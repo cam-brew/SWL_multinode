@@ -90,18 +90,23 @@ def isolate_foreground(tomo_stack):
     return binary
 
 @delayed
-def normalize_slice(slice):
+def normalize_slice(slice,background):
     if slice.max() > slice.min():
         slice = (slice - slice.min()) / (slice.max() - slice.min())
-        print(slice.shape)
-        return slice.astype(np.float32)
+        background = (background - slice.min()) / (slice.max() - slice.min())
+        slice.astype(np.float32)
+        background.astype(np.float32)
+        return slice - background
     
-    return np.zeros_like(slice[1:],dtype=np.float32)
+    return np.zeros_like(slice,dtype=np.float32)
 
 @delayed
 def process_slice(slice,idx):
     
-    
+    if slice.ndim == 3:
+        slice.squeeze(axis=0)
+
+    print(slice.shape)
     edge = sobel_edge_2d(slice)
     gauss = gaussian_filter(slice,sigma=(45.,45.))
     enhanced = gauss * edge
@@ -119,15 +124,18 @@ def process_slice(slice,idx):
     
 
 def iso_foreground_dask(tomo_stack):
-    norm_func = [normalize_slice(tomo_stack[i]) for i in range(tomo_stack.shape[0])]
-    norm_stack = da.stack([da.from_delayed(n,shape=tomo_stack.shape[1:],dtype=np.float32)] for n in norm_func)
-    print(f'Norm_stack shape: {norm_stack.shape}')
-    norm = norm_stack.compute()
-    norm = norm - norm[0]
-    print(f'Norm shape: {norm.shape}')
+    # delay_slice = tomo_stack.to_delayed().flatten()
+
+    norm_func = [normalize_slice(d,tomo_stack[0]) for d in tomo_stack]
+    norm_stack = da.stack([da.from_delayed(n,shape=tomo_stack.shape[1:],dtype=np.float32) for n in norm_func], axis=0)
+    # for i in range(norm_stack):
+    #     plt.imshow(norm_stack[i])
+    #     plt.show()
+    print(norm_stack.shape)
+    # norm = norm_stack - norm_stack[0]
     
-    binary_func = [process_slice(norm[i],i) for i in range(norm.shape[0])]
-    binary_stack = da.stack([da.from_delayed(b, shape=norm.shape[1:], dtype=bool) for b in binary_func], axis=0)
+    binary_func = [process_slice(norm_stack[i],i) for i in range(len(norm_stack))]
+    binary_stack = da.stack([da.from_delayed(b, shape=norm_stack.shape[1:], dtype=bool) for b in binary_func], axis=0)
 
     return binary_stack
     
