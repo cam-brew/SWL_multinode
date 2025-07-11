@@ -30,17 +30,17 @@ def animate_stack(tomo_stack,mask_stack,label_stack):
     
     fig, ax = plt.subplots(1, 3, figsize=(12, 4), constrained_layout=True)
     # Plot initial slices
-    im0 = ax[0].imshow(tomo_stack[0], cmap='gray')
+    im0 = ax[0].imshow(tomo_stack[0], cmap='gray', vmin=np.min(tomo_stack[0]),vmax=np.max(tomo_stack[0]))
     ax[0].set_title('Raw Data')
 
-    im1 = ax[1].imshow(mask_stack[0], cmap='gray')
+    im1 = ax[1].imshow(mask_stack[0], cmap='gray', vmin=np.min(mask_stack[0]),vmax=np.max(mask_stack[0]))
     ax[1].set_title('Binary Mask')
 
     # For labeled image, determine min and max labels for color scale
     vmin = np.min(label_stack)
     vmax = np.max(label_stack)
 
-    im2 = ax[2].imshow(label_stack[0], cmap='gray', vmin=vmin, vmax=vmax)
+    im2 = ax[2].imshow(label_stack[0], cmap='gray')
     ax[2].set_title('Labeled')
 
     # Add colorbar without shrinking the image axis
@@ -54,7 +54,9 @@ def animate_stack(tomo_stack,mask_stack,label_stack):
     # Animation update function
     def update(i):
         im0.set_data(tomo_stack[i])
+        im0.set_clim(vmin=np.min(tomo_stack[i]),vmax=np.max(tomo_stack[i]))
         im1.set_data(mask_stack[i])
+        im1.set_clim(vmin=np.min(mask_stack[i]),vmax=np.max(mask_stack[i]))
         im2.set_data(label_stack[i])
         # No need to update colorbar limits since vmin and vmax fixed
         return im0, im1, im2

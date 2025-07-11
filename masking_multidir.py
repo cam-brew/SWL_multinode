@@ -55,54 +55,9 @@ def keep_largest_component(mask):
     return labeled == sizes.argmax()
 
 
-def isolate_foreground(tomo_stack):
-    
-    # tomo_stack = (tomo_stack / 65535.0).astype(np.float32)
-    tomo_stack = tomo_stack - tomo_stack[0]
 
 
-    edge=np.zeros(tomo_stack.shape,dtype=np.float32)
-    binary=np.zeros(tomo_stack.shape,dtype=bool)
-    
-    for i,slice in enumerate(tomo_stack):
-        edge[i] = sobel_edge_2d(slice)
-        gauss = gaussian_filter(slice,sigma=(45.,45.))
-        enhanced = np.multiply(gauss,edge[i])
-        print(f'Slice {i+475} std: {np.std(enhanced)}')
-        # plt.imshow(enhanced)
-        # plt.title(f'Slice {i} std: {np.std(enhanced)}')
-        # plt.show()
-    
-        # skip flat slices
-        
-        if np.allclose(enhanced,0) or np.std(enhanced) < 0.001:
-            binary[i] = np.zeros_like(slice,dtype=bool)
-            continue
-        try:
-            binary[i] = enhanced > threshold_triangle(enhanced)
-        except ValueError:
-            print(f'[Slice {i}] Triangle threshold failed -- filling with zeros')
-            binary[i] = np.zeros_like(slice,dtype=bool)
 
-        binary[i] = keep_largest_component(binary[i])
-
-
-    return binary
-
-# @delayed
-# def normalize_slice(slice,background):
-
-#     if slice.dtype == 'uint8':
-#         slice = slice / 255.
-
-#     if slice.max() > slice.min():
-#         slice = (slice - slice.min()) / (slice.max() - slice.min())
-#         background = (background - slice.min()) / (slice.max() - slice.min())
-#         slice.astype(np.float32)
-#         background.astype(np.float32)
-#         return slice - background
-    
-#     return np.zeros_like(slice,dtype=np.float32)
 
 @delayed
 def process_slice(slice,idx):
@@ -128,44 +83,41 @@ def process_slice(slice,idx):
         print(f'[Slice{idx}] Triangle threshold failed')
         return np.zeros_like(slice,dtype=bool)
 
-
+@delayed
+def threshold(slice):
+    try:
+        thresh = threshold_triangle(slice)
+        return (slice > thresh).astype(bool)
     
+    except:
+        return np.zeros_like(slice,dtype=bool)
 
-def iso_foreground_dask(norm_stack):
-    # delay_slice = tomo_stack.to_delayed().flatten()
 
-    # norm_func = [normalize_slice(d,tomo_stack[0]) for d in tomo_stack]
-    # norm_stack = da.stack([da.from_delayed(n,shape=tomo_stack.shape[1:],dtype=np.float32) for n in norm_func], axis=0)
-    # for i in range(norm_stack):
-    #     plt.imshow(norm_stack[i])
-    #     plt.show()
-    # print(norm_stack.shape)
-    # norm = norm_stack - norm_stack[0]
-    
-    binary_func = [process_slice(norm_stack[i],i) for i in range(len(norm_stack))]
-    binary_stack = da.stack([da.from_delayed(b, shape=norm_stack.shape[1:], dtype=bool) for b in binary_func], axis=0)
 
-    return binary_stack
+def iso_foreground_dask(stack):
     
-def convert(tomos):
-    if tomos.dtype == 'uint8':
-        tomos = tomos - tomos[0]
-        tomos = tomos / 255.
-        tomos = tomos.astype(np.float32)
-        return tomos
-    elif tomos.dtype == 'uint16':
-        tomos = tomos - tomos[0]
-        tomos = tomos / 65535.
-        tomos = tomos.astype(np.float32)
-        return tomos
+    Z,Y,X = stack.shape
+
+    masks_z = [da.from_delayed(threshold(stack[z]),shape=(Y,X),dtype=bool) for z in range(Z)]
+    mask_z_stack = da.stack(masks_z,axis=0)
+
+    mask_x = [da.from_delayed(threshold(stack[:,:,x]),shape=(Z,Y),dtype=bool) for x in range(X)]
+    mask_x_stack = da.stack(mask_x,axis=2)
+
+    print(f'Z mask shape: {mask_z_stack.shape}')
+    print(f'X mask shape: {mask_x_stack}')
+    combined_mask = da.logical_and(mask_z_stack,mask_x_stack)
+    return combined_mask
     
-    elif tomos.dtype == 'uint32':
-        tomos = tomos - tomos[0]
-        tomos = tomos / 4294967295.
-        tomos = tomos.astype(np.float32)
-        return tomos
-    else:
-        return ValueError
+def edge_enhance_3d(vol):
+    blur = gaussian_filter(vol,sigma=3)
+    edges = np.sqrt(np.sum(np.square(np.gradient(blur)),axis=0))
+    enhanced = blur + edges
+
+    t = threshold_otsu(enhanced)
+    binary = enhanced > t
+    return binary,enhanced
+
 def main():
     import tifffile
     import matplotlib.pyplot as plt
@@ -173,20 +125,19 @@ def main():
     from monitor_performance import animate_stack
     from pathlib import Path
 
-    path = ''
     tomo_dir = '/data/visitor/me1663/id19/20240227/PROCESSED_DATA/Real_05_01/delta_beta_150/Reconstruction_16bit_dff_s32_v2/Real_05_01_0001_16bit_vol/'
     f_names = sorted([f for f in Path(tomo_dir).iterdir() if f.suffix.lower() in ['.tif','.tiff'] and not '._' in f.name])
     f_names = f_names[::200]
 
     print(f'Files: {len(f_names)} begining with {f_names[0]}')
     tomos = read_tomos_dask(f_names,cores=None)
+    tomos = tomos - tomos[0]
 
-    tomos = convert(tomos)
-    
-    binary = iso_foreground_dask(tomos)
-    binary = binary.compute()
+    # binary = iso_foreground_dask(tomos)
+    # binary = binary.compute()
+    binary,enhanced  = edge_enhance_3d(tomos)
 
-    animate_stack(tomos,binary,np.multiply(tomos,binary))
+    animate_stack(enhanced,binary,np.multiply(tomos,binary))
 
     # for i,slice in enumerate(tomos):
     #     fig,ax = plt.subplots(1,3)
