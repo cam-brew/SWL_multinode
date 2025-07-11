@@ -1,5 +1,9 @@
 import numpy as np
 import time
+import dask.array as da
+
+from dask import delayed
+from dask.diagnostics import ProgressBar
 from scipy.ndimage import binary_fill_holes, binary_closing,generate_binary_structure,convolve,gaussian_filter
 from skimage.filters import threshold_otsu,threshold_triangle
 from skimage.measure import label
@@ -33,7 +37,6 @@ def sobel_edge_2d(tomo):
     Iy = convolve(tomo.astype(np.float32),Ky)
 
     edge_mag = np.sqrt(Ix**2 + Iy**2)
-    print(f'Edge shape: {edge_mag.shape} {edge_mag.dtype}')
 
     return edge_mag
 
@@ -53,8 +56,10 @@ def keep_largest_component(mask):
 
 
 def isolate_foreground(tomo_stack):
-    tomo_stack = (tomo_stack / 65535.0).astype(np.float32)
+    
+    # tomo_stack = (tomo_stack / 65535.0).astype(np.float32)
     tomo_stack = tomo_stack - tomo_stack[0]
+
 
     edge=np.zeros(tomo_stack.shape,dtype=np.float32)
     binary=np.zeros(tomo_stack.shape,dtype=bool)
@@ -63,19 +68,19 @@ def isolate_foreground(tomo_stack):
         edge[i] = sobel_edge_2d(slice)
         gauss = gaussian_filter(slice,sigma=(45.,45.))
         enhanced = np.multiply(gauss,edge[i])
-        
+        print(f'Slice {i+475} std: {np.std(enhanced)}')
         # plt.imshow(enhanced)
         # plt.title(f'Slice {i} std: {np.std(enhanced)}')
         # plt.show()
     
         # skip flat slices
         
-        if np.allclose(enhanced,0) or np.std(enhanced) < 0.00015:
+        if np.allclose(enhanced,0) or np.std(enhanced) < 0.001:
             binary[i] = np.zeros_like(slice,dtype=bool)
             continue
         try:
             binary[i] = enhanced > threshold_triangle(enhanced)
-        except:
+        except ValueError:
             print(f'[Slice {i}] Triangle threshold failed -- filling with zeros')
             binary[i] = np.zeros_like(slice,dtype=bool)
 
@@ -83,6 +88,49 @@ def isolate_foreground(tomo_stack):
 
 
     return binary
+
+@delayed
+def normalize_slice(slice):
+    if slice.max() > slice.min():
+        slice = (slice - slice.min()) / (slice.max() - slice.min())
+        print(slice.shape)
+        return slice.astype(np.float32)
+    
+    return np.zeros_like(slice[1:],dtype=np.float32)
+
+@delayed
+def process_slice(slice,idx):
+    
+    
+    edge = sobel_edge_2d(slice)
+    gauss = gaussian_filter(slice,sigma=(45.,45.))
+    enhanced = gauss * edge
+    print(f'Slice {idx*200} std: {np.std(enhanced)}')
+
+    if np.allclose(enhanced,0) or np.std(enhanced) < 0.001:
+        return np.zeros_like(slice,dtype=bool)
+    
+    try:
+        mask = enhanced > threshold_triangle(enhanced)
+        return mask
+    except Exception:
+        print(f'[Slice{idx}] Triangle threshold failed')
+        return np.zeros_like(slice,dtype=bool)
+    
+
+def iso_foreground_dask(tomo_stack):
+    norm_func = [normalize_slice(tomo_stack[i]) for i in range(tomo_stack.shape[0])]
+    norm_stack = da.stack([da.from_delayed(n,shape=tomo_stack.shape[1:],dtype=np.float32)] for n in norm_func)
+    print(f'Norm_stack shape: {norm_stack.shape}')
+    norm = norm_stack.compute()
+    norm = norm - norm[0]
+    print(f'Norm shape: {norm.shape}')
+    
+    binary_func = [process_slice(norm[i],i) for i in range(norm.shape[0])]
+    binary_stack = da.stack([da.from_delayed(b, shape=norm.shape[1:], dtype=bool) for b in binary_func], axis=0)
+
+    return binary_stack
+    
 
 def main():
     import tifffile
@@ -94,20 +142,22 @@ def main():
     path = ''
     tomo_dir = '/data/visitor/me1663/id19/20240227/PROCESSED_DATA/Real_05_01/delta_beta_150/Reconstruction_16bit_dff_s32_v2/Real_05_01_0001_16bit_vol/'
     f_names = sorted([f for f in Path(tomo_dir).iterdir() if f.suffix.lower() in ['.tif','.tiff'] and not '._' in f.name])
-    f_names = f_names[475:490]
+    f_names = f_names[::200]
 
     print(f'Files: {len(f_names)} begining with {f_names[0]}')
     tomos = read_tomos_dask(f_names,cores=None)
-    binary = isolate_foreground(tomos)
+    
+    binary = iso_foreground_dask(tomos)
+    binary = binary.compute()
 
     animate_stack(tomos,binary,np.multiply(tomos,binary))
 
-    for i,slice in enumerate(tomos):
-        fig,ax = plt.subplots(1,3)
-        ax[0].imshow(slice,cmap='gray',vmin=slice.min(),vmax=slice.max())
-        ax[1].imshow(binary[i],cmap='gray')
-        ax[2].imshow(np.multiply(slice,binary[i]),cmap='gray')
-        plt.title(f'Slice {475 + i}')
-        plt.show()
+    # for i,slice in enumerate(tomos):
+    #     fig,ax = plt.subplots(1,3)
+    #     ax[0].imshow(slice,cmap='gray',vmin=slice.min(),vmax=slice.max())
+    #     ax[1].imshow(binary[i],cmap='gray')
+    #     ax[2].imshow(np.multiply(slice,binary[i]),cmap='gray')
+    #     plt.title(f'Slice {475 + i}')
+    #     plt.show()
 if __name__ == '__main__':
     main()
