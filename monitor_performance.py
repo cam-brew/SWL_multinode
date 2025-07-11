@@ -23,38 +23,39 @@ def setup_logger():
     logger.setLevel(logging.INFO)
     return logger
     
-def animate_stack(tomo_stack,mask_stack,label_stack,rank):
+def animate_stack(tomo_stack,mask_stack,label_stack):
     depth = tomo_stack.shape[0]
     
     writer = animation.PillowWriter(fps=15)
     
     fig, ax = plt.subplots(1, 3, figsize=(12, 4), constrained_layout=True)
     # Plot initial slices
-    im0 = ax[0].imshow(tomo_stack[0, :, :], cmap='gray')
+    im0 = ax[0].imshow(tomo_stack[0], cmap='gray')
     ax[0].set_title('Raw Data')
 
-    im1 = ax[1].imshow(mask_stack[0, :, :], cmap='gray')
+    im1 = ax[1].imshow(mask_stack[0], cmap='gray')
     ax[1].set_title('Binary Mask')
 
     # For labeled image, determine min and max labels for color scale
     vmin = np.min(label_stack)
     vmax = np.max(label_stack)
 
-    im2 = ax[2].imshow(label_stack[0, :, :], cmap='gray', vmin=vmin, vmax=vmax)
+    im2 = ax[2].imshow(label_stack[0], cmap='gray', vmin=vmin, vmax=vmax)
     ax[2].set_title('Labeled')
 
     # Add colorbar without shrinking the image axis
     from mpl_toolkits.axes_grid1 import make_axes_locatable
     divider = make_axes_locatable(ax[2])
     cax = divider.append_axes("right", size="5%", pad=0.05)
-    cbar = fig.colorbar(im2, cax=cax, ticks=np.arange(vmin, vmax + 1),cmap='gray')
+    cbar = fig.colorbar(im2, cax=cax)
     cbar.ax.set_ylabel('Labels')
+    cbar.ax.set_yticks([])
 
     # Animation update function
     def update(i):
-        im0.set_data(tomo_stack[i, :, :])
-        im1.set_data(mask_stack[i, :, :])
-        im2.set_data(label_stack[i, :, :])
+        im0.set_data(tomo_stack[i])
+        im1.set_data(mask_stack[i])
+        im2.set_data(label_stack[i])
         # No need to update colorbar limits since vmin and vmax fixed
         return im0, im1, im2
 

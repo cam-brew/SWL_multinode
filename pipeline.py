@@ -190,7 +190,7 @@ def process_pipeline_dist(params):
     # ====== Section 4: Labeled data validation and visualization ======
     print('Proceed to developing writing...')
     if animate == True:
-        animate_stack(node_stack,node_mask,gmm_integrated,rank)
+        animate_stack(node_stack,node_mask,gmm_integrated)
     ## Present Gaussian Mixture selection
     # plot_gmm_masked_clusters(tomo_stack[tomo_stack.shape[0]//2],mask_stack[mask_stack.shape[0]//2],gmm_stone_labeled[gmm_stone_labeled.shape[0]//2],gmm_stone_model,transparency=0.3)
     # plot_gmm_masked_clusters(tomo_stack[tomo_stack.shape[0]//2],pore_stack[pore_stack.shape[0]//2],gmm_pore_labeled[gmm_stone_labeled.shape[0]//2],gmm_pore_model,transparency=0.9)

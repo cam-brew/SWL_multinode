@@ -62,10 +62,25 @@ def isolate_foreground(tomo_stack):
     for i,slice in enumerate(tomo_stack):
         edge[i] = sobel_edge_2d(slice)
         gauss = gaussian_filter(slice,sigma=(45.,45.))
-        slice = np.multiply(gauss,edge[i])
-        plt.imshow(slice)
-        plt.show()
-        binary[i] = threshold_triangle(slice,256)
+        enhanced = np.multiply(gauss,edge[i])
+        
+        # plt.imshow(enhanced)
+        # plt.title(f'Slice {i} std: {np.std(enhanced)}')
+        # plt.show()
+    
+        # skip flat slices
+        
+        if np.allclose(enhanced,0) or np.std(enhanced) < 0.00015:
+            binary[i] = np.zeros_like(slice,dtype=bool)
+            continue
+        try:
+            binary[i] = enhanced > threshold_triangle(enhanced)
+        except:
+            print(f'[Slice {i}] Triangle threshold failed -- filling with zeros')
+            binary[i] = np.zeros_like(slice,dtype=bool)
+
+        binary[i] = keep_largest_component(binary[i])
+
 
     return binary
 
@@ -79,17 +94,20 @@ def main():
     path = ''
     tomo_dir = '/data/visitor/me1663/id19/20240227/PROCESSED_DATA/Real_05_01/delta_beta_150/Reconstruction_16bit_dff_s32_v2/Real_05_01_0001_16bit_vol/'
     f_names = sorted([f for f in Path(tomo_dir).iterdir() if f.suffix.lower() in ['.tif','.tiff'] and not '._' in f.name])
-    f_names = f_names[::200]
+    f_names = f_names[475:490]
 
     print(f'Files: {len(f_names)} begining with {f_names[0]}')
     tomos = read_tomos_dask(f_names,cores=None)
     binary = isolate_foreground(tomos)
+
+    animate_stack(tomos,binary,np.multiply(tomos,binary))
 
     for i,slice in enumerate(tomos):
         fig,ax = plt.subplots(1,3)
         ax[0].imshow(slice,cmap='gray',vmin=slice.min(),vmax=slice.max())
         ax[1].imshow(binary[i],cmap='gray')
         ax[2].imshow(np.multiply(slice,binary[i]),cmap='gray')
+        plt.title(f'Slice {475 + i}')
         plt.show()
 if __name__ == '__main__':
     main()
