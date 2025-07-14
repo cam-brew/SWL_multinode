@@ -18,23 +18,24 @@ from dask.distributed import Client
 
 def split_slices(total_slices, core_counts):
 
-    total_cores = sum(core_counts)
-    slice_alloc = [int((c/total_cores)*total_slices) for c in core_counts]
-
-    while sum(slice_alloc) < total_slices:
-        i =slice_alloc.index(min(slice_alloc))
-        slice_alloc[i] +=1
-    while sum(slice_alloc) > total_slices:
-        i = slice_alloc.index(max(slice_alloc))
-        slice_alloc[i] -= 1
-
-    z_splits = []
-    z_start = 0
-    for count in slice_alloc:
-        z_end = z_start + count
-        z_splits.append((z_start,z_end))
-        z_start = z_end
-    return z_splits
+    core_counts = np.array(core_counts)
+    total_cores = core_counts.sum()
+    slots = []
+    for i, count in enumerate(core_counts):
+        slots.extend([i] * count)
+    slots = np.array(slots)
+    
+    node_assignment = slots[:total_slices]
+    
+    if len(node_assignment) < total_slices:
+        repeats = int(np.ceil(total_slices / len(slots)))
+        node_assignment = np.tile(slots,repeats[:total_slices])
+        
+    node_slices = [[] for _ in range(len(core_counts))]
+    for idx, node in enumerate(node_assignment):
+        node_slices[node].append(idx)
+        
+    return node_slices
 
 
 def process_pipeline_dist(params):
