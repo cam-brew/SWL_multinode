@@ -87,19 +87,21 @@ def test_iso_dask(vol, kern_size=7):
         # Called per (1, y, x) block
         slice2d = slice2d[0]
         mask2d = mask2d[0]
+
+        if not np.any(mask2d):
+            print(f'Empty slice')
+            binary = np.zeros(slice2d,dtype=np.uint8)
+            blurred = gaussian_filter(slice2d,sigma=(kern_size,kern_size))
+            return blurred[np.newaxis, :, :], binary[np.newaxis, :, :]
         
         blurred = gaussian_filter(slice2d, sigma=(kern_size, kern_size))
         t = threshold_otsu(blurred[mask2d])
         binary = np.zeros(slice2d.shape,dtype=np.uint8)
         
-        binary[mask2d] = blurred[mask2d] < t
+        binary[mask2d] = (blurred[mask2d] < t)
         
-        if binary[0,0]  == True:
-            print(f'Empty slice detected')
-            binary = np.zeros((binary.shape[0],binary.shape[1]))
-        else:
-            binary = binary_closing(binary)
-            binary = binary_fill_holes(binary)
+        binary = binary_closing(binary)
+        binary = binary_fill_holes(binary)
 
         # print(f'Unique elements {np.unique(binary).size}')
         # if np.unique(binary).size == 1:

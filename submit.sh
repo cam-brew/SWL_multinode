@@ -1,8 +1,8 @@
 #!/bin/bash
-#SBATCH --nodes=3
-#SBATCH --ntasks=3
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
 #SBATCH --partition=nice
-#SBATCH --nodelist=hpc7-[62-65,01-04],hpc6-[06-08,32-33,35-40]
+#SBATCH --nodelist=hpc7-[62-65,01-04],hpc6-[06-08,32-33,35-40],hpc3-[2103,2604,2701-2704,2801-2804,2901-2902],hpc5-[0504,0601,0701-0702]
 #SBATCH --mem=0
 #SBATCH --time=10:00:00
 export OMPI_MCA_pml=ob1
@@ -13,7 +13,7 @@ echo "Starting script"
 source ~/.bashrc
 
 echo "Loading conda"
-conda activate kidneystone_seg
+conda activate ks_seg_dask
 
 echo "Conda activated"
 which python

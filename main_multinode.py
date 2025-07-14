@@ -20,7 +20,7 @@ def main():
 
         
         root_dir = '/data/visitor/me1663/id19/20240227/'
-        tomo_dir = root_dir + f'PROCESSED_DATA/{stone_ids[rank][:10]}/delta_beta_150/Reconstruction_16bit_dff_s32_v2/test_{stone_ids[rank]}_16bit_vol/'
+        tomo_dir = root_dir + f'PROCESSED_DATA/{stone_ids[rank][:10]}/delta_beta_150/Reconstruction_16bit_dff_s32_v2/{stone_ids[rank]}_16bit_vol/'
         seg_dir = root_dir + f"SEGMENTATION/{stone_ids[rank][:10]}_multinode/labels/"
 
         dirs = (root_dir,tomo_dir,seg_dir)
@@ -48,8 +48,8 @@ def main():
         task_args=None
 
     task_args = comm.bcast(task_args,root=0)
-    with open(f'./testing_mn_{rank}.txt','w') as f:
-            f.write(f'Reading from {task_args[0][1]} \nWriting to {task_args[0][2]}\nUsing {psutil.cpu_count(logical=True)} cores on node {rank}\n')
+    # with open(f'./testing_mn_{rank}.txt','w') as f:
+    #         f.write(f'Reading from {task_args[0][1]} \nWriting to {task_args[0][2]}\nUsing {psutil.cpu_count(logical=True)} cores on node {rank}\n')
 
     print(f'Worker {rank} ready')
 

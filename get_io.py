@@ -108,7 +108,7 @@ def _save_tiff(slice_data,path):
     
         
         
-def write_labels_dask(label_stack, output_dir, start, end, prefix='label_', dtype=np.int8, cores = None):
+def write_labels_dask(label_stack, output_dir, indices, prefix='label_', dtype=np.int8, cores = None):
     if cores == None:
         cores = psutil.cpu_count(logical=True)
 
@@ -116,9 +116,9 @@ def write_labels_dask(label_stack, output_dir, start, end, prefix='label_', dtyp
     label_stack = label_stack.astype(dtype)
     delayed_tasks = []
 
-    for z in range(start,end):
-        slice_data = label_stack[z-start]
-        out_path = output_dir + f'{prefix}{z:05d}.tif'
+    for i in range(len(indices)):
+        slice_data = label_stack[i]
+        out_path = output_dir + f'{prefix}{indices[i]:05d}.tif'
         task = delayed(_save_tiff)(slice_data,out_path)
         delayed_tasks.append(task)
 

@@ -1,3 +1,0 @@
-Reading from Real_05_01_0001 
-Writing to 2.149544433e-06
-Using 64 cores on node 1

@@ -1,14 +1,28 @@
-from multiprocessing import shared_memory
 import os
 import numpy as np
 import matplotlib.pyplot as plt
 import pywt
 import scipy.ndimage as ndi
 import matplotlib.pyplot as plt
-from scipy.ndimage import gaussian_filter1d,median_filter,map_coordinates
+from scipy.ndimage import gaussian_filter,median_filter,map_coordinates
 from skimage.transform import warp_polar,warp,rotate
 from concurrent.futures import ProcessPoolExecutor
+from mpi4py import MPI
 
+def remove_spring(local_stack, global_start):
+    comm = MPI.COMM_WORLD
+    rank = comm.Get_rank()
+
+    local_first = -1
+    for i, slice2d in enumerate(local_stack):
+        if 65535 in slice2d:
+            local_first = global_start + i
+            break
+
+    local_first_val = local_first if local_first != -1 else np.iinfo(np.int32).max
+    global_first = comm.allreduce(local_first_val,op=MPI.MIN)
+
+    return -1 if global_first == np.iinfo(np.int32).max else global_first
 
 def radial_ring_removal(img, radial_window=100, subtract_fraction=0.01, smooth_sigma=0.01):
     """Remove ring artifacts using radial FFT profile subtraction."""
@@ -73,7 +87,18 @@ def ring_remove_test(img,wavelet='db11',level=None,sigma=None):
     # corr_img = np.mean((corr_img,scipy.signal.medfilt2d(img,kernel_size=25)),axis=0)
     return corr_img
 
+def gauss_2d_slices(vol,sigma):
+    if np.isscalar(sigma):
+        sigma= (0,sigma,sigma)
+    elif len(sigma) == 2:
+        sigma = (0,) + tuple(sigma)
+    elif len(sigma) == 3:
+        sigma = tuple(sigma)
 
+    else:
+        raise ValueError("Sigma invalid shape")
+    
+    return gaussian_filter(vol,sigma=sigma)
 def linear_polar(img, o=None, r=None, output=None, order=1):
     if o is None:
         o = np.array(img.shape[:2]) / 2 - 0.5
