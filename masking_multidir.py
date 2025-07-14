@@ -87,14 +87,24 @@ def test_iso_dask(vol, kern_size=7):
         # Called per (1, y, x) block
         slice2d = slice2d[0]
         mask2d = mask2d[0]
-
+        
         blurred = gaussian_filter(slice2d, sigma=(kern_size, kern_size))
         t = threshold_otsu(blurred[mask2d])
-        binary = blurred < t
-        binary = binary_closing(binary)
-        binary = binary_fill_holes(binary)
-        if np.mean(binary) == 1:
-            binary = np.zeros(blurred.shape,dtype=bool)
+        binary = np.zeros(slice2d.shape,dtype=np.uint8)
+        
+        binary[mask2d] = blurred[mask2d] < t
+        
+        if binary[0,0]  == True:
+            print(f'Empty slice detected')
+            binary = np.zeros((binary.shape[0],binary.shape[1]))
+        else:
+            binary = binary_closing(binary)
+            binary = binary_fill_holes(binary)
+
+        # print(f'Unique elements {np.unique(binary).size}')
+        # if np.unique(binary).size == 1:
+        #     print(f'Empty slice detected')
+        #     binary = np.zeros(binary.shape,dtype=np.uint8)
         return blurred[np.newaxis, :, :], binary[np.newaxis, :, :]
 
     # --- Wrap for map_blocks ---
@@ -115,7 +125,7 @@ def test_iso_dask(vol, kern_size=7):
 
     mask_dask = da.map_blocks(
         mask_func, vol_filled, valid_mask,
-        dtype=bool,
+        dtype=np.uint8,
         chunks=vol_filled.chunks
     )
 
