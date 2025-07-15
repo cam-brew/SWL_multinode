@@ -1,13 +1,12 @@
 import time
 import numpy as np
 import matplotlib.pyplot as plt
-import multiprocessing as mp
-import argparse
 import psutil
+import tifffile
 import gc
 
 from masking_multidir import circular_mask, test_iso_dask, rescale
-from preproc_img import process_tomo_stack,show_comparison, gauss_2d_slices
+from preproc_img import remove_spring, gauss_2d_slices
 from segmentation import gaussian_mix_dask
 from monitor_performance import animate_stack
 from surface_calc import estimate_surface_area, mesh_surface_area
@@ -75,13 +74,15 @@ def process_pipeline_dist(params):
     if rank == 0:
         seg_dir_update = list(Path(seg_dir).glob('test_'+stone_id+'*/'))
         seg_dir_update = seg_dir_update[0].as_posix()
-        print(f'Clearing directories in {seg_dir_update}')
-        clear_dir(seg_dir_update + '/test_mask/')
-        clear_dir(seg_dir_update + '/test_iso/')
+        # print(f'Clearing directories in {seg_dir_update}')
+        # clear_dir(seg_dir_update + '/test_mask/')
+        # clear_dir(seg_dir_update + '/test_iso/')
         
         tomo_files,shape,dtype = get_metadata(tomo_dir)
         ## remove when testing vull sample
-        tomo_files = tomo_files[::100]
+        if end_slice == None:
+            end_slice = -1
+        tomo_files = tomo_files[:end_slice:skip_interval]
         print(len(tomo_files), core_counts)
         n_slices = len(tomo_files)
         z_split = split_slices(n_slices,core_counts)
@@ -119,10 +120,17 @@ def process_pipeline_dist(params):
         f.write(f'\nRead {tomo_stack.shape[0]} images: {time.time() - start} seconds\n')
     
     tomo_stack = tomo_stack.compute()
+    ## Remove spring slices
+    # spring_idx_min = remove_spring(tomo_stack,global_start=0)
+
+    # print(spring_idx_min)
+
+
     tomo_stack = np.where(circular_mask(tomo_stack.shape,radius_scale=0.98),tomo_stack,np.nan)
 
     print(f'Worker {rank} rescaling histogram')
     tomo_he = rescale(tomo_stack)
+    print(f'Length of nan in hist eq: {len(tomo_he == np.nan)}')
     print(f'Worker {rank} isolating foreground')
     _,mask = test_iso_dask(tomo_he,kern_size=35)
     mask = mask.compute()
@@ -130,63 +138,61 @@ def process_pipeline_dist(params):
         print(f'Slice {i} max: {m.max()}')
 
     print(f'Worker {rank} smoothing rescale volume')
-    tomo_he = gauss_2d_slices(tomo_he,sigma=7)
+    tomo_he = gauss_2d_slices(tomo_he,sigma=5)
     tomo_he[mask != 1] = np.nan
 
     
     del tomo_stack
     gc.collect()
     outdir = f'/data/visitor/me1663/id19/20240227/SEGMENTATION/Real_05_01_multinode/labels/test_{stone_id}'
-    print(f'Writing masks')
-    write_labels_dask(mask,outdir + f'/test_mask/', z_list,prefix='mask_',dtype=bool)
-    print(f'Writing data')
-    write_labels_dask(tomo_he,outdir + f'/test_iso/', z_list,prefix='iso_',dtype=np.float32)
-    # with open(log_path,'a+') as f:
-    #     f.write(f'Histogram adjusted and mask generated in {time.time() - start} seconds\n')
-    # # show_comparison(tomo_stack,mask_stack)
+    with open(log_path,'a+') as f:
+        f.write(f'Histogram adjusted and mask generated in {time.time() - start} seconds\n')
+    # show_comparison(tomo_stack,mask_stack)
     
-    # # start = time.time()
-    # # proc_stack = process_tomo_stack(tomo_stack,num_workers=slurm_cpus)
-    # # with open(f'{seg_dir}/{stone_id}_log.txt','a') as f:
-    # #     f.write(f'\nRing removal processing: {time.time() - start} seconds')
-    # # show_comparison(tomo_stack,proc_stack)
-    # # tomo_stack = proc_stack
-    # # del proc_stack
-    
-    # # ====== Section 2: Automated foreground segmentation ======
-    
-    # ## First pass separates solid and fluid
     # start = time.time()
-    # gmm_stone_labeled,gmm_stone_model = gaussian_mix_dask(node_stack,node_mask,n_classes=2)
-    # with open(log_path,'a') as f:
-    #     f.write(f'\nSolid segmentation: {time.time() - start} seconds')
-    # print('Stone segmentation complete...')
-    # # Second pass segments fluids (air and water presence)
-    # if air_water_seg == True:
-    #     print(f'Segmenting fluids...')
+    # proc_stack = process_tomo_stack(tomo_stack,num_workers=slurm_cpus)
+    # with open(f'{seg_dir}/{stone_id}_log.txt','a') as f:
+    #     f.write(f'\nRing removal processing: {time.time() - start} seconds')
+    # show_comparison(tomo_stack,proc_stack)
+    # tomo_stack = proc_stack
+    # del proc_stack
+    
+    # ====== Section 2: Automated foreground segmentation ======
+    
+    ## First pass separates solid and fluid
+    start = time.time()
+    gmm_stone_labeled,gmm_stone_model = gaussian_mix_dask(tomo_he,mask,n_classes=2)
+    with open(log_path,'a') as f:
+        f.write(f'\nSolid segmentation: {time.time() - start} seconds')
+
+    tifffile.imwrite('test_stone_seg.tif',gmm_stone_labeled[gmm_stone_labeled.shape[0] // 2])
+    print('Stone segmentation complete...')
+    # Second pass segments fluids (air and water presence)
+    if air_water_seg == True:
+        print(f'Segmenting fluids...')
         
-    #     start = time.time()
-    #     pore_stack = gmm_stone_labeled == 0
-    #     gmm_pore_labeled,gmm_pore_model = gaussian_mix_dask(node_stack,node_mask,n_classes=num_classes - 1)
-    #     with open(log_path,'a') as f:
-    #         f.write(f'\nFluid segmentation: {time.time() - start} seconds')
+        start = time.time()
+        pore_stack = gmm_stone_labeled == 1
+        gmm_pore_labeled,gmm_pore_model = gaussian_mix_dask(tomo_he,pore_stack,n_classes=2)
+        with open(log_path,'a') as f:
+            f.write(f'\nFluid segmentation: {time.time() - start} seconds')
+        tifffile.imwrite('test_pore_seg.tif',gmm_pore_labeled[gmm_pore_labeled.shape[0] // 2])
+        ## Integrate into common label set
+        print('Sorting labels in ascending order...')
+        gmm_integrated = np.zeros_like(tomo_he,dtype=np.int8)
         
-    #     ## Integrate into common label set
-    #     print('Sorting labels in ascending order...')
-    #     gmm_integrated = np.zeros_like(node_stack,dtype=np.int8)
+        gmm_integrated[gmm_integrated == 0] = 0
+        gmm_integrated[gmm_pore_labeled == 0] = 1 ## Air values set to 1
+        gmm_integrated[gmm_pore_labeled == 1] = 2 ## Water values set to 2
+        gmm_integrated[gmm_stone_labeled == 0] = 3 ## Stone values set to 3
+        if stone_id == 'Stone_15_01':
+            gmm_integrated[gmm_pore_labeled == 1] = 3
         
-    #     gmm_integrated[gmm_integrated == 0] = 0
-    #     gmm_integrated[gmm_pore_labeled == 0] = 1 ## Air values set to 1
-    #     gmm_integrated[gmm_pore_labeled == 1] = 2 ## Water values set to 2
-    #     gmm_integrated[gmm_stone_labeled == 1] = 3 ## Stone values set to 3
-    #     if stone_id == 'Stone_15_01':
-    #         gmm_integrated[gmm_pore_labeled == 1] = 3
-        
-    # elif air_water_seg == False:
-    #     gmm_integrated = gmm_stone_labeled
-    #     gmm_integrated[gmm_integrated == 0] = 0
-    #     gmm_integrated[gmm_stone_labeled == 1] = 3 ## Stone values set to 1
-    #     print('Stone and fluid labels sorted...')
+    elif air_water_seg == False:
+        gmm_integrated = gmm_stone_labeled
+        gmm_integrated[gmm_integrated == 0] = 0
+        gmm_integrated[gmm_stone_labeled == 1] = 3 ## Stone values set to 1
+        print('Stone and fluid labels sorted...')
         
     
     # del gmm_stone_labeled
@@ -205,14 +211,14 @@ def process_pipeline_dist(params):
     # # # #     mesh_sa = mesh_surface_area(verts,faces)
     # # # #     print(f'Surface area calculated: {mesh_sa} m^2 | {time.time() - start} seconds')
     
-    # # ====== Section 3: Stone surface area estimation ======
-    # ## Stone surface area calculation
-    # print('Estimating surface area (6-conn.)...')
-    # start = time.time()
-    # surface_area_mm2 = estimate_surface_area(gmm_integrated,label=3,vox_size=voxel_size)
+    # ====== Section 3: Stone surface area estimation ======
+    ## Stone surface area calculation
+    print('Estimating surface area (6-conn.)...')
+    start = time.time()
+    surface_area_mm2 = estimate_surface_area(gmm_integrated,label=3,vox_size=voxel_size)
     
-    # with open(log_path,'a') as f:
-    #     f.write(f'\nEstimated surface area (6-conn.): {time.time() - start} seconds')
+    with open(log_path,'a') as f:
+        f.write(f'\nEstimated surface area (6-conn.): {time.time() - start} seconds')
     
     
     # # ====== Section 4: Labeled data validation and visualization ======
@@ -225,13 +231,13 @@ def process_pipeline_dist(params):
     
     # # ====== Section 5: Write labeled data to tiff output ======
     
-    # # print(f'Writing to path: {seg_dir_update}')
-    # # start = time.time()
-    # # write_labels_dask(gmm_integrated,seg_dir_update,z_start,z_end,prefix=f'{stone_id}_labels_',cores = None)
-    # # with open(log_path,'a') as f:
-    # #     f.write(f'\nTime to write labels: {time.time() - start} seconds\n\n')
-    # #     f.write(f'\nTotal time: {time.time() - total_start}')
+    print(f'Writing to path: {seg_dir_update}')
+    start = time.time()
+    write_labels_dask(gmm_integrated,seg_dir_update,z_list,prefix=f'/{stone_id}_labels_',cores = None)
+    with open(log_path,'a') as f:
+        f.write(f'\nTime to write labels: {time.time() - start} seconds\n\n')
+        f.write(f'\nTotal time: {time.time() - total_start}')
 
 
-    return 0
+    return surface_area_mm2
     

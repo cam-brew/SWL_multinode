@@ -1,0 +1,7 @@
+Starting script
+Loading conda
+Conda activated
+/home/esrf/cameron15a/miniforge3/envs/ks_seg_dask/bin/python
+Python 3.10.18
+Launching script
+Starting job on hpc3-[2604,2701],hpc5-[0504,0601,0701-0702],hpc6-[35,37]

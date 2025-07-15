@@ -1,6 +1,6 @@
 #!/bin/bash
-#SBATCH --nodes=1
-#SBATCH --ntasks=1
+#SBATCH --nodes=8
+#SBATCH --ntasks=8
 #SBATCH --partition=nice
 #SBATCH --nodelist=hpc7-[62-65,01-04],hpc6-[06-08,32-33,35-40],hpc3-[2103,2604,2701-2704,2801-2804,2901-2902],hpc5-[0504,0601,0701-0702]
 #SBATCH --mem=0

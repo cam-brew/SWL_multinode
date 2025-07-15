@@ -89,10 +89,11 @@ def test_iso_dask(vol, kern_size=7):
         mask2d = mask2d[0]
 
         if not np.any(mask2d):
-            print(f'Empty slice')
+            print(f'Empty slice caught on circ mask')
             binary = np.zeros(slice2d,dtype=np.uint8)
             blurred = gaussian_filter(slice2d,sigma=(kern_size,kern_size))
             return blurred[np.newaxis, :, :], binary[np.newaxis, :, :]
+        
         
         blurred = gaussian_filter(slice2d, sigma=(kern_size, kern_size))
         t = threshold_otsu(blurred[mask2d])
@@ -102,7 +103,9 @@ def test_iso_dask(vol, kern_size=7):
         
         binary = binary_closing(binary)
         binary = binary_fill_holes(binary)
-
+        if np.unique(binary[mask2d]).size == 1:
+            print(f'Empty caught on unique mask')
+            binary = np.zeros(slice2d.shape,dtype=np.uint8)
         # print(f'Unique elements {np.unique(binary).size}')
         # if np.unique(binary).size == 1:
         #     print(f'Empty slice detected')
@@ -187,11 +190,12 @@ def main():
     tomos[mask_np == 1] = tomos_he[mask_np == 1]
     
     for i in range(len(blur)):
-        fig,ax = plt.subplots(1,3)
-        ax[0].imshow(blur_np[i])
-        ax[1].imshow(mask_np[i])
-        ax[2].imshow(tomos[i])
-        plt.show()
+        if i == 0:
+            fig,ax = plt.subplots(1,3)
+            ax[0].imshow(blur_np[i])
+            ax[1].imshow(mask_np[i])
+            ax[2].imshow(tomos[i])
+            plt.show()
     
 
     # for i,slice in enumerate(tomos):

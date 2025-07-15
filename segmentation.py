@@ -72,6 +72,15 @@ def gaussian_mix_dask(tomo_stack, mask_stack, n_classes=2, confidence_threshold=
     print('Inserting into full volume...')
     # Step 6: Insert into volume
     gmm_labels = np.full(tomo_stack.shape, -1, dtype=np.int8)
-    gmm_labels[mask_stack] = sorted_labels
+    flat_mask = mask_stack.astype(bool).ravel()
+    
+    if sorted_labels.shape[0] != flat_mask.sum():
+        raise ValueError(f'Mismatch: {sorted_labels.shape[0]} labels but {flat_mask.sum()} mask voxels')
+    
+    flat_output = gmm_labels.ravel()
+    flat_output[flat_mask] = sorted_labels
+    
+    gmm_labels = flat_output.reshape(tomo_stack.shape)
+
 
     return gmm_labels, gmm

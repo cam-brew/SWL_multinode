@@ -1,0 +1,2 @@
+Node 6 is utilizing 64 cores
+Processing 344 slices including [0, 8, 14, 18, 24, 28, 34, 40, 44, 50] ending with /data/visitor/me1663/id19/20240227/PROCESSED_DATA/Real_05_01/delta_beta_150/Reconstruction_16bit_dff_s32_v2/Real_05_01_0001_16bit_vol/Real_05_01_0001_16bit_vol_001846.tiff
