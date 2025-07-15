@@ -157,7 +157,7 @@ def process_pipeline_dist(params):
     
     ## First pass separates solid and fluid
     start = time.time()
-    gmm_stone_labeled,_ = gaussian_mix_dask(smooth.compute(),mask.compute(),n_classes=2)
+    gmm_stone_labeled,_ = gaussian_mix_dask(smooth,mask,n_classes=2)
     with open(log_path,'a') as f:
         f.write(f'\nSolid segmentation: {time.time() - start} seconds')
 
