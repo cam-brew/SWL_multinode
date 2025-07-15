@@ -81,8 +81,12 @@ def test_iso_dask(vol, blur_kern_size = 3, mask_kern_size = 30):
     print(f'Valid mask')
 
     # Compute global mean of valid voxels and fill NaNs
-    mean_val = vol_dask[valid_mask].mean().compute()
-    vol_filled = da.where(valid_mask, vol_dask, mean_val)
+
+    # mean_val = da.nanmean(vol_dask).compute()
+
+    print(f'Filling nans with mean vals')
+    vol_filled = da.where(~da.isnan(vol_dask),vol_dask,0)
+    valid_mask = ~da.isnan(vol_dask)
     print(f'Vol filled')
 
     # --- Define a slice processing function ---

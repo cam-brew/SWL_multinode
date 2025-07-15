@@ -1,0 +1,35 @@
+Starting script
+Loading conda
+Conda activated
+/home/esrf/cameron15a/miniforge3/envs/ks_seg_dask/bin/python
+Python 3.10.18
+Launching script
+Starting job on hpc3-[2103-2104]
+Metadata from /home/esrf/cameron15a/Desktop/python/inputs/Real_05_01/seg_param_0002.txt
+Processing Stone Real_05_01_0002
+Worker 0 ready
+Clearing directories in /data/visitor/me1663/id19/20240227/SEGMENTATION/Real_05_01_multinode/labels/Real_05_01_0002
+27 [28, 28]
+Reading 14 files using 28 cores
+Sample shape and type: (2563, 2563) uint16
+Worker 1 ready
+Reading 13 files using 28 cores
+Sample shape and type: (2563, 2563) uint16
+Worker 1 rescaling histogram
+Worker 1 isolating foreground
+Valid mask
+Filling nans with mean vals
+Vol filled
+Setting blur dask
+Setting mask dask
+Masking blur
+Worker 1 gaussian complete
+Worker 0 rescaling histogram
+Worker 0 isolating foreground
+Valid mask
+Filling nans with mean vals
+Vol filled
+Setting blur dask
+Setting mask dask
+Masking blur
+Worker 0 gaussian complete
