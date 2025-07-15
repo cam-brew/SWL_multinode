@@ -48,5 +48,5 @@ def estimate_surface_area(segmented,label=1,vox_size=1.0e-3,conn=6):
     else:
         print(f'Surface area calculation could not be completed. Choose 6-connectivity or render surface.')
         
-    return surface_area_mm2
+    return surface_area_mm2, exposed_faces.sum()
     

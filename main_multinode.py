@@ -4,6 +4,7 @@ import psutil
 from mpi4py import MPI
 from pipeline import process_pipeline_dist
 from get_io import get_user_input
+from pathlib import Path
 
 def main():
     comm = MPI.COMM_WORLD
@@ -11,13 +12,18 @@ def main():
     rank = comm.Get_rank()
 
     if rank==0:
+        
+        param_path = '/home/esrf/cameron15a/Desktop/python/inputs/Real_05_01/seg_param_0002.txt'
+        id_details, task_settings = get_user_input(param_path)
 
-        id_details, task_settings = get_user_input('/home/esrf/cameron15a/Desktop/python/inputs/Real_05_01/seg_params_multinode.txt')
+        print(f'Metadata from {param_path}')
+        
         
         
         stone_ids,voxel_sizes,end_slices,skip_intervals = id_details
         gen_mesh,air_water_seg,animate,num_classes = task_settings
 
+        print(f'Processing Stone {stone_ids[rank]}')
         
         root_dir = '/data/visitor/me1663/id19/20240227/'
         tomo_dir = root_dir + f'PROCESSED_DATA/{stone_ids[rank][:10]}/delta_beta_150/Reconstruction_16bit_dff_s32_v2/{stone_ids[rank]}_16bit_vol/'
@@ -62,7 +68,11 @@ def main():
     total_SA_mm2 = comm.reduce(surface_area_mm2,op=MPI.SUM,root=0)
 
     if rank == 0:
-         print(f'Total surface area (mm^2): {total_SA_mm2}')
+         for i in stone_ids:
+             
+            with open(Path(seg_dir).parent / 'data' / f'{stone_ids[i]}_data.txt') as f:
+                f.write(f'Total measured surface area(mm^2) {total_SA_mm2}')
+            print(f'Total surface area (mm^2): {total_SA_mm2}')
 
 if __name__ == '__main__':
     

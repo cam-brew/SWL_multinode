@@ -1,14 +1,8 @@
-import pickle
-import multiprocessing
 import numpy as np
-import time
-import os
 import psutil
 import dask.array as da
-import dask
 
-from concurrent.futures import ProcessPoolExecutor
-from monitor_performance import setup_logger
+
 from sklearn.mixture import GaussianMixture
 
 
@@ -31,8 +25,8 @@ def gaussian_mix_dask(tomo_stack, mask_stack, n_classes=2, confidence_threshold=
     Dask-optimized version of GMM segmentation
     """
     # Flatten vals
-    print(f'Tomo shape: {tomo_stack.shape}')
-    print(f'Mask shape: {mask_stack.shape}')
+    print(f'Tomo empty shape: {len(mask_stack == 1)}')
+    print(f'Mask empty: {len(tomo_stack != np.nan)}')
     masked_vals = np.where(mask_stack.astype(bool),tomo_stack,np.nan)
     values = masked_vals[~np.isnan(masked_vals)].reshape(-1,1)
     N = values.shape[0]

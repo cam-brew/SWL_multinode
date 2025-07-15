@@ -6,10 +6,10 @@ import psutil
 import numpy as np
 import tifffile
 import time
-from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor
+
 from pathlib import Path
 from masking import hist_stretch, isolate_foreground
-from dask.delayed import delayed
+
 
 """
     I/O functions are defined by:
@@ -58,44 +58,55 @@ def get_metadata(tomo_dir):
     return f_names,sample.shape,sample.dtype
 
 
+def safe_read(f):
+    try:
+        return tifffile.imread(f)
+    except Exception as e:
+        print(f'Failed to read{f}: e')
+        raise
 
 
 def read_tomos_dask(files,cores = None):
+    dask.config.set(scheduler='processes')
+
     if cores == None:
         cores = psutil.cpu_count(logical=True)
     print(f'Reading {len(files)} files using {cores} cores')
 
     sample = tifffile.imread(files[0])
+    print(f'Sample shape and type: {sample.shape} {sample.dtype}')
     stack = da.stack([
-        da.from_delayed(dask.delayed(tifffile.imread)(f),
+        da.from_delayed(dask.delayed(safe_read)(f),
         shape = sample.shape,
         dtype=sample.dtype)
         for f in files
     ])
 
+    # write_labels_dask(stack.compute(),'/data/visitor/me1663/id19/20240227/SEGMENTATION/Real_05_01_multinode/labels/testing/',range(0,stack.shape[0]),prefix='raw_',dtype=stack.dtype)
+
     return stack
     
     
 
-def mask_and_stretch(stack,cores=None,stretch=True):
-    if cores ==None:
-        cores = psutil.cpu_count(logical=True)
-    print(f'Masking dataset...')
-    # Mask dataset
-    start = time.time()
-    mask_stack = stack.map_blocks(isolate_foreground,dtype=bool)
-    masks = mask_stack.compute(n_workers=cores,n_threads=1)
-    print(f'Masks computed in {time.time() - start:.2f} seconds')
+# def mask_and_stretch(stack,cores=None,stretch=True):
+#     if cores ==None:
+#         cores = psutil.cpu_count(logical=True)
+#     print(f'Masking dataset...')
+#     # Mask dataset
+#     start = time.time()
+#     mask_stack = stack.map_blocks(isolate_foreground,dtype=bool)
+#     masks = mask_stack.compute(n_workers=cores,n_threads=1)
+#     print(f'Masks computed in {time.time() - start:.2f} seconds')
 
-    if stretch == True:
-        print(f'Stretching histogram...')
-        # Stretch dataset
-        start = time.time()
-        stretch_stack = da.map_blocks(hist_stretch,stack,dtype=stack.dtype)
-        stack = stretch_stack.compute(n_workers=cores,n_thread=1)
-        print(f'Histogram stretched in {time.time() - start} seconds')
+#     if stretch == True:
+#         print(f'Stretching histogram...')
+#         # Stretch dataset
+#         start = time.time()
+#         stretch_stack = da.map_blocks(hist_stretch,stack,dtype=stack.dtype)
+#         stack = stretch_stack.compute(n_workers=cores,n_thread=1)
+#         print(f'Histogram stretched in {time.time() - start} seconds')
 
-    return stack,masks
+#     return stack,masks
 
 
 def clear_dir(dir):
@@ -119,7 +130,7 @@ def write_labels_dask(label_stack, output_dir, indices, prefix='label_', dtype=n
     for i in range(len(indices)):
         slice_data = label_stack[i]
         out_path = output_dir + f'{prefix}{indices[i]:05d}.tif'
-        task = delayed(_save_tiff)(slice_data,out_path)
+        task = dask.delayed(_save_tiff)(slice_data,out_path)
         delayed_tasks.append(task)
 
     dask.compute(*delayed_tasks)

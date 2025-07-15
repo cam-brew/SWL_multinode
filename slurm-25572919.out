@@ -5,3 +5,2578 @@ Conda activated
 Python 3.10.18
 Launching script
 Starting job on hpc3-[2604,2701],hpc5-[0504,0601,0701-0702],hpc6-[35,37]
+Worker 6 ready
+Reading 344 files using 64 cores
+Worker 6 rescaling histogram
+Performing histogram EQ
+Length of nan in hist eq: 344
+Worker 6 isolating foreground
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Slice 0 max: 0
+Slice 1 max: 0
+Slice 2 max: 0
+Slice 3 max: 0
+Slice 4 max: 0
+Slice 5 max: 0
+Slice 6 max: 0
+Slice 7 max: 0
+Slice 8 max: 0
+Slice 9 max: 0
+Slice 10 max: 0
+Slice 11 max: 0
+Slice 12 max: 0
+Slice 13 max: 0
+Slice 14 max: 0
+Slice 15 max: 0
+Slice 16 max: 0
+Slice 17 max: 0
+Slice 18 max: 0
+Slice 19 max: 0
+Slice 20 max: 0
+Slice 21 max: 0
+Slice 22 max: 0
+Slice 23 max: 0
+Slice 24 max: 0
+Slice 25 max: 0
+Slice 26 max: 0
+Slice 27 max: 0
+Slice 28 max: 0
+Slice 29 max: 0
+Slice 30 max: 0
+Slice 31 max: 0
+Slice 32 max: 0
+Slice 33 max: 0
+Slice 34 max: 0
+Slice 35 max: 0
+Slice 36 max: 0
+Slice 37 max: 0
+Slice 38 max: 0
+Slice 39 max: 0
+Slice 40 max: 0
+Slice 41 max: 0
+Slice 42 max: 0
+Slice 43 max: 0
+Slice 44 max: 0
+Slice 45 max: 0
+Slice 46 max: 0
+Slice 47 max: 0
+Slice 48 max: 0
+Slice 49 max: 0
+Slice 50 max: 0
+Slice 51 max: 0
+Slice 52 max: 0
+Slice 53 max: 0
+Slice 54 max: 0
+Slice 55 max: 0
+Slice 56 max: 0
+Slice 57 max: 0
+Slice 58 max: 0
+Slice 59 max: 0
+Slice 60 max: 0
+Slice 61 max: 0
+Slice 62 max: 0
+Slice 63 max: 0
+Slice 64 max: 0
+Slice 65 max: 0
+Slice 66 max: 0
+Slice 67 max: 0
+Slice 68 max: 0
+Slice 69 max: 0
+Slice 70 max: 0
+Slice 71 max: 0
+Slice 72 max: 0
+Slice 73 max: 0
+Slice 74 max: 0
+Slice 75 max: 0
+Slice 76 max: 0
+Slice 77 max: 0
+Slice 78 max: 0
+Slice 79 max: 0
+Slice 80 max: 0
+Slice 81 max: 0
+Slice 82 max: 0
+Slice 83 max: 0
+Slice 84 max: 0
+Slice 85 max: 0
+Slice 86 max: 0
+Slice 87 max: 0
+Slice 88 max: 0
+Slice 89 max: 0
+Slice 90 max: 0
+Slice 91 max: 0
+Slice 92 max: 0
+Slice 93 max: 1
+Slice 94 max: 1
+Slice 95 max: 1
+Slice 96 max: 1
+Slice 97 max: 1
+Slice 98 max: 1
+Slice 99 max: 1
+Slice 100 max: 1
+Slice 101 max: 1
+Slice 102 max: 1
+Slice 103 max: 1
+Slice 104 max: 1
+Slice 105 max: 1
+Slice 106 max: 1
+Slice 107 max: 1
+Slice 108 max: 1
+Slice 109 max: 1
+Slice 110 max: 1
+Slice 111 max: 1
+Slice 112 max: 1
+Slice 113 max: 1
+Slice 114 max: 1
+Slice 115 max: 1
+Slice 116 max: 1
+Slice 117 max: 1
+Slice 118 max: 1
+Slice 119 max: 1
+Slice 120 max: 1
+Slice 121 max: 1
+Slice 122 max: 1
+Slice 123 max: 1
+Slice 124 max: 1
+Slice 125 max: 1
+Slice 126 max: 1
+Slice 127 max: 1
+Slice 128 max: 1
+Slice 129 max: 1
+Slice 130 max: 1
+Slice 131 max: 1
+Slice 132 max: 1
+Slice 133 max: 1
+Slice 134 max: 1
+Slice 135 max: 1
+Slice 136 max: 1
+Slice 137 max: 1
+Slice 138 max: 1
+Slice 139 max: 1
+Slice 140 max: 1
+Slice 141 max: 1
+Slice 142 max: 1
+Slice 143 max: 1
+Slice 144 max: 1
+Slice 145 max: 1
+Slice 146 max: 1
+Slice 147 max: 1
+Slice 148 max: 1
+Slice 149 max: 1
+Slice 150 max: 1
+Slice 151 max: 1
+Slice 152 max: 1
+Slice 153 max: 1
+Slice 154 max: 1
+Slice 155 max: 1
+Slice 156 max: 1
+Slice 157 max: 1
+Slice 158 max: 1
+Slice 159 max: 1
+Slice 160 max: 1
+Slice 161 max: 1
+Slice 162 max: 1
+Slice 163 max: 1
+Slice 164 max: 1
+Slice 165 max: 1
+Slice 166 max: 1
+Slice 167 max: 1
+Slice 168 max: 1
+Slice 169 max: 1
+Slice 170 max: 1
+Slice 171 max: 1
+Slice 172 max: 1
+Slice 173 max: 1
+Slice 174 max: 1
+Slice 175 max: 1
+Slice 176 max: 1
+Slice 177 max: 1
+Slice 178 max: 1
+Slice 179 max: 1
+Slice 180 max: 1
+Slice 181 max: 1
+Slice 182 max: 1
+Slice 183 max: 1
+Slice 184 max: 1
+Slice 185 max: 1
+Slice 186 max: 1
+Slice 187 max: 1
+Slice 188 max: 1
+Slice 189 max: 1
+Slice 190 max: 1
+Slice 191 max: 1
+Slice 192 max: 1
+Slice 193 max: 1
+Slice 194 max: 1
+Slice 195 max: 1
+Slice 196 max: 1
+Slice 197 max: 1
+Slice 198 max: 1
+Slice 199 max: 1
+Slice 200 max: 1
+Slice 201 max: 1
+Slice 202 max: 1
+Slice 203 max: 1
+Slice 204 max: 1
+Slice 205 max: 1
+Slice 206 max: 1
+Slice 207 max: 1
+Slice 208 max: 1
+Slice 209 max: 1
+Slice 210 max: 1
+Slice 211 max: 1
+Slice 212 max: 1
+Slice 213 max: 1
+Slice 214 max: 1
+Slice 215 max: 1
+Slice 216 max: 1
+Slice 217 max: 1
+Slice 218 max: 1
+Slice 219 max: 1
+Slice 220 max: 1
+Slice 221 max: 1
+Slice 222 max: 1
+Slice 223 max: 1
+Slice 224 max: 1
+Slice 225 max: 1
+Slice 226 max: 1
+Slice 227 max: 1
+Slice 228 max: 1
+Slice 229 max: 1
+Slice 230 max: 1
+Slice 231 max: 1
+Slice 232 max: 1
+Slice 233 max: 1
+Slice 234 max: 1
+Slice 235 max: 1
+Slice 236 max: 1
+Slice 237 max: 1
+Slice 238 max: 1
+Slice 239 max: 1
+Slice 240 max: 1
+Slice 241 max: 1
+Slice 242 max: 1
+Slice 243 max: 1
+Slice 244 max: 1
+Slice 245 max: 1
+Slice 246 max: 1
+Slice 247 max: 1
+Slice 248 max: 1
+Slice 249 max: 1
+Slice 250 max: 1
+Slice 251 max: 1
+Slice 252 max: 1
+Slice 253 max: 1
+Slice 254 max: 1
+Slice 255 max: 1
+Slice 256 max: 1
+Slice 257 max: 1
+Slice 258 max: 1
+Slice 259 max: 1
+Slice 260 max: 1
+Slice 261 max: 1
+Slice 262 max: 1
+Slice 263 max: 1
+Slice 264 max: 1
+Slice 265 max: 1
+Slice 266 max: 1
+Slice 267 max: 1
+Slice 268 max: 1
+Slice 269 max: 1
+Slice 270 max: 1
+Slice 271 max: 1
+Slice 272 max: 1
+Slice 273 max: 1
+Slice 274 max: 1
+Slice 275 max: 1
+Slice 276 max: 1
+Slice 277 max: 1
+Slice 278 max: 1
+Slice 279 max: 1
+Slice 280 max: 1
+Slice 281 max: 1
+Slice 282 max: 1
+Slice 283 max: 1
+Slice 284 max: 1
+Slice 285 max: 1
+Slice 286 max: 1
+Slice 287 max: 1
+Slice 288 max: 1
+Slice 289 max: 1
+Slice 290 max: 1
+Slice 291 max: 1
+Slice 292 max: 1
+Slice 293 max: 1
+Slice 294 max: 1
+Slice 295 max: 1
+Slice 296 max: 1
+Slice 297 max: 1
+Slice 298 max: 1
+Slice 299 max: 1
+Slice 300 max: 1
+Slice 301 max: 1
+Slice 302 max: 1
+Slice 303 max: 1
+Slice 304 max: 1
+Slice 305 max: 1
+Slice 306 max: 1
+Slice 307 max: 1
+Slice 308 max: 1
+Slice 309 max: 1
+Slice 310 max: 1
+Slice 311 max: 1
+Slice 312 max: 1
+Slice 313 max: 1
+Slice 314 max: 1
+Slice 315 max: 1
+Slice 316 max: 1
+Slice 317 max: 1
+Slice 318 max: 1
+Slice 319 max: 1
+Slice 320 max: 1
+Slice 321 max: 1
+Slice 322 max: 1
+Slice 323 max: 1
+Slice 324 max: 1
+Worker 7 ready
+Reading 344 files using 64 cores
+Worker 7 rescaling histogram
+Performing histogram EQ
+Length of nan in hist eq: 344
+Worker 7 isolating foreground
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Slice 0 max: 0
+Slice 1 max: 0
+Slice 2 max: 0
+Slice 3 max: 0
+Slice 4 max: 0
+Slice 5 max: 0
+Slice 6 max: 0
+Slice 7 max: 0
+Slice 8 max: 0
+Slice 9 max: 0
+Slice 10 max: 0
+Slice 11 max: 0
+Slice 12 max: 0
+Slice 13 max: 0
+Slice 14 max: 0
+Slice 15 max: 0
+Slice 16 max: 0
+Slice 17 max: 0
+Slice 18 max: 0
+Slice 19 max: 0
+Slice 20 max: 0
+Slice 21 max: 0
+Slice 22 max: 0
+Slice 23 max: 0
+Slice 24 max: 0
+Slice 25 max: 0
+Slice 26 max: 0
+Slice 27 max: 0
+Slice 28 max: 0
+Slice 29 max: 0
+Slice 30 max: 0
+Slice 31 max: 0
+Slice 32 max: 0
+Slice 33 max: 0
+Slice 34 max: 0
+Slice 35 max: 0
+Slice 36 max: 0
+Slice 37 max: 0
+Slice 38 max: 0
+Slice 39 max: 0
+Slice 40 max: 0
+Slice 41 max: 0
+Slice 42 max: 0
+Slice 43 max: 0
+Slice 44 max: 0
+Slice 45 max: 0
+Slice 46 max: 0
+Slice 47 max: 0
+Slice 48 max: 0
+Slice 49 max: 0
+Slice 50 max: 0
+Slice 51 max: 0
+Slice 52 max: 0
+Slice 53 max: 0
+Slice 54 max: 0
+Slice 55 max: 0
+Slice 56 max: 0
+Slice 57 max: 0
+Slice 58 max: 0
+Slice 59 max: 0
+Slice 60 max: 0
+Slice 61 max: 0
+Slice 62 max: 0
+Slice 63 max: 0
+Slice 64 max: 0
+Slice 65 max: 0
+Slice 66 max: 0
+Slice 67 max: 0
+Slice 68 max: 0
+Slice 69 max: 0
+Slice 70 max: 0
+Slice 71 max: 0
+Slice 72 max: 0
+Slice 73 max: 0
+Slice 74 max: 0
+Slice 75 max: 0
+Slice 76 max: 0
+Slice 77 max: 0
+Slice 78 max: 0
+Slice 79 max: 0
+Slice 80 max: 0
+Slice 81 max: 0
+Slice 82 max: 0
+Slice 83 max: 0
+Slice 84 max: 0
+Slice 85 max: 0
+Slice 86 max: 0
+Slice 87 max: 0
+Slice 88 max: 0
+Slice 89 max: 0
+Slice 90 max: 0
+Slice 91 max: 0
+Slice 92 max: 0
+Slice 93 max: 1
+Slice 94 max: 1
+Slice 95 max: 1
+Slice 96 max: 1
+Slice 97 max: 1
+Slice 98 max: 1
+Slice 99 max: 1
+Slice 100 max: 1
+Slice 101 max: 1
+Slice 102 max: 1
+Slice 103 max: 1
+Slice 104 max: 1
+Slice 105 max: 1
+Slice 106 max: 1
+Slice 107 max: 1
+Slice 108 max: 1
+Slice 109 max: 1
+Slice 110 max: 1
+Slice 111 max: 1
+Slice 112 max: 1
+Slice 113 max: 1
+Slice 114 max: 1
+Slice 115 max: 1
+Slice 116 max: 1
+Slice 117 max: 1
+Slice 118 max: 1
+Slice 119 max: 1
+Slice 120 max: 1
+Slice 121 max: 1
+Slice 122 max: 1
+Slice 123 max: 1
+Slice 124 max: 1
+Slice 125 max: 1
+Slice 126 max: 1
+Slice 127 max: 1
+Slice 128 max: 1
+Slice 129 max: 1
+Slice 130 max: 1
+Slice 131 max: 1
+Slice 132 max: 1
+Slice 133 max: 1
+Slice 134 max: 1
+Slice 135 max: 1
+Slice 136 max: 1
+Slice 137 max: 1
+Slice 138 max: 1
+Slice 139 max: 1
+Slice 140 max: 1
+Slice 141 max: 1
+Slice 142 max: 1
+Slice 143 max: 1
+Slice 144 max: 1
+Slice 145 max: 1
+Slice 146 max: 1
+Slice 147 max: 1
+Slice 148 max: 1
+Slice 149 max: 1
+Slice 150 max: 1
+Slice 151 max: 1
+Slice 152 max: 1
+Slice 153 max: 1
+Slice 154 max: 1
+Slice 155 max: 1
+Slice 156 max: 1
+Slice 157 max: 1
+Slice 158 max: 1
+Slice 159 max: 1
+Slice 160 max: 1
+Slice 161 max: 1
+Slice 162 max: 1
+Slice 163 max: 1
+Slice 164 max: 1
+Slice 165 max: 1
+Slice 166 max: 1
+Slice 167 max: 1
+Slice 168 max: 1
+Slice 169 max: 1
+Slice 170 max: 1
+Slice 171 max: 1
+Slice 172 max: 1
+Slice 173 max: 1
+Slice 174 max: 1
+Slice 175 max: 1
+Slice 176 max: 1
+Slice 177 max: 1
+Slice 178 max: 1
+Slice 179 max: 1
+Slice 180 max: 1
+Slice 181 max: 1
+Slice 182 max: 1
+Slice 183 max: 1
+Slice 184 max: 1
+Slice 185 max: 1
+Slice 186 max: 1
+Slice 187 max: 1
+Slice 188 max: 1
+Slice 189 max: 1
+Slice 190 max: 1
+Slice 191 max: 1
+Slice 192 max: 1
+Slice 193 max: 1
+Slice 194 max: 1
+Slice 195 max: 1
+Slice 196 max: 1
+Slice 197 max: 1
+Slice 198 max: 1
+Slice 199 max: 1
+Slice 200 max: 1
+Slice 201 max: 1
+Slice 202 max: 1
+Slice 203 max: 1
+Slice 204 max: 1
+Slice 205 max: 1
+Slice 206 max: 1
+Slice 207 max: 1
+Slice 208 max: 1
+Slice 209 max: 1
+Slice 210 max: 1
+Slice 211 max: 1
+Slice 212 max: 1
+Slice 213 max: 1
+Slice 214 max: 1
+Slice 215 max: 1
+Slice 216 max: 1
+Slice 217 max: 1
+Slice 218 max: 1
+Slice 219 max: 1
+Slice 220 max: 1
+Slice 221 max: 1
+Slice 222 max: 1
+Slice 223 max: 1
+Slice 224 max: 1
+Slice 225 max: 1
+Slice 226 max: 1
+Slice 227 max: 1
+Slice 228 max: 1
+Slice 229 max: 1
+Slice 230 max: 1
+Slice 231 max: 1
+Slice 232 max: 1
+Slice 233 max: 1
+Slice 234 max: 1
+Slice 235 max: 1
+Slice 236 max: 1
+Slice 237 max: 1
+Slice 238 max: 1
+Slice 239 max: 1
+Slice 240 max: 1
+Slice 241 max: 1
+Slice 242 max: 1
+Slice 243 max: 1
+Slice 244 max: 1
+Slice 245 max: 1
+Slice 246 max: 1
+Slice 247 max: 1
+Slice 248 max: 1
+Slice 249 max: 1
+Slice 250 max: 1
+Slice 251 max: 1
+Slice 252 max: 1
+Slice 253 max: 1
+Slice 254 max: 1
+Slice 255 max: 1
+Slice 256 max: 1
+Slice 257 max: 1
+Slice 258 max: 1
+Slice 259 max: 1
+Slice 260 max: 1
+Slice 261 max: 1
+Slice 262 max: 1
+Slice 263 max: 1
+Slice 264 max: 1
+Slice 265 max: 1
+Slice 266 max: 1
+Slice 267 max: 1
+Slice 268 max: 1
+Slice 269 max: 1
+Slice 270 max: 1
+Slice 271 max: 1
+Slice 272 max: 1
+Slice 273 max: 1
+Slice 274 max: 1
+Slice 275 max: 1
+Slice 276 max: 1
+Slice 277 max: 1
+Slice 278 max: 1
+Slice 279 max: 1
+Slice 280 max: 1
+Slice 281 max: 1
+Slice 282 max: 1
+Slice 283 max: 1
+Slice 284 max: 1
+Slice 285 max: 1
+Slice 286 max: 1
+Slice 287 max: 1
+Slice 288 max: 1
+Slice 289 max: 1
+Slice 290 max: 1
+Slice 291 max: 1
+Slice 292 max: 1
+Slice 293 max: 1
+Slice 294 max: 1
+Slice 295 max: 1
+Slice 296 max: 1
+Slice 297 max: 1
+Slice 298 max: 1
+Slice 299 max: 1
+Slice 300 max: 1
+Slice 301 max: 1
+Slice 302 max: 1
+Slice 303 max: 1
+Slice 304 max: 1
+Slice 305 max: 1
+Slice 306 max: 1
+Slice 307 max: 1
+Slice 308 max: 1
+Slice 309 max: 1
+Slice 310 max: 1
+Slice 311 max: 1
+Slice 312 max: 1
+Slice 313 max: 1
+Slice 314 max: 1
+Slice 315 max: 1
+Slice 316 max: 1
+Slice 317 max: 1
+Slice 318 max: 1
+Slice 319 max: 1
+Slice 320 max: 1
+Slice 321 max: 1
+Slice 322 max: 1
+Slice 323 max: 1
+Slice 324 max: 1
+Slice 325 max: 1
+Slice 326 max: 1
+Slice 327 max: 1
+Slice 328 max: 1
+Slice 329 max: 1
+Slice 330 max: 1
+Slice 331 max: 1
+Slice 332 max: 1
+Slice 333 max: 1
+Slice 334 max: 1
+Slice 335 max: 1
+Slice 336 max: 1
+Slice 337 max: 1
+Slice 338 max: 1
+Slice 339 max: 1
+Slice 340 max: 1
+Slice 341 max: 1
+Slice 342 max: 1
+Slice 343 max: 1
+Worker 7 smoothing rescale volume
+Tomo shape: (344, 3875, 3875)
+Mask shape: (344, 3875, 3875)
+Creating dask array to write inside...
+Mapping blocks...
+Computing labels with 64 cores
+Remapping and sorting...
+Inserting into full volume...
+Stone segmentation complete...
+Segmenting fluids...
+Tomo shape: (344, 3875, 3875)
+Mask shape: (344, 3875, 3875)
+Creating dask array to write inside...
+Mapping blocks...
+Computing labels with 64 cores
+Remapping and sorting...
+Inserting into full volume...
+Sorting labels in ascending order...
+Estimating surface area (6-conn.)...
+Detected 171949328 faces.
+Slice 325 max: 1
+Slice 326 max: 1
+Slice 327 max: 1
+Slice 328 max: 1
+Slice 329 max: 1
+Slice 330 max: 1
+Slice 331 max: 1
+Slice 332 max: 1
+Slice 333 max: 1
+Slice 334 max: 1
+Slice 335 max: 1
+Slice 336 max: 1
+Slice 337 max: 1
+Slice 338 max: 1
+Slice 339 max: 1
+Slice 340 max: 1
+Slice 341 max: 1
+Slice 342 max: 1
+Slice 343 max: 1
+Worker 6 smoothing rescale volume
+Tomo shape: (344, 3875, 3875)
+Mask shape: (344, 3875, 3875)
+Creating dask array to write inside...
+Mapping blocks...
+Computing labels with 64 cores
+Remapping and sorting...
+Inserting into full volume...
+Stone segmentation complete...
+Segmenting fluids...
+Tomo shape: (344, 3875, 3875)
+Mask shape: (344, 3875, 3875)
+Creating dask array to write inside...
+Mapping blocks...
+Computing labels with 64 cores
+Remapping and sorting...
+Inserting into full volume...
+Sorting labels in ascending order...
+Estimating surface area (6-conn.)...
+Detected 173023880 faces.
+Writing to path: /data/visitor/me1663/id19/20240227/SEGMENTATION/Real_05_01_multinode/labels/test_Real_05_01_0001
+Node 7 completed in 2015.9215116500854 seconds
+Worker 5 ready
+Reading 215 files using 40 cores
+Worker 5 rescaling histogram
+Performing histogram EQ
+Length of nan in hist eq: 215
+Worker 5 isolating foreground
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Writing to path: /data/visitor/me1663/id19/20240227/SEGMENTATION/Real_05_01_multinode/labels/test_Real_05_01_0001
+Node 6 completed in 2005.4383137226105 seconds
+Worker 2 ready
+Reading 215 files using 40 cores
+Worker 2 rescaling histogram
+Performing histogram EQ
+Length of nan in hist eq: 215
+Worker 2 isolating foreground
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Worker 3 ready
+Reading 215 files using 40 cores
+Worker 3 rescaling histogram
+Performing histogram EQ
+Length of nan in hist eq: 215
+Worker 3 isolating foreground
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Worker 4 ready
+Reading 215 files using 40 cores
+Worker 4 rescaling histogram
+Performing histogram EQ
+Length of nan in hist eq: 215
+Worker 4 isolating foreground
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Worker 1 ready
+Reading 151 files using 28 cores
+Worker 1 rescaling histogram
+Performing histogram EQ
+Length of nan in hist eq: 151
+Worker 1 isolating foreground
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Worker 0 ready
+1850 [28, 28, 40, 40, 40, 40, 64, 64]
+Reading 151 files using 28 cores
+Worker 0 rescaling histogram
+Performing histogram EQ
+Length of nan in hist eq: 151
+Worker 0 isolating foreground
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Slice 0 max: 0
+Slice 1 max: 0
+Slice 2 max: 0
+Slice 3 max: 0
+Slice 4 max: 0
+Slice 5 max: 0
+Slice 6 max: 0
+Slice 7 max: 0
+Slice 8 max: 0
+Slice 9 max: 0
+Slice 10 max: 0
+Slice 11 max: 0
+Slice 12 max: 0
+Slice 13 max: 0
+Slice 14 max: 0
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Slice 0 max: 0
+Slice 1 max: 0
+Slice 2 max: 0
+Slice 3 max: 0
+Slice 4 max: 0
+Slice 5 max: 0
+Slice 6 max: 0
+Slice 7 max: 0
+Slice 8 max: 0
+Slice 9 max: 0
+Slice 10 max: 0
+Slice 11 max: 0
+Slice 12 max: 0
+Slice 13 max: 0
+Slice 14 max: 0
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Slice 0 max: 0
+Slice 1 max: 0
+Slice 2 max: 0
+Slice 3 max: 0
+Slice 4 max: 0
+Slice 5 max: 0
+Slice 6 max: 0
+Slice 7 max: 0
+Slice 8 max: 0
+Slice 9 max: 0
+Slice 10 max: 0
+Slice 11 max: 0
+Slice 12 max: 0
+Slice 13 max: 0
+Slice 14 max: 0
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Slice 0 max: 0
+Slice 1 max: 0
+Slice 2 max: 0
+Slice 3 max: 0
+Slice 4 max: 0
+Slice 5 max: 0
+Slice 6 max: 0
+Slice 7 max: 0
+Slice 8 max: 0
+Slice 9 max: 0
+Slice 10 max: 0
+Slice 11 max: 0
+Slice 12 max: 0
+Slice 13 max: 0
+Slice 14 max: 0
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Slice 0 max: 0
+Slice 1 max: 0
+Slice 2 max: 0
+Slice 3 max: 0
+Slice 4 max: 0
+Slice 5 max: 0
+Slice 6 max: 0
+Slice 7 max: 0
+Slice 8 max: 0
+Slice 9 max: 0
+Slice 10 max: 0
+Slice 11 max: 0
+Slice 12 max: 0
+Slice 13 max: 0
+Slice 14 max: 0
+Slice 15 max: 0
+Slice 16 max: 0
+Slice 17 max: 0
+Slice 18 max: 0
+Slice 19 max: 0
+Slice 20 max: 0
+Slice 21 max: 0
+Slice 22 max: 0
+Slice 23 max: 0
+Slice 24 max: 0
+Slice 25 max: 0
+Slice 26 max: 0
+Slice 27 max: 0
+Slice 28 max: 0
+Slice 29 max: 0
+Slice 30 max: 0
+Slice 31 max: 0
+Slice 32 max: 0
+Slice 33 max: 0
+Slice 34 max: 0
+Slice 35 max: 0
+Slice 36 max: 0
+Slice 37 max: 0
+Slice 38 max: 0
+Slice 39 max: 0
+Slice 40 max: 1
+Slice 41 max: 1
+Slice 42 max: 1
+Slice 43 max: 1
+Slice 44 max: 1
+Slice 45 max: 1
+Slice 46 max: 1
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Empty caught on unique mask
+Slice 0 max: 0
+Slice 1 max: 0
+Slice 2 max: 0
+Slice 3 max: 0
+Slice 4 max: 0
+Slice 5 max: 0
+Slice 6 max: 0
+Slice 7 max: 0
+Slice 8 max: 0
+Slice 9 max: 0
+Slice 10 max: 0
+Slice 11 max: 0
+Slice 12 max: 0
+Slice 13 max: 0
+Slice 14 max: 0
+Slice 15 max: 0
+Slice 16 max: 0
+Slice 17 max: 0
+Slice 18 max: 0
+Slice 19 max: 0
+Slice 20 max: 0
+Slice 21 max: 0
+Slice 22 max: 0
+Slice 23 max: 0
+Slice 24 max: 0
+Slice 25 max: 0
+Slice 26 max: 0
+Slice 27 max: 0
+Slice 28 max: 0
+Slice 29 max: 0
+Slice 30 max: 0
+Slice 31 max: 0
+Slice 32 max: 0
+Slice 33 max: 0
+Slice 34 max: 0
+Slice 35 max: 0
+Slice 36 max: 0
+Slice 37 max: 0
+Slice 38 max: 0
+Slice 39 max: 0
+Slice 40 max: 0
+Slice 41 max: 1
+Slice 42 max: 1
+Slice 15 max: 0
+Slice 16 max: 0
+Slice 17 max: 0
+Slice 18 max: 0
+Slice 19 max: 0
+Slice 20 max: 0
+Slice 21 max: 0
+Slice 22 max: 0
+Slice 23 max: 0
+Slice 24 max: 0
+Slice 25 max: 0
+Slice 26 max: 0
+Slice 27 max: 0
+Slice 28 max: 0
+Slice 29 max: 0
+Slice 30 max: 0
+Slice 31 max: 0
+Slice 32 max: 0
+Slice 33 max: 0
+Slice 34 max: 0
+Slice 35 max: 0
+Slice 36 max: 0
+Slice 37 max: 0
+Slice 38 max: 0
+Slice 39 max: 0
+Slice 40 max: 0
+Slice 41 max: 0
+Slice 42 max: 0
+Slice 43 max: 0
+Slice 44 max: 0
+Slice 45 max: 0
+Slice 46 max: 0
+Slice 47 max: 0
+Slice 48 max: 0
+Slice 49 max: 0
+Slice 50 max: 0
+Slice 51 max: 0
+Slice 52 max: 0
+Slice 53 max: 0
+Slice 54 max: 0
+Slice 55 max: 0
+Slice 56 max: 0
+Slice 57 max: 0
+Slice 58 max: 1
+Slice 59 max: 1
+Slice 60 max: 1
+Slice 61 max: 1
+Slice 62 max: 1
+Slice 63 max: 1
+Slice 64 max: 1
+Slice 65 max: 1
+Slice 66 max: 1
+Slice 67 max: 1
+Slice 68 max: 1
+Slice 69 max: 1
+Slice 70 max: 1
+Slice 71 max: 1
+Slice 72 max: 1
+Slice 73 max: 1
+Slice 74 max: 1
+Slice 75 max: 1
+Slice 76 max: 1
+Slice 77 max: 1
+Slice 15 max: 0
+Slice 16 max: 0
+Slice 17 max: 0
+Slice 18 max: 0
+Slice 19 max: 0
+Slice 20 max: 0
+Slice 21 max: 0
+Slice 22 max: 0
+Slice 23 max: 0
+Slice 24 max: 0
+Slice 25 max: 0
+Slice 26 max: 0
+Slice 27 max: 0
+Slice 28 max: 0
+Slice 29 max: 0
+Slice 30 max: 0
+Slice 31 max: 0
+Slice 32 max: 0
+Slice 33 max: 0
+Slice 34 max: 0
+Slice 35 max: 0
+Slice 36 max: 0
+Slice 37 max: 0
+Slice 38 max: 0
+Slice 39 max: 0
+Slice 40 max: 0
+Slice 41 max: 0
+Slice 42 max: 0
+Slice 43 max: 0
+Slice 44 max: 0
+Slice 45 max: 0
+Slice 46 max: 0
+Slice 47 max: 0
+Slice 48 max: 0
+Slice 49 max: 0
+Slice 50 max: 0
+Slice 51 max: 0
+Slice 52 max: 0
+Slice 53 max: 0
+Slice 54 max: 0
+Slice 55 max: 0
+Slice 56 max: 0
+Slice 57 max: 0
+Slice 58 max: 1
+Slice 59 max: 1
+Slice 60 max: 1
+Slice 61 max: 1
+Slice 62 max: 1
+Slice 63 max: 1
+Slice 64 max: 1
+Slice 65 max: 1
+Slice 66 max: 1
+Slice 67 max: 1
+Slice 68 max: 1
+Slice 69 max: 1
+Slice 70 max: 1
+Slice 71 max: 1
+Slice 72 max: 1
+Slice 73 max: 1
+Slice 74 max: 1
+Slice 75 max: 1
+Slice 76 max: 1
+Slice 77 max: 1
+Slice 15 max: 0
+Slice 16 max: 0
+Slice 17 max: 0
+Slice 18 max: 0
+Slice 19 max: 0
+Slice 20 max: 0
+Slice 21 max: 0
+Slice 22 max: 0
+Slice 23 max: 0
+Slice 24 max: 0
+Slice 25 max: 0
+Slice 26 max: 0
+Slice 27 max: 0
+Slice 28 max: 0
+Slice 29 max: 0
+Slice 30 max: 0
+Slice 31 max: 0
+Slice 32 max: 0
+Slice 33 max: 0
+Slice 34 max: 0
+Slice 35 max: 0
+Slice 36 max: 0
+Slice 37 max: 0
+Slice 38 max: 0
+Slice 39 max: 0
+Slice 40 max: 0
+Slice 41 max: 0
+Slice 42 max: 0
+Slice 43 max: 0
+Slice 44 max: 0
+Slice 45 max: 0
+Slice 46 max: 0
+Slice 47 max: 0
+Slice 48 max: 0
+Slice 49 max: 0
+Slice 50 max: 0
+Slice 51 max: 0
+Slice 52 max: 0
+Slice 53 max: 0
+Slice 54 max: 0
+Slice 55 max: 0
+Slice 56 max: 0
+Slice 57 max: 0
+Slice 58 max: 1
+Slice 59 max: 1
+Slice 60 max: 1
+Slice 61 max: 1
+Slice 62 max: 1
+Slice 63 max: 1
+Slice 64 max: 1
+Slice 65 max: 1
+Slice 66 max: 1
+Slice 67 max: 1
+Slice 68 max: 1
+Slice 69 max: 1
+Slice 70 max: 1
+Slice 71 max: 1
+Slice 72 max: 1
+Slice 73 max: 1
+Slice 74 max: 1
+Slice 75 max: 1
+Slice 76 max: 1
+Slice 77 max: 1
+Slice 15 max: 0
+Slice 16 max: 0
+Slice 17 max: 0
+Slice 18 max: 0
+Slice 19 max: 0
+Slice 20 max: 0
+Slice 21 max: 0
+Slice 22 max: 0
+Slice 23 max: 0
+Slice 24 max: 0
+Slice 25 max: 0
+Slice 26 max: 0
+Slice 27 max: 0
+Slice 28 max: 0
+Slice 29 max: 0
+Slice 30 max: 0
+Slice 31 max: 0
+Slice 32 max: 0
+Slice 33 max: 0
+Slice 34 max: 0
+Slice 35 max: 0
+Slice 36 max: 0
+Slice 37 max: 0
+Slice 38 max: 0
+Slice 39 max: 0
+Slice 40 max: 0
+Slice 41 max: 0
+Slice 42 max: 0
+Slice 43 max: 0
+Slice 44 max: 0
+Slice 45 max: 0
+Slice 46 max: 0
+Slice 47 max: 0
+Slice 48 max: 0
+Slice 49 max: 0
+Slice 50 max: 0
+Slice 51 max: 0
+Slice 52 max: 0
+Slice 53 max: 0
+Slice 54 max: 0
+Slice 55 max: 0
+Slice 56 max: 0
+Slice 57 max: 0
+Slice 58 max: 1
+Slice 59 max: 1
+Slice 60 max: 1
+Slice 61 max: 1
+Slice 62 max: 1
+Slice 63 max: 1
+Slice 64 max: 1
+Slice 65 max: 1
+Slice 66 max: 1
+Slice 67 max: 1
+Slice 68 max: 1
+Slice 69 max: 1
+Slice 70 max: 1
+Slice 71 max: 1
+Slice 72 max: 1
+Slice 73 max: 1
+Slice 74 max: 1
+Slice 75 max: 1
+Slice 76 max: 1
+Slice 77 max: 1
+Slice 47 max: 1
+Slice 48 max: 1
+Slice 49 max: 1
+Slice 50 max: 1
+Slice 51 max: 1
+Slice 52 max: 1
+Slice 53 max: 1
+Slice 54 max: 1
+Slice 55 max: 1
+Slice 56 max: 1
+Slice 57 max: 1
+Slice 58 max: 1
+Slice 59 max: 1
+Slice 60 max: 1
+Slice 61 max: 1
+Slice 62 max: 1
+Slice 63 max: 1
+Slice 64 max: 1
+Slice 65 max: 1
+Slice 66 max: 1
+Slice 67 max: 1
+Slice 68 max: 1
+Slice 69 max: 1
+Slice 70 max: 1
+Slice 71 max: 1
+Slice 72 max: 1
+Slice 73 max: 1
+Slice 74 max: 1
+Slice 75 max: 1
+Slice 76 max: 1
+Slice 77 max: 1
+Slice 78 max: 1
+Slice 79 max: 1
+Slice 80 max: 1
+Slice 81 max: 1
+Slice 82 max: 1
+Slice 83 max: 1
+Slice 84 max: 1
+Slice 85 max: 1
+Slice 86 max: 1
+Slice 87 max: 1
+Slice 88 max: 1
+Slice 89 max: 1
+Slice 90 max: 1
+Slice 91 max: 1
+Slice 92 max: 1
+Slice 93 max: 1
+Slice 94 max: 1
+Slice 95 max: 1
+Slice 96 max: 1
+Slice 97 max: 1
+Slice 98 max: 1
+Slice 99 max: 1
+Slice 100 max: 1
+Slice 101 max: 1
+Slice 102 max: 1
+Slice 103 max: 1
+Slice 104 max: 1
+Slice 105 max: 1
+Slice 106 max: 1
+Slice 107 max: 1
+Slice 108 max: 1
+Slice 109 max: 1
+Slice 43 max: 1
+Slice 44 max: 1
+Slice 45 max: 1
+Slice 46 max: 1
+Slice 47 max: 1
+Slice 48 max: 1
+Slice 49 max: 1
+Slice 50 max: 1
+Slice 51 max: 1
+Slice 52 max: 1
+Slice 53 max: 1
+Slice 54 max: 1
+Slice 55 max: 1
+Slice 56 max: 1
+Slice 57 max: 1
+Slice 58 max: 1
+Slice 59 max: 1
+Slice 60 max: 1
+Slice 61 max: 1
+Slice 62 max: 1
+Slice 63 max: 1
+Slice 64 max: 1
+Slice 65 max: 1
+Slice 66 max: 1
+Slice 67 max: 1
+Slice 68 max: 1
+Slice 69 max: 1
+Slice 70 max: 1
+Slice 71 max: 1
+Slice 72 max: 1
+Slice 73 max: 1
+Slice 74 max: 1
+Slice 75 max: 1
+Slice 76 max: 1
+Slice 77 max: 1
+Slice 78 max: 1
+Slice 79 max: 1
+Slice 80 max: 1
+Slice 81 max: 1
+Slice 82 max: 1
+Slice 83 max: 1
+Slice 84 max: 1
+Slice 85 max: 1
+Slice 86 max: 1
+Slice 87 max: 1
+Slice 88 max: 1
+Slice 89 max: 1
+Slice 90 max: 1
+Slice 91 max: 1
+Slice 92 max: 1
+Slice 93 max: 1
+Slice 94 max: 1
+Slice 95 max: 1
+Slice 96 max: 1
+Slice 97 max: 1
+Slice 98 max: 1
+Slice 99 max: 1
+Slice 100 max: 1
+Slice 101 max: 1
+Slice 102 max: 1
+Slice 103 max: 1
+Slice 104 max: 1
+Slice 105 max: 1
+Slice 78 max: 1
+Slice 79 max: 1
+Slice 80 max: 1
+Slice 81 max: 1
+Slice 82 max: 1
+Slice 83 max: 1
+Slice 84 max: 1
+Slice 85 max: 1
+Slice 86 max: 1
+Slice 87 max: 1
+Slice 88 max: 1
+Slice 89 max: 1
+Slice 90 max: 1
+Slice 91 max: 1
+Slice 92 max: 1
+Slice 93 max: 1
+Slice 94 max: 1
+Slice 95 max: 1
+Slice 96 max: 1
+Slice 97 max: 1
+Slice 98 max: 1
+Slice 99 max: 1
+Slice 100 max: 1
+Slice 101 max: 1
+Slice 102 max: 1
+Slice 103 max: 1
+Slice 104 max: 1
+Slice 105 max: 1
+Slice 106 max: 1
+Slice 107 max: 1
+Slice 108 max: 1
+Slice 109 max: 1
+Slice 110 max: 1
+Slice 111 max: 1
+Slice 112 max: 1
+Slice 113 max: 1
+Slice 114 max: 1
+Slice 115 max: 1
+Slice 116 max: 1
+Slice 117 max: 1
+Slice 118 max: 1
+Slice 119 max: 1
+Slice 120 max: 1
+Slice 121 max: 1
+Slice 122 max: 1
+Slice 123 max: 1
+Slice 124 max: 1
+Slice 125 max: 1
+Slice 126 max: 1
+Slice 127 max: 1
+Slice 128 max: 1
+Slice 129 max: 1
+Slice 130 max: 1
+Slice 131 max: 1
+Slice 132 max: 1
+Slice 133 max: 1
+Slice 134 max: 1
+Slice 135 max: 1
+Slice 136 max: 1
+Slice 137 max: 1
+Slice 138 max: 1
+Slice 78 max: 1
+Slice 79 max: 1
+Slice 80 max: 1
+Slice 81 max: 1
+Slice 82 max: 1
+Slice 83 max: 1
+Slice 84 max: 1
+Slice 85 max: 1
+Slice 86 max: 1
+Slice 87 max: 1
+Slice 88 max: 1
+Slice 89 max: 1
+Slice 90 max: 1
+Slice 91 max: 1
+Slice 92 max: 1
+Slice 93 max: 1
+Slice 94 max: 1
+Slice 95 max: 1
+Slice 96 max: 1
+Slice 97 max: 1
+Slice 98 max: 1
+Slice 99 max: 1
+Slice 100 max: 1
+Slice 101 max: 1
+Slice 102 max: 1
+Slice 103 max: 1
+Slice 104 max: 1
+Slice 105 max: 1
+Slice 106 max: 1
+Slice 107 max: 1
+Slice 108 max: 1
+Slice 109 max: 1
+Slice 110 max: 1
+Slice 111 max: 1
+Slice 112 max: 1
+Slice 113 max: 1
+Slice 114 max: 1
+Slice 115 max: 1
+Slice 116 max: 1
+Slice 117 max: 1
+Slice 118 max: 1
+Slice 119 max: 1
+Slice 120 max: 1
+Slice 121 max: 1
+Slice 122 max: 1
+Slice 123 max: 1
+Slice 124 max: 1
+Slice 125 max: 1
+Slice 126 max: 1
+Slice 127 max: 1
+Slice 128 max: 1
+Slice 129 max: 1
+Slice 130 max: 1
+Slice 131 max: 1
+Slice 132 max: 1
+Slice 133 max: 1
+Slice 134 max: 1
+Slice 135 max: 1
+Slice 136 max: 1
+Slice 137 max: 1
+Slice 138 max: 1
+Slice 78 max: 1
+Slice 79 max: 1
+Slice 80 max: 1
+Slice 81 max: 1
+Slice 82 max: 1
+Slice 83 max: 1
+Slice 84 max: 1
+Slice 85 max: 1
+Slice 86 max: 1
+Slice 87 max: 1
+Slice 88 max: 1
+Slice 89 max: 1
+Slice 90 max: 1
+Slice 91 max: 1
+Slice 92 max: 1
+Slice 93 max: 1
+Slice 94 max: 1
+Slice 95 max: 1
+Slice 96 max: 1
+Slice 97 max: 1
+Slice 98 max: 1
+Slice 99 max: 1
+Slice 100 max: 1
+Slice 101 max: 1
+Slice 102 max: 1
+Slice 103 max: 1
+Slice 104 max: 1
+Slice 105 max: 1
+Slice 106 max: 1
+Slice 107 max: 1
+Slice 108 max: 1
+Slice 109 max: 1
+Slice 110 max: 1
+Slice 111 max: 1
+Slice 112 max: 1
+Slice 113 max: 1
+Slice 114 max: 1
+Slice 115 max: 1
+Slice 116 max: 1
+Slice 117 max: 1
+Slice 118 max: 1
+Slice 119 max: 1
+Slice 120 max: 1
+Slice 121 max: 1
+Slice 122 max: 1
+Slice 123 max: 1
+Slice 124 max: 1
+Slice 125 max: 1
+Slice 126 max: 1
+Slice 127 max: 1
+Slice 128 max: 1
+Slice 129 max: 1
+Slice 130 max: 1
+Slice 131 max: 1
+Slice 132 max: 1
+Slice 133 max: 1
+Slice 134 max: 1
+Slice 135 max: 1
+Slice 136 max: 1
+Slice 137 max: 1
+Slice 138 max: 1
+Slice 78 max: 1
+Slice 79 max: 1
+Slice 80 max: 1
+Slice 81 max: 1
+Slice 82 max: 1
+Slice 83 max: 1
+Slice 84 max: 1
+Slice 85 max: 1
+Slice 86 max: 1
+Slice 87 max: 1
+Slice 88 max: 1
+Slice 89 max: 1
+Slice 90 max: 1
+Slice 91 max: 1
+Slice 92 max: 1
+Slice 93 max: 1
+Slice 94 max: 1
+Slice 95 max: 1
+Slice 96 max: 1
+Slice 97 max: 1
+Slice 98 max: 1
+Slice 99 max: 1
+Slice 100 max: 1
+Slice 101 max: 1
+Slice 102 max: 1
+Slice 103 max: 1
+Slice 104 max: 1
+Slice 105 max: 1
+Slice 106 max: 1
+Slice 107 max: 1
+Slice 108 max: 1
+Slice 109 max: 1
+Slice 110 max: 1
+Slice 111 max: 1
+Slice 112 max: 1
+Slice 113 max: 1
+Slice 114 max: 1
+Slice 115 max: 1
+Slice 116 max: 1
+Slice 117 max: 1
+Slice 118 max: 1
+Slice 119 max: 1
+Slice 120 max: 1
+Slice 121 max: 1
+Slice 122 max: 1
+Slice 123 max: 1
+Slice 124 max: 1
+Slice 125 max: 1
+Slice 126 max: 1
+Slice 127 max: 1
+Slice 128 max: 1
+Slice 129 max: 1
+Slice 130 max: 1
+Slice 131 max: 1
+Slice 132 max: 1
+Slice 133 max: 1
+Slice 134 max: 1
+Slice 135 max: 1
+Slice 136 max: 1
+Slice 137 max: 1
+Slice 138 max: 1
+Slice 110 max: 1
+Slice 111 max: 1
+Slice 112 max: 1
+Slice 113 max: 1
+Slice 114 max: 1
+Slice 115 max: 1
+Slice 116 max: 1
+Slice 117 max: 1
+Slice 118 max: 1
+Slice 119 max: 1
+Slice 120 max: 1
+Slice 121 max: 1
+Slice 122 max: 1
+Slice 123 max: 1
+Slice 124 max: 1
+Slice 125 max: 1
+Slice 126 max: 1
+Slice 127 max: 1
+Slice 128 max: 1
+Slice 129 max: 1
+Slice 130 max: 1
+Slice 131 max: 1
+Slice 132 max: 1
+Slice 133 max: 1
+Slice 134 max: 1
+Slice 135 max: 1
+Slice 136 max: 1
+Slice 137 max: 1
+Slice 138 max: 1
+Slice 139 max: 1
+Slice 140 max: 1
+Slice 141 max: 1
+Slice 142 max: 1
+Slice 143 max: 1
+Slice 144 max: 1
+Slice 145 max: 1
+Slice 146 max: 1
+Slice 147 max: 1
+Slice 148 max: 1
+Slice 149 max: 1
+Slice 150 max: 1
+Worker 1 smoothing rescale volume
+Tomo shape: (151, 3875, 3875)
+Mask shape: (151, 3875, 3875)
+Creating dask array to write inside...
+Mapping blocks...
+Computing labels with 28 cores
+Remapping and sorting...
+Inserting into full volume...
+Stone segmentation complete...
+Segmenting fluids...
+Tomo shape: (151, 3875, 3875)
+Slice 106 max: 1
+Slice 107 max: 1
+Slice 108 max: 1
+Slice 109 max: 1
+Slice 110 max: 1
+Slice 111 max: 1
+Slice 112 max: 1
+Slice 113 max: 1
+Slice 114 max: 1
+Slice 115 max: 1
+Slice 116 max: 1
+Slice 117 max: 1
+Slice 118 max: 1
+Slice 119 max: 1
+Slice 120 max: 1
+Slice 121 max: 1
+Slice 122 max: 1
+Slice 123 max: 1
+Slice 124 max: 1
+Slice 125 max: 1
+Slice 126 max: 1
+Slice 127 max: 1
+Slice 128 max: 1
+Slice 129 max: 1
+Slice 130 max: 1
+Slice 131 max: 1
+Slice 132 max: 1
+Slice 133 max: 1
+Slice 134 max: 1
+Slice 135 max: 1
+Slice 136 max: 1
+Slice 137 max: 1
+Slice 138 max: 1
+Slice 139 max: 1
+Slice 140 max: 1
+Slice 141 max: 1
+Slice 142 max: 1
+Slice 143 max: 1
+Slice 144 max: 1
+Slice 145 max: 1
+Slice 146 max: 1
+Slice 147 max: 1
+Slice 148 max: 1
+Slice 149 max: 1
+Slice 150 max: 1
+Worker 0 smoothing rescale volume
+Tomo shape: (151, 3875, 3875)
+Mask shape: (151, 3875, 3875)
+Creating dask array to write inside...
+Mapping blocks...
+Computing labels with 28 cores
+Remapping and sorting...
+Inserting into full volume...
+Slice 139 max: 1
+Slice 140 max: 1
+Slice 141 max: 1
+Slice 139 max: 1
+Slice 140 max: 1
+Slice 141 max: 1
+Slice 139 max: 1
+Slice 140 max: 1
+Slice 141 max: 1
+Slice 139 max: 1
+Slice 140 max: 1
+Slice 141 max: 1
+Mask shape: (151, 3875, 3875)
+Stone segmentation complete...
+Segmenting fluids...
+Slice 142 max: 1
+Slice 143 max: 1
+Slice 144 max: 1
+Slice 145 max: 1
+Slice 146 max: 1
+Slice 147 max: 1
+Slice 148 max: 1
+Slice 149 max: 1
+Slice 150 max: 1
+Slice 151 max: 1
+Slice 152 max: 1
+Slice 153 max: 1
+Slice 154 max: 1
+Slice 155 max: 1
+Slice 156 max: 1
+Slice 157 max: 1
+Slice 158 max: 1
+Slice 159 max: 1
+Slice 160 max: 1
+Slice 161 max: 1
+Slice 162 max: 1
+Slice 163 max: 1
+Slice 164 max: 1
+Slice 165 max: 1
+Slice 166 max: 1
+Slice 167 max: 1
+Slice 168 max: 1
+Slice 169 max: 1
+Slice 170 max: 1
+Slice 171 max: 1
+Slice 172 max: 1
+Slice 173 max: 1
+Slice 174 max: 1
+Slice 175 max: 1
+Slice 176 max: 1
+Slice 177 max: 1
+Slice 178 max: 1
+Slice 179 max: 1
+Slice 180 max: 1
+Slice 181 max: 1
+Slice 182 max: 1
+Slice 183 max: 1
+Slice 184 max: 1
+Slice 185 max: 1
+Slice 186 max: 1
+Slice 187 max: 1
+Slice 188 max: 1
+Slice 189 max: 1
+Slice 190 max: 1
+Slice 191 max: 1
+Slice 192 max: 1
+Slice 193 max: 1
+Slice 194 max: 1
+Slice 195 max: 1
+Slice 196 max: 1
+Slice 197 max: 1
+Slice 198 max: 1
+Slice 199 max: 1
+Slice 200 max: 1
+Slice 201 max: 1
+Slice 142 max: 1
+Slice 143 max: 1
+Slice 144 max: 1
+Slice 145 max: 1
+Slice 146 max: 1
+Slice 147 max: 1
+Slice 148 max: 1
+Slice 149 max: 1
+Slice 150 max: 1
+Slice 151 max: 1
+Slice 152 max: 1
+Slice 153 max: 1
+Slice 154 max: 1
+Slice 155 max: 1
+Slice 156 max: 1
+Slice 157 max: 1
+Slice 158 max: 1
+Slice 159 max: 1
+Slice 160 max: 1
+Slice 161 max: 1
+Slice 162 max: 1
+Slice 163 max: 1
+Slice 164 max: 1
+Slice 165 max: 1
+Slice 166 max: 1
+Slice 167 max: 1
+Slice 168 max: 1
+Slice 169 max: 1
+Slice 170 max: 1
+Slice 171 max: 1
+Slice 172 max: 1
+Slice 173 max: 1
+Slice 174 max: 1
+Slice 175 max: 1
+Slice 176 max: 1
+Slice 177 max: 1
+Slice 178 max: 1
+Slice 179 max: 1
+Slice 180 max: 1
+Slice 181 max: 1
+Slice 182 max: 1
+Slice 183 max: 1
+Slice 184 max: 1
+Slice 185 max: 1
+Slice 186 max: 1
+Slice 187 max: 1
+Slice 188 max: 1
+Slice 189 max: 1
+Slice 190 max: 1
+Slice 191 max: 1
+Slice 192 max: 1
+Slice 193 max: 1
+Slice 194 max: 1
+Slice 195 max: 1
+Slice 196 max: 1
+Slice 197 max: 1
+Slice 198 max: 1
+Slice 199 max: 1
+Slice 200 max: 1
+Slice 201 max: 1
+Slice 142 max: 1
+Slice 143 max: 1
+Slice 144 max: 1
+Slice 145 max: 1
+Slice 146 max: 1
+Slice 147 max: 1
+Slice 148 max: 1
+Slice 149 max: 1
+Slice 150 max: 1
+Slice 151 max: 1
+Slice 152 max: 1
+Slice 153 max: 1
+Slice 154 max: 1
+Slice 155 max: 1
+Slice 156 max: 1
+Slice 157 max: 1
+Slice 158 max: 1
+Slice 159 max: 1
+Slice 160 max: 1
+Slice 161 max: 1
+Slice 162 max: 1
+Slice 163 max: 1
+Slice 164 max: 1
+Slice 165 max: 1
+Slice 166 max: 1
+Slice 167 max: 1
+Slice 168 max: 1
+Slice 169 max: 1
+Slice 170 max: 1
+Slice 171 max: 1
+Slice 172 max: 1
+Slice 173 max: 1
+Slice 174 max: 1
+Slice 175 max: 1
+Slice 176 max: 1
+Slice 177 max: 1
+Slice 178 max: 1
+Slice 179 max: 1
+Slice 180 max: 1
+Slice 181 max: 1
+Slice 182 max: 1
+Slice 183 max: 1
+Slice 184 max: 1
+Slice 185 max: 1
+Slice 186 max: 1
+Slice 187 max: 1
+Slice 188 max: 1
+Slice 189 max: 1
+Slice 190 max: 1
+Slice 191 max: 1
+Slice 192 max: 1
+Slice 193 max: 1
+Slice 194 max: 1
+Slice 195 max: 1
+Slice 196 max: 1
+Slice 197 max: 1
+Slice 198 max: 1
+Slice 199 max: 1
+Slice 200 max: 1
+Slice 201 max: 1
+Slice 142 max: 1
+Slice 143 max: 1
+Slice 144 max: 1
+Slice 145 max: 1
+Slice 146 max: 1
+Slice 147 max: 1
+Slice 148 max: 1
+Slice 149 max: 1
+Slice 150 max: 1
+Slice 151 max: 1
+Slice 152 max: 1
+Slice 153 max: 1
+Slice 154 max: 1
+Slice 155 max: 1
+Slice 156 max: 1
+Slice 157 max: 1
+Slice 158 max: 1
+Slice 159 max: 1
+Slice 160 max: 1
+Slice 161 max: 1
+Slice 162 max: 1
+Slice 163 max: 1
+Slice 164 max: 1
+Slice 165 max: 1
+Slice 166 max: 1
+Slice 167 max: 1
+Slice 168 max: 1
+Slice 169 max: 1
+Slice 170 max: 1
+Slice 171 max: 1
+Slice 172 max: 1
+Slice 173 max: 1
+Slice 174 max: 1
+Slice 175 max: 1
+Slice 176 max: 1
+Slice 177 max: 1
+Slice 178 max: 1
+Slice 179 max: 1
+Slice 180 max: 1
+Slice 181 max: 1
+Slice 182 max: 1
+Slice 183 max: 1
+Slice 184 max: 1
+Slice 185 max: 1
+Slice 186 max: 1
+Slice 187 max: 1
+Slice 188 max: 1
+Slice 189 max: 1
+Slice 190 max: 1
+Slice 191 max: 1
+Slice 192 max: 1
+Slice 193 max: 1
+Slice 194 max: 1
+Slice 195 max: 1
+Slice 196 max: 1
+Slice 197 max: 1
+Slice 198 max: 1
+Slice 199 max: 1
+Slice 200 max: 1
+Slice 201 max: 1
+Creating dask array to write inside...
+Mapping blocks...
+Computing labels with 28 cores
+Remapping and sorting...
+Inserting into full volume...
+Sorting labels in ascending order...
+Estimating surface area (6-conn.)...
+Detected 104250526 faces.
+Writing to path: /data/visitor/me1663/id19/20240227/SEGMENTATION/Real_05_01_multinode/labels/test_Real_05_01_0001
+Node 1 completed in 1237.2885468006134 seconds
+Tomo shape: (151, 3875, 3875)
+Mask shape: (151, 3875, 3875)
+Creating dask array to write inside...
+Mapping blocks...
+Computing labels with 28 cores
+Remapping and sorting...
+Inserting into full volume...
+Sorting labels in ascending order...
+Estimating surface area (6-conn.)...
+Detected 104305068 faces.
+Writing to path: /data/visitor/me1663/id19/20240227/SEGMENTATION/Real_05_01_multinode/labels/test_Real_05_01_0001
+Node 0 completed in 1218.3220267295837 seconds
+Total surface area (mm^2): 4979.885994418459
+Slice 202 max: 1
+Slice 203 max: 1
+Slice 204 max: 1
+Slice 205 max: 1
+Slice 206 max: 1
+Slice 207 max: 1
+Slice 208 max: 1
+Slice 209 max: 1
+Slice 210 max: 1
+Slice 211 max: 1
+Slice 212 max: 1
+Slice 213 max: 1
+Slice 214 max: 1
+Worker 5 smoothing rescale volume
+Tomo shape: (215, 3875, 3875)
+Mask shape: (215, 3875, 3875)
+Creating dask array to write inside...
+Mapping blocks...
+Computing labels with 40 cores
+Remapping and sorting...
+Inserting into full volume...
+Stone segmentation complete...
+Segmenting fluids...
+Tomo shape: (215, 3875, 3875)
+Mask shape: (215, 3875, 3875)
+Creating dask array to write inside...
+Mapping blocks...
+Computing labels with 40 cores
+Remapping and sorting...
+Inserting into full volume...
+Sorting labels in ascending order...
+Estimating surface area (6-conn.)...
+Detected 131042656 faces.
+Writing to path: /data/visitor/me1663/id19/20240227/SEGMENTATION/Real_05_01_multinode/labels/test_Real_05_01_0001
+Node 5 completed in 1698.6716225147247 seconds
+Slice 202 max: 1
+Slice 203 max: 1
+Slice 204 max: 1
+Slice 205 max: 1
+Slice 206 max: 1
+Slice 207 max: 1
+Slice 208 max: 1
+Slice 209 max: 1
+Slice 210 max: 1
+Slice 211 max: 1
+Slice 212 max: 1
+Slice 213 max: 1
+Slice 214 max: 1
+Worker 2 smoothing rescale volume
+Tomo shape: (215, 3875, 3875)
+Mask shape: (215, 3875, 3875)
+Creating dask array to write inside...
+Mapping blocks...
+Computing labels with 40 cores
+Remapping and sorting...
+Inserting into full volume...
+Stone segmentation complete...
+Segmenting fluids...
+Tomo shape: (215, 3875, 3875)
+Mask shape: (215, 3875, 3875)
+Creating dask array to write inside...
+Mapping blocks...
+Computing labels with 40 cores
+Remapping and sorting...
+Inserting into full volume...
+Sorting labels in ascending order...
+Estimating surface area (6-conn.)...
+Detected 131197170 faces.
+Writing to path: /data/visitor/me1663/id19/20240227/SEGMENTATION/Real_05_01_multinode/labels/test_Real_05_01_0001
+Node 2 completed in 1702.5724108219147 seconds
+Slice 202 max: 1
+Slice 203 max: 1
+Slice 204 max: 1
+Slice 205 max: 1
+Slice 206 max: 1
+Slice 207 max: 1
+Slice 208 max: 1
+Slice 209 max: 1
+Slice 210 max: 1
+Slice 211 max: 1
+Slice 212 max: 1
+Slice 213 max: 1
+Slice 214 max: 1
+Worker 3 smoothing rescale volume
+Tomo shape: (215, 3875, 3875)
+Mask shape: (215, 3875, 3875)
+Creating dask array to write inside...
+Mapping blocks...
+Computing labels with 40 cores
+Remapping and sorting...
+Inserting into full volume...
+Stone segmentation complete...
+Segmenting fluids...
+Tomo shape: (215, 3875, 3875)
+Mask shape: (215, 3875, 3875)
+Creating dask array to write inside...
+Mapping blocks...
+Computing labels with 40 cores
+Remapping and sorting...
+Inserting into full volume...
+Sorting labels in ascending order...
+Estimating surface area (6-conn.)...
+Detected 131202586 faces.
+Writing to path: /data/visitor/me1663/id19/20240227/SEGMENTATION/Real_05_01_multinode/labels/test_Real_05_01_0001
+Node 3 completed in 1740.88050699234 seconds
+Slice 202 max: 1
+Slice 203 max: 1
+Slice 204 max: 1
+Slice 205 max: 1
+Slice 206 max: 1
+Slice 207 max: 1
+Slice 208 max: 1
+Slice 209 max: 1
+Slice 210 max: 1
+Slice 211 max: 1
+Slice 212 max: 1
+Slice 213 max: 1
+Slice 214 max: 1
+Worker 4 smoothing rescale volume
+Tomo shape: (215, 3875, 3875)
+Mask shape: (215, 3875, 3875)
+Creating dask array to write inside...
+Mapping blocks...
+Computing labels with 40 cores
+Remapping and sorting...
+Inserting into full volume...
+Stone segmentation complete...
+Segmenting fluids...
+Tomo shape: (215, 3875, 3875)
+Mask shape: (215, 3875, 3875)
+Creating dask array to write inside...
+Mapping blocks...
+Computing labels with 40 cores
+Remapping and sorting...
+Inserting into full volume...
+Sorting labels in ascending order...
+Estimating surface area (6-conn.)...
+Detected 130799918 faces.
+Writing to path: /data/visitor/me1663/id19/20240227/SEGMENTATION/Real_05_01_multinode/labels/test_Real_05_01_0001
+Node 4 completed in 1697.5074996948242 seconds
