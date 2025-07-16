@@ -1,7 +1,7 @@
 from re import L
 import numpy as np
 import time
-
+from joblib import Parallel,delayed
 
 import dask.array as da
 
@@ -92,18 +92,18 @@ def process_slice_np(slice,sigma_blur,sigma_mask):
     mask = binary_dilation(mask)
     mask = mask.astype(np.uint8)
 
-    print(f'Completed masking. Now blurring')
     blur = gaussian_filter(slice_fill,sigma=sigma_blur)
 
-    return blur, mask
+    return np.asarray(blur), np.asarray(mask)
 
 def test_iso_np(vol,blur_kern_size=3,mask_kern_size=30):
     
     n_slices = vol.shape[0]
-    results = Parallel(n_jobs=-1,backend='loky')(
-        delayed(process_slice_np)(vol[z],blur_kern_size,mask_kern_size)
-    )
-    return np.stack(results,axis=0)
+    results = Parallel(n_jobs=-1,backend='loky')(delayed(process_slice_np)(vol[z],blur_kern_size,mask_kern_size) for z in range(n_slices))
+    blur,mask = zip(*results)
+    blur = np.stack(blur,axis=0)
+    mask = np.stack(mask,axis=0)
+    return blur,mask
         
 def rescale(vol):
     valid_mask = ~np.isnan(vol) # mask valid pixels
@@ -143,20 +143,18 @@ def main():
     # Histogram Equialization
     tomos_he = rescale(tomos)
     
-    blur,mask = test_iso_dask(tomos_he,blur_kern_size=5,mask_kern_size=50)
+    blur,mask = test_iso_np(tomos_he,blur_kern_size=5,mask_kern_size=50)
     
-    blur_np = blur.compute()
-    mask_np = mask.compute()
     
-    tomos[mask_np != 1] = np.nan
-    tomos[mask_np == 1] = blur_np[mask_np == 1]
+    tomos[mask != 1] = np.nan
+    tomos[mask == 1] = blur[mask == 1]
     
     
     for i in range(len(blur)):
         
         fig,ax = plt.subplots(1,3)
         ax[0].imshow(raw_tomos[i],cmap='gray')
-        ax[1].imshow(mask_np[i],cmap='gray')
+        ax[1].imshow(mask[i],cmap='gray')
         ax[2].imshow(tomos[i],cmap='gray')
         plt.show()
     
