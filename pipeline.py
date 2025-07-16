@@ -116,7 +116,7 @@ def process_pipeline_dist(params):
             f.write(f'{node_files[i].as_posix()}\n')
     
     tomo_stack = read_tomos_dask(node_files)
-    with open(log_path,'w') as f:
+    with open(log_path,'a+') as f:
         f.write(f'===== Logging for {stone_id} =====\n')
         f.write(f'\nUsing {psutil.cpu_count(logical=False)} cores \nReading {tomo_dir}')
         f.write(f'\nRead {tomo_stack.shape[0]} images: {time.time() - start} seconds\n')
@@ -131,13 +131,11 @@ def process_pipeline_dist(params):
 
     tomo_stack = np.where(circular_mask(tomo_stack.shape,radius_scale=0.98),tomo_stack,np.nan)
 
-    print(f'Worker {rank} rescaling histogram')
     tomo_he = rescale(tomo_stack)
     
     del tomo_stack
     gc.collect()
 
-    print(f'Worker {rank} isolating foreground')
     smooth,mask = test_iso_dask(tomo_he,blur_kern_size=5,mask_kern_size=35)
     # mask = mask.compute()
 

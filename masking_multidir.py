@@ -7,10 +7,11 @@ import dask.array as da
 
 from dask import delayed
 from dask.diagnostics import ProgressBar
-from scipy.ndimage import median_filter,binary_fill_holes, binary_closing,generate_binary_structure,convolve,gaussian_filter
+from scipy.ndimage import median_filter,binary_fill_holes, binary_closing,generate_binary_structure,convolve,gaussian_filter,binary_dilation
 import skimage
 from skimage.filters import threshold_otsu,threshold_triangle
 from skimage.measure import label
+from skimage.morphology import remove_small_objects
 from skimage import exposure
 import matplotlib.pyplot as plt
 
@@ -52,8 +53,8 @@ def hist_stretch(data,mask=None):
     p2,p98 = np.percentile(values,(2,98))
     return exposure.rescale_intensity(data,in_range=(p2,p98))
 
-def keep_largest_component(mask):
-    labeled = label(mask, connectivity=2)
+def keep_largest_component(mask,conn=2):
+    labeled = label(mask, connectivity=conn)
     sizes = np.bincount(labeled.ravel())
     sizes[0] = 0
     return labeled == sizes.argmax()
@@ -71,82 +72,76 @@ def detect_spring(vol,intensity_thresh=0.95,std_thresh=0.25):
 
 def test_iso_dask(vol, blur_kern_size = 3, mask_kern_size = 30):
     # Make sure input is Dask array with correct chunking
+    mean = np.nanmean(vol)
+    
     if not isinstance(vol, da.Array):
         vol_dask = da.from_array(vol, chunks=(1, vol.shape[1], vol.shape[2]))
     else:
         vol_dask = vol.rechunk((1, vol.shape[1], vol.shape[2]))
 
-    
+    print(f'Masking and filling')
     valid_mask = ~da.isnan(vol_dask)
-    print(f'Valid mask')
+    vol_filled = da.where(valid_mask,vol_dask,mean)
 
     # Compute global mean of valid voxels and fill NaNs
 
     # mean_val = da.nanmean(vol_dask).compute()
 
-    print(f'Filling nans with mean vals')
-    vol_filled = da.where(~da.isnan(vol_dask),vol_dask,0)
-    valid_mask = ~da.isnan(vol_dask)
-    print(f'Vol filled')
+    print(f'Processing each slice')
 
     # --- Define a slice processing function ---
-    def process_slice(slice2d, mask2d, kern):
-        # Called per (1, y, x) block
+    
+    def process_blur(slice2d,sigma):
+        slice2d = slice2d[0]
+        blurred = gaussian_filter(slice2d,sigma=sigma)
+        return blurred[np.newaxis,:,:]
+    
+    
+    def process_mask(slice2d, mask2d, mask_kern):
+        
+        # Change shape from (1,:,:) to (:,:)
         slice2d = slice2d[0]
         mask2d = mask2d[0]
-
-        if not np.any(mask2d):
-            
-            binary = np.zeros(slice2d,dtype=np.uint8)
-            blurred = gaussian_filter(slice2d,sigma=(kern,kern))
-            return blurred[np.newaxis, :, :], binary[np.newaxis, :, :]
         
-        
-        blurred = gaussian_filter(slice2d, sigma=(kern, kern))
-        t = threshold_otsu(blurred[mask2d])
         binary = np.zeros(slice2d.shape,dtype=np.uint8)
+        blurred = gaussian_filter(slice2d, sigma=mask_kern)
         
-        binary[mask2d] = (blurred[mask2d] < t)
+        # Thresholding
+        t = threshold_triangle(blurred[mask2d])
+        binary[mask2d] = blurred[mask2d] < t
         
+        # Close interior holes
         binary = binary_closing(binary)
         binary = binary_fill_holes(binary)
+        binary = binary_dilation(binary,iterations=3)
+        
+        # Keep largest component function
+        binary = label(binary, connectivity=2)
+        sizes = np.bincount(binary.ravel())
+        sizes[0] = 0
+        binary == sizes.argmax()
+        
+        # Make sure array is not blank
         if np.unique(binary[mask2d]).size == 1:
+            binary[:] = 0
             
-            binary = np.zeros(slice2d.shape,dtype=np.uint8)
-        # print(f'Unique elements {np.unique(binary).size}')
-        # if np.unique(binary).size == 1:
-        #     print(f'Empty slice detected')
-        #     binary = np.zeros(binary.shape,dtype=np.uint8)
-        return blurred[np.newaxis, :, :], binary[np.newaxis, :, :]
-
+        # Perform smaller gaussian blur to return
+        return binary[np.newaxis,:,:]
+    
     # --- Wrap for map_blocks ---
-    def blur_func(block, mask_block,blur_k):
-        blur, _ = process_slice(block, mask_block, blur_k)
-        return blur
 
-    def mask_func(block, mask_block,mask_k):
-        _, mask = process_slice(block, mask_block, mask_k)
-        return mask
-
-    print('Setting blur dask')
     # Apply processing functions via map_blocks
     blurred_dask = da.map_blocks(
-        blur_func, vol_filled, valid_mask, blur_kern_size,
+        process_blur, vol_filled, blur_kern_size,
         dtype=np.float32,
-        chunks=vol_filled.chunks
+        chunks=(1,vol.shape[1],vol.shape[2])
     )
-
-    print('Setting mask dask')
+    
     mask_dask = da.map_blocks(
-        mask_func, vol_filled, valid_mask, mask_kern_size,
-        dtype=np.uint8,
-        chunks=vol_filled.chunks
+        process_mask, vol_filled, valid_mask, mask_kern_size,
+        dtype = np.int8,
+        chunks = (1,vol.shape[1],vol.shape[2])
     )
-
-    # Restore NaNs to blurred image
-    print(f'Masking blur')
-    blurred_dask = da.where(valid_mask, blurred_dask, np.nan)
-
     return blurred_dask, mask_dask
 
 
@@ -182,38 +177,30 @@ def main():
     f_names = sorted([f for f in Path(tomo_dir).iterdir() if f.suffix.lower() in ['.tif','.tiff'] and not '._' in f.name])
 
     print(f'Files: {len(f_names)} begining with {f_names[0]}')
-    tomos = read_tomos_dask(f_names,cores=None)
-    tomos = tomos.compute()
-    
-    tomos = np.where(circular_mask(tomos.shape,radius_scale=0.98), tomos, np.nan)
-    
+    raw_tomos = read_tomos_dask(f_names,cores=None)
+    raw_tomos = raw_tomos.compute()
+    # Circular masking
+    tomos = np.where(circular_mask(raw_tomos.shape,radius_scale=0.98), raw_tomos, np.nan)
+    # Histogram Equialization
     tomos_he = rescale(tomos)
     
+    blur,mask = test_iso_dask(tomos_he,blur_kern_size=5,mask_kern_size=50)
     
-    
-    blur,mask = test_iso_dask(tomos_he,kern_size=35)
     blur_np = blur.compute()
     mask_np = mask.compute()
     
-
     tomos[mask_np != 1] = np.nan
-    tomos[mask_np == 1] = tomos_he[mask_np == 1]
+    tomos[mask_np == 1] = blur_np[mask_np == 1]
+    
     
     for i in range(len(blur)):
-        if i == 0:
-            fig,ax = plt.subplots(1,3)
-            ax[0].imshow(blur_np[i])
-            ax[1].imshow(mask_np[i])
-            ax[2].imshow(tomos[i])
-            plt.show()
+        
+        fig,ax = plt.subplots(1,3)
+        ax[0].imshow(raw_tomos[i],cmap='gray')
+        ax[1].imshow(mask_np[i],cmap='gray')
+        ax[2].imshow(tomos[i],cmap='gray')
+        plt.show()
     
 
-    # for i,slice in enumerate(tomos):
-    #     fig,ax = plt.subplots(1,3)
-    #     ax[0].imshow(slice,cmap='gray',vmin=slice.min(),vmax=slice.max())
-    #     ax[1].imshow(binary[i],cmap='gray')
-    #     ax[2].imshow(np.multiply(slice,binary[i]),cmap='gray')
-    #     plt.title(f'Slice {475 + i}')
-    #     plt.show()
 if __name__ == '__main__':
     main()
