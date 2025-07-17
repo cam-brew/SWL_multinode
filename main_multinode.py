@@ -13,7 +13,7 @@ def main():
 
     if rank==0:
         
-        param_path = '/home/esrf/cameron15a/Desktop/python/inputs/Real_05_01/seg_param_0006.txt'
+        param_path = '/home/esrf/cameron15a/Desktop/python/inputs/Real_05_01/seg_param_0007.txt'
         id_details, task_settings = get_user_input(param_path)
 
         print(f'Metadata from {param_path}')
@@ -70,7 +70,7 @@ def main():
     if rank == 0:
          for i in stone_ids:
              
-            with open(Path(seg_dir).parent / 'data' / f'{stone_ids[i]}_data.txt') as f:
+            with open(Path(seg_dir).parent / 'data' / f'{i}_data.txt', 'a+') as f:
                 f.write(f'Total measured surface area(mm^2): {total_SA_mm2}')
                 f.write(f'Total faces detected: {total_faces}')
             print(f'Total surface area (mm^2): {total_SA_mm2}')

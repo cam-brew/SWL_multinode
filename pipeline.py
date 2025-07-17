@@ -196,22 +196,19 @@ def process_pipeline_dist(params):
     
     with open(log_path,'a') as f:
         f.write(f'\nEstimated surface area (6-conn.): {time.time() - start} seconds')
-    
-    
-    # # ====== Section 4: Labeled data validation and visualization ======
+
+    # ====== Section 4: Labeled data validation and visualization ======
     # print('Proceed to developing writing...')
     # if animate == True:
     #     animate_stack(node_stack,node_mask,gmm_integrated)
-    # ## Present Gaussian Mixture selection
-    # # plot_gmm_masked_clusters(tomo_stack[tomo_stack.shape[0]//2],mask_stack[mask_stack.shape[0]//2],gmm_stone_labeled[gmm_stone_labeled.shape[0]//2],gmm_stone_model,transparency=0.3)
-    # # plot_gmm_masked_clusters(tomo_stack[tomo_stack.shape[0]//2],pore_stack[pore_stack.shape[0]//2],gmm_pore_labeled[gmm_stone_labeled.shape[0]//2],gmm_pore_model,transparency=0.9)
-    
+      
     # # ====== Section 5: Write labeled data to tiff output ======
     
     print(f'Writing to path: {seg_dir_update}')
     start = time.time()
     write_labels_dask(gmm_integrated,seg_dir_update,z_list,prefix=f'/{stone_id}_labels_',cores = None)
-    with open(log_path,'a') as f:
+    print(f'Worker {rank}: All files written')
+    with open(log_path,'a+') as f:
         f.write(f'\nTime to write labels: {time.time() - start} seconds\n\n')
         f.write(f'\nTotal time: {time.time() - total_start}')
 

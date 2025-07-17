@@ -1,2 +1,0 @@
-Node 13 is utilizing 64 cores
-Processing 166 slices including [3, 20, 28, 41, 51, 60, 74, 81, 97, 104] ending with /data/visitor/me1663/id19/20240227/PROCESSED_DATA/Real_05_01/delta_beta_150/Reconstruction_16bit_dff_s32_v2/Real_05_01_0006_16bit_vol/Real_05_01_0006_16bit_vol_001850.tiff
