@@ -109,12 +109,6 @@ def test_iso_np(vol,blur_kern_size=3,mask_kern_size=30):
     blur = np.stack(blur,axis=0)
     mask = np.stack(mask,axis=0)
     
-    plt.imshow(mask[mask.shape[0] // 2])
-    plt.show()
-    # results = Parallel(n_jobs=1)(delayed(process_slice_np)(vol[z],blur_kern_size,mask_kern_size) for z in range(n_slices))
-    # # blur,mask = zip(*results)
-    # # blur = np.stack(blur,axis=0)
-    # mask = np.stack(results,axis=0)
     return blur,mask
         
 def rescale(vol):

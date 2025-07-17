@@ -5,7 +5,7 @@ import psutil
 import tifffile
 import gc
 
-from masking_multidir import circular_mask, test_iso_dask, rescale
+from masking_np import circular_mask, test_iso_np, rescale
 from preproc_img import remove_spring, gauss_2d_slices
 from segmentation import gaussian_mix_dask
 from monitor_performance import animate_stack
@@ -61,8 +61,6 @@ def process_pipeline_dist(params):
     rank = comm.Get_rank()
     size = comm.Get_size()
 
-    ## ELIMINATE ALL 'TEST_' BEFORE RUNNING COMPLETED CODE
-
     core_counts = comm.gather(psutil.cpu_count(logical=False),root=0)
 
     _,tomo_dir,seg_dir = dirs
@@ -103,18 +101,13 @@ def process_pipeline_dist(params):
     z_list = z_split[rank]
     node_files = [tomo_files[i] for i in z_list]
 
-    with open(f'./testing_mn_{rank:02d}.txt', 'w+') as f:
+    with open(f'./node_details/testing_mn_{rank:02d}.txt', 'w+') as f:
         f.write(f'Node {rank} is utilizing {psutil.cpu_count(logical=False)} cores\n')
         f.write(f'Processing {len(node_files)} slices including {z_list[:10]} ending with {node_files[-1]}')
 
     start = time.time()
     total_start = start
 
-    with open(f'files.txt','w+') as f:
-        f.write(f'Files to read on node {rank}:\n')
-        for i in range(len(node_files)):
-            f.write(f'{node_files[i].as_posix()}\n')
-    
     tomo_stack = read_tomos_dask(node_files)
     with open(log_path,'a+') as f:
         f.write(f'===== Logging for {stone_id} =====\n')
@@ -122,12 +115,7 @@ def process_pipeline_dist(params):
         f.write(f'\nRead {tomo_stack.shape[0]} images: {time.time() - start} seconds\n')
     
     tomo_stack = tomo_stack.compute()
-    # write_labels_dask(tomo_stack,seg_dir_update,z_list,prefix=f'/{stone_id}_raw_',cores = None)
-    ## Remove spring slices
-    # spring_idx_min = remove_spring(tomo_stack,global_start=0)
-
-    # print(spring_idx_min)
-
+    
 
     tomo_stack = np.where(circular_mask(tomo_stack.shape,radius_scale=0.98),tomo_stack,np.nan)
 
@@ -136,15 +124,9 @@ def process_pipeline_dist(params):
     del tomo_stack
     gc.collect()
 
-    smooth,mask = test_iso_dask(tomo_he,blur_kern_size=5,mask_kern_size=35)
-    # mask = mask.compute()
-
-    # tomo_he = gauss_2d_slices(tomo_he,sigma=5)
-    # tomo_he = smooth.compute()
-    # tomo_he[mask != 1] = np.nan
+    tomo_he,mask = test_iso_np(tomo_he,blur_kern_size=5,mask_kern_size=50)
+    
     print(f'Worker {rank} gaussian complete')
-    # write_labels_dask(mask,seg_dir_update,z_list,prefix=f'/{stone_id}_mask_',cores = None)
-    # write_labels_dask(tomo_he,seg_dir_update,z_list,prefix=f'/{stone_id}_histeq_',cores = None)
     
     
     with open(log_path,'a+') as f:
@@ -155,7 +137,7 @@ def process_pipeline_dist(params):
     
     ## First pass separates solid and fluid
     start = time.time()
-    gmm_stone_labeled,_ = gaussian_mix_dask(smooth,mask,n_classes=2)
+    gmm_stone_labeled,_ = gaussian_mix_dask(tomo_he,mask,n_classes=2)
     with open(log_path,'a') as f:
         f.write(f'\nSolid segmentation: {time.time() - start} seconds')
 
@@ -188,9 +170,11 @@ def process_pipeline_dist(params):
         print('Stone and fluid labels sorted...')
         
     
-    # del gmm_stone_labeled
-    # del gmm_pore_labeled
-    # gc.collect()
+    del tomo_he
+    del mask
+    del gmm_stone_labeled
+    del gmm_pore_labeled
+    gc.collect()
 
     # # ====== Section 3: Generate surface mesh ======
     # if gen_mesh == True:

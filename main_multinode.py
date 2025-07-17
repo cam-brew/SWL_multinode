@@ -13,7 +13,7 @@ def main():
 
     if rank==0:
         
-        param_path = '/home/esrf/cameron15a/Desktop/python/inputs/Real_05_01/seg_param_0002.txt'
+        param_path = '/home/esrf/cameron15a/Desktop/python/inputs/Real_05_01/seg_param_0006.txt'
         id_details, task_settings = get_user_input(param_path)
 
         print(f'Metadata from {param_path}')
@@ -61,18 +61,20 @@ def main():
 
     start = time.time()
 
-    surface_area_mm2 = process_pipeline_dist(*task_args)
+    surface_area_mm2,face_count = process_pipeline_dist(*task_args)
 
     print(f'Node {rank} completed in {time.time() - start} seconds')
     
     total_SA_mm2 = comm.reduce(surface_area_mm2,op=MPI.SUM,root=0)
-
+    total_faces = comm.reduce(face_count,op=MPI.SUM,root=0)
     if rank == 0:
          for i in stone_ids:
              
             with open(Path(seg_dir).parent / 'data' / f'{stone_ids[i]}_data.txt') as f:
-                f.write(f'Total measured surface area(mm^2) {total_SA_mm2}')
+                f.write(f'Total measured surface area(mm^2): {total_SA_mm2}')
+                f.write(f'Total faces detected: {total_faces}')
             print(f'Total surface area (mm^2): {total_SA_mm2}')
+            print(f'Total faces detected: {total_faces}')
 
 if __name__ == '__main__':
     

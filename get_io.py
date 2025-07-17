@@ -9,7 +9,7 @@ import time
 
 from pathlib import Path
 from masking import hist_stretch, isolate_foreground
-
+from multiprocessing import Pool
 
 """
     I/O functions are defined by:
@@ -123,17 +123,21 @@ def write_labels_dask(label_stack, output_dir, indices, prefix='label_', dtype=n
     if cores == None:
         cores = psutil.cpu_count(logical=True)
 
-    
+    assert len(indices) == label_stack.shape[0], "Writing Error: Mismatch in index list and number of slices!"    
+    os.makedirs(output_dir, exist_ok=True)
+
     label_stack = label_stack.astype(dtype)
-    delayed_tasks = []
+    
+    tasks = []
 
     for i in range(len(indices)):
-        slice_data = label_stack[i]
+        slice_data = label_stack[i].astype(dtype)
         out_path = output_dir + f'{prefix}{indices[i]:05d}.tif'
-        task = dask.delayed(_save_tiff)(slice_data,out_path)
-        delayed_tasks.append(task)
-
-    dask.compute(*delayed_tasks)
+        tasks.append((slice_data,out_path))
+    
+    
+    with Pool(processes=min(cores,len(tasks))) as pool:
+        pool.starmap(_save_tiff,tasks)
     
 
 def main():

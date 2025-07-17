@@ -25,15 +25,6 @@ def gaussian_mix_dask(tomo_stack, mask_stack, n_classes=2, confidence_threshold=
     Dask-optimized version of GMM segmentation
     """
     # Flatten vals
-    if isinstance(tomo_stack,np.ndarray):
-        tomo_stack = da.from_array(tomo_stack,chunks=(1,tomo_stack.shape[1],tomo_stack.shape[2]))
-    elif not isinstance(tomo_stack,da.Array):
-        raise TypeError('Tomo stack must be Dask or Numpy')
-    
-    if isinstance(mask_stack,np.ndarray):
-        mask_stack = da.from_array(mask_stack,chunks=(1,mask_stack.shape[1],mask_stack.shape[2]))
-    elif not isinstance(mask_stack,da.Array):
-        raise TypeError('Mask stack must be Dask or Numpy')
     
     valid_voxels = tomo_stack[mask_stack.astype(bool)]
     
@@ -42,19 +33,16 @@ def gaussian_mix_dask(tomo_stack, mask_stack, n_classes=2, confidence_threshold=
     # Fit GMM on random subsample for saved mem
     if N > max_voxels:
         idx = np.random.choice(N, size=max_voxels, replace=False)
-        sample = valid_voxels[idx].compute().reshape(-1,1)
+        sample = valid_voxels[idx].reshape(-1,1)
     else:
-        sample = valid_voxels.compute().reshape(-1,1)
+        sample = valid_voxels.reshape(-1,1)
         
     print('Creating GMM')
     gmm = gaussian_mix_init(n_classes)
     gmm.fit(sample)
-
-    print('Creating dask array to write inside...')
-    full_vals = valid_voxels.compute().reshape(-1,1)
     
     print('Predicting values...')
-    predicted = gmm.predict(full_vals)
+    predicted = gmm.predict(valid_voxels.reshape(-1,1))
     
     # Step 5: Sort by mean intensities
     print('Remapping and sorting...')
@@ -65,8 +53,7 @@ def gaussian_mix_dask(tomo_stack, mask_stack, n_classes=2, confidence_threshold=
 
     print('Rebuild label volume...')
     label_volume = np.full(tomo_stack.shape,-1,dtype=np.int8)
-    flat_mask = mask_stack.astype(bool).ravel()
-    label_volume.ravel()[flat_mask] = predicted
+    label_volume[mask_stack.astype(bool)] = sorted_labels
     
     print(f'Label vol complete')
     return label_volume,gmm
