@@ -101,10 +101,6 @@ def process_pipeline_dist(params):
     z_list = z_split[rank]
     node_files = [tomo_files[i] for i in z_list]
 
-    with open(f'./node_details/testing_mn_{rank:02d}.txt', 'w+') as f:
-        f.write(f'Node {rank} is utilizing {psutil.cpu_count(logical=False)} cores\n')
-        f.write(f'Processing {len(node_files)} slices including {z_list[:10]} ending with {node_files[-1]}')
-
     start = time.time()
     total_start = start
 
@@ -138,10 +134,13 @@ def process_pipeline_dist(params):
     ## First pass separates solid and fluid
     start = time.time()
     gmm_stone_labeled,_ = gaussian_mix_dask(tomo_he,mask,n_classes=2)
+
+    ## Insert keep_largest_component_3d application here
+
     with open(log_path,'a') as f:
         f.write(f'\nSolid segmentation: {time.time() - start} seconds')
 
-    tifffile.imwrite('test_stone_seg.tif',gmm_stone_labeled[gmm_stone_labeled.shape[0] // 2])
+    
     print('Stone segmentation complete...')
     # Second pass segments fluids (air and water presence)
     if air_water_seg == True:
@@ -151,7 +150,6 @@ def process_pipeline_dist(params):
         gmm_pore_labeled,_ = gaussian_mix_dask(tomo_he,pore_stack,n_classes=2)
         with open(log_path,'a') as f:
             f.write(f'\nFluid segmentation: {time.time() - start} seconds')
-        tifffile.imwrite('test_pore_seg.tif',gmm_pore_labeled[gmm_pore_labeled.shape[0] // 2])
         
         
         gmm_integrated = np.zeros_like(tomo_he,dtype=np.int8)

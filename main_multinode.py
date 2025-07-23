@@ -76,6 +76,8 @@ def main():
             print(f'Total surface area (mm^2): {total_SA_mm2}')
             print(f'Total faces detected: {total_faces}')
 
+    return 0
+
 if __name__ == '__main__':
     
     main()

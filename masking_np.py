@@ -8,10 +8,9 @@ import dask.array as da
 
 from dask import delayed
 from dask.diagnostics import ProgressBar
-from scipy.ndimage import median_filter,binary_fill_holes, binary_closing,generate_binary_structure,convolve,gaussian_filter,binary_dilation
+from scipy.ndimage import median_filter,binary_fill_holes, binary_closing,generate_binary_structure,convolve,gaussian_filter,binary_dilation,label
 import skimage
 from skimage.filters import threshold_otsu,threshold_triangle
-from skimage.measure import label
 from skimage.morphology import remove_small_objects
 from skimage import exposure
 import matplotlib.pyplot as plt
@@ -54,7 +53,7 @@ def hist_stretch(data,mask=None):
     p2,p98 = np.percentile(values,(2,98))
     return exposure.rescale_intensity(data,in_range=(p2,p98))
 
-def keep_largest_component(mask,conn=2):
+def keep_largest_component_2d(mask,conn=2):
     labeled = label(mask, connectivity=conn)
     sizes = np.bincount(labeled.ravel())
     sizes[0] = 0
@@ -70,6 +69,36 @@ def detect_spring(vol,intensity_thresh=0.95,std_thresh=0.25):
         if vmax > intensity_thresh or std_intensity > std_thresh:
             print(f'Spring detected in slice {i} (max={vmax:.2f}, std={std_thresh:.2f})')
 
+
+def keep_largest_component_3d(stack,id,conn=6):
+    if stack.ndim != 3:
+        raise ValueError(f'Expected 3D mask, got shape: {mask.shape}')
+    if conn==6:
+        structure = np.zeros((3,3,3),dtype=np.int8)
+        structure[1,1,:] = 1
+        structure[1,:,1] = 1
+        structure[:,1,1] = 1
+    elif conn==26:
+        structure = np.ones((3,3,3),dtype=np.int8)
+    else:
+        raise ValueError('conn must be 6 or 26')
+    mask = (stack == id)
+    if not np.any(mask):
+        print('Mask considered empty')
+        return stack.copy()
+    labeled_mask,num_features = label(mask,structure=structure)
+    if num_features == 0:
+        print('Detected no features')
+        return stack.copy()
+
+    comp_size = np.bincount(labeled_mask.ravel())
+    comp_size[0] = 0
+    largest_label = comp_size.argmax()
+    result = stack.copy()
+
+    result[mask] = stack.min()
+    result[labeled_mask == largest_label] = id
+    return result
 
 def process_slice_np(slice,sigma_blur,sigma_mask):
     if np.all(np.isnan(slice)):
@@ -100,14 +129,46 @@ def process_slice_np(slice,sigma_blur,sigma_mask):
     blur = gaussian_filter(slice_fill,sigma=sigma_blur)
     return blur,mask
 
+def gaussian_blur(slice,sigma):
+    return gaussian_filter(slice,sigma=sigma)
+
+def close_mask(mask,valid):
+    mask = binary_closing(mask)
+    mask = binary_fill_holes(mask)
+    mask = binary_dilation(mask,iterations=15)
+    if len(np.unique(mask[valid])) == 1:
+        mask = np.zeros_like(mask,dtype=np.uint8)
+    return mask
+    
+
 def test_iso_np(vol,blur_kern_size=3,mask_kern_size=30):
     
+    valid = ~np.isnan(vol)
+    vol_filled = np.nan_to_num(vol,nan=np.max(vol[valid]))
     with Pool() as pool:
-        results = pool.starmap(process_slice_np, [(vol[z],blur_kern_size,mask_kern_size) for z in range(vol.shape[0])])
-    
-    blur,mask = zip(*results)
+        blur = pool.starmap(gaussian_blur,[(vol_filled[z],mask_kern_size) for z in range(vol.shape[0])])
+
+    blur = np.stack(blur,axis=0)
+    vals = blur[valid].ravel()
+    print(f'Max: {vals.max()} | Min: {vals.min()}')
+    t = threshold_otsu(blur[valid].ravel())
+    mask = np.zeros_like(vol,dtype=np.int8)
+    mask[valid] = blur[valid] < t
+    mask = keep_largest_component_3d(mask,id=1)
+
+    with Pool() as pool:
+        blur = pool.starmap(gaussian_blur,[(vol_filled[z],blur_kern_size) for z in range(vol.shape[0])])
+        mask_closed = pool.starmap(close_mask,[(mask[i],valid[i]) for i in range(mask.shape[0])])
+
     blur = np.stack(blur,axis=0)
     mask = np.stack(mask,axis=0)
+
+    #with Pool() as pool:
+    #    results = pool.starmap(process_slice_np, [(vol[z],blur_kern_size,mask_kern_size) for z in range(vol.shape[0])])
+    
+    #blur,mask = zip(*results)
+    #blur = np.stack(blur,axis=0)
+    #mask = np.stack(mask,axis=0)
     
     return blur,mask
         
