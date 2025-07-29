@@ -119,7 +119,7 @@ def _save_tiff(slice_data,path):
     
         
         
-def write_labels_dask(label_stack, output_dir, indices, prefix='label_', dtype=np.int8, cores = None):
+def write_labels_pool(label_stack, output_dir, indices, prefix='label_', dtype=np.int8, cores = None):
     if cores == None:
         cores = psutil.cpu_count(logical=True)
 

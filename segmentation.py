@@ -1,7 +1,4 @@
 import numpy as np
-import psutil
-import dask.array as da
-
 
 from sklearn.mixture import GaussianMixture
 
@@ -16,11 +13,11 @@ from sklearn.mixture import GaussianMixture
 
 ###### Dask version implementation #######
 
-def gaussian_mix_init(n, covar_type='full', seed=0):
+def gaussian_mix_init(n, covar_type='full', seed=42):
     return GaussianMixture(n_components=n, covariance_type=covar_type, random_state=seed)
 
-def gaussian_mix_dask(tomo_stack, mask_stack, n_classes=2, confidence_threshold=0.9,
-                      max_voxels=750_000):
+def gaussian_mix_np(tomo_stack, mask_stack, n_classes=2, confidence_threshold=0.9,
+                      max_voxels=850_000):
     """
     Dask-optimized version of GMM segmentation
     """
@@ -32,7 +29,9 @@ def gaussian_mix_dask(tomo_stack, mask_stack, n_classes=2, confidence_threshold=
 
     # Fit GMM on random subsample for saved mem
     if N > max_voxels:
-        idx = np.random.choice(N, size=max_voxels, replace=False)
+        generator = np.random.default_rng(42)
+        idx = generator.choice(N,size=max_voxels,replace=False)
+        # idx = np.random.choice(N, size=max_voxels, replace=False)
         sample = valid_voxels[idx].reshape(-1,1)
     else:
         sample = valid_voxels.reshape(-1,1)

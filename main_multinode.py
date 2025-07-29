@@ -1,19 +1,53 @@
 import time
 import os
-import psutil
+import atexit
+import signal
+import sys
+import multiprocessing
+import threading
+
 from mpi4py import MPI
 from pipeline import process_pipeline_dist
 from get_io import get_user_input
 from pathlib import Path
 
-def main():
-    comm = MPI.COMM_WORLD
+
+def kill_remaining_children():
+    for child in multiprocessing.active_children():
+        print(f'Terminating child process {child.name}')
+        child.terminate()
+        child.join()
+    for t in threading.enumerate():
+        if t is not threading.main_thread():
+            try:
+                print(f'Joining thread {t.name}')
+                t.join(timeout=1)
+            except Exception:
+                pass
+    try:
+        pgid = os.getpgid(0)
+        print(f'[Rank 0] Killing process group {pgid}')
+        os.killpg(pgid,signal.SIGTERM)
+    except Exception as e:
+        print(f'Process group kill failed: {e}')
+
+def list_files_in_dir(path):
+    abs_path = os.path.abspath(path)
+    files = sorted([f for f in Path(abs_path).iterdir() if f.suffix.lower() in ['.txt'] and not '._' in f.name])
+    if not files:
+        raise RuntimeError(f'No input files found in {abs_path}')
+    else:
+        print(f'{len(files)} files found\n')
+    return files
+
+def main(comm,param_file):
+    
     size = comm.Get_size()
     rank = comm.Get_rank()
 
     if rank==0:
         
-        param_path = '/home/esrf/cameron15a/Desktop/python/inputs/Real_05_01/seg_param_0007.txt'
+        param_path = param_file
         id_details, task_settings = get_user_input(param_path)
 
         print(f'Metadata from {param_path}')
@@ -26,7 +60,11 @@ def main():
         print(f'Processing Stone {stone_ids[rank]}')
         
         root_dir = '/data/visitor/me1663/id19/20240227/'
-        tomo_dir = root_dir + f'PROCESSED_DATA/{stone_ids[rank][:10]}/delta_beta_150/Reconstruction_16bit_dff_s32_v2/{stone_ids[rank]}_16bit_vol/'
+        if stone_ids[rank][:10] == "Real_05_01":
+            tomo_dir = root_dir + f'PROCESSED_DATA/{stone_ids[rank][:10]}/delta_beta_150/Reconstruction_16bit_dff_s32_v2/{stone_ids[rank]}_16bit_vol/'
+        elif stone_ids[rank][:10] == "Real_15_01":
+            tomo_dir = root_dir + f'PROCESSED_DATA/{stone_ids[rank][:10]}/Reconstruction_16bit_dff_s32_v2/{stone_ids[rank]}_16bit_vol/'
+        
         seg_dir = root_dir + f"SEGMENTATION/{stone_ids[rank][:10]}_multinode/labels/"
 
         dirs = (root_dir,tomo_dir,seg_dir)
@@ -54,30 +92,44 @@ def main():
         task_args=None
 
     task_args = comm.bcast(task_args,root=0)
-    # with open(f'./testing_mn_{rank}.txt','w') as f:
-    #         f.write(f'Reading from {task_args[0][1]} \nWriting to {task_args[0][2]}\nUsing {psutil.cpu_count(logical=True)} cores on node {rank}\n')
-
-    print(f'Worker {rank} ready')
 
     start = time.time()
 
-    surface_area_mm2,face_count = process_pipeline_dist(*task_args)
+    ext_sa,ext_faces,int_sa,int_faces = process_pipeline_dist(*task_args)
 
     print(f'Node {rank} completed in {time.time() - start} seconds')
     
-    total_SA_mm2 = comm.reduce(surface_area_mm2,op=MPI.SUM,root=0)
-    total_faces = comm.reduce(face_count,op=MPI.SUM,root=0)
+    total_ext_sa = comm.reduce(ext_sa,op=MPI.SUM,root=0)
+    total_ext_faces = comm.reduce(ext_faces,op=MPI.SUM,root=0)
+    total_int_sa = comm.reduce(int_sa,op=MPI.SUM,root=0)
+    total_int_faces = comm.reduce(int_faces,op=MPI.SUM,root=0)
+
+
     if rank == 0:
          for i in stone_ids:
              
-            with open(Path(seg_dir).parent / 'data' / f'{i}_data.txt', 'a+') as f:
-                f.write(f'Total measured surface area(mm^2): {total_SA_mm2}')
-                f.write(f'Total faces detected: {total_faces}')
-            print(f'Total surface area (mm^2): {total_SA_mm2}')
-            print(f'Total faces detected: {total_faces}')
-
-    return 0
+            with open(Path(seg_dir).parent / 'data' / f'{i}_data.txt', 'w+') as f:
+                f.write(f'\nTotal measured exterior surface area(mm^2): {total_ext_sa}')
+                f.write(f'\nTotal exterior faces detected: {total_ext_faces}')
+                f.write(f'\nTotal measured interior surface area (mm^2): {total_int_sa}')
+                f.write(f'\nTotal interior faces detected: {total_int_faces}\n')
+    
+    pass
 
 if __name__ == '__main__':
+    comm = MPI.COMM_WORLD
+    inputs_path = sys.argv[1]
+
+#    input_files = list_files_in_dir(inputs_path)
     
-    main()
+#    for i,f in enumerate(input_files):
+#        print(f'\nFile {i} on Worker {comm.Get_rank()}: {f}\n')
+    try:
+        main(comm,inputs_path)
+        comm.Barrier()
+    finally:
+        if comm.rank == 0:
+            #kill_remaining_children()
+            print(f'Completed stone')
+    
+        sys.exit(0)

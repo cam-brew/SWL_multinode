@@ -1,19 +1,9 @@
-from re import L
 import numpy as np
-import time
-from joblib import Parallel,delayed
 from multiprocessing import Pool
 
-import dask.array as da
-
-from dask import delayed
-from dask.diagnostics import ProgressBar
-from scipy.ndimage import median_filter,binary_fill_holes, binary_closing,generate_binary_structure,convolve,gaussian_filter,binary_dilation,label
-import skimage
+from scipy.ndimage import binary_fill_holes, binary_closing,convolve,gaussian_filter,binary_dilation,label
 from skimage.filters import threshold_otsu,threshold_triangle
-from skimage.morphology import remove_small_objects
 from skimage import exposure
-import matplotlib.pyplot as plt
 
 """
     Masking functions:
@@ -120,7 +110,7 @@ def process_slice_np(slice,sigma_blur,sigma_mask):
     mask = binary_closing(mask)
     mask = binary_fill_holes(mask)
     mask = binary_dilation(mask)
-    mask = keep_largest_component(mask)
+    mask = keep_largest_component_2d(mask)
     mask = mask.astype(np.uint8)
     
     if len(np.unique(mask[valid])) == 1:
@@ -132,43 +122,83 @@ def process_slice_np(slice,sigma_blur,sigma_mask):
 def gaussian_blur(slice,sigma):
     return gaussian_filter(slice,sigma=sigma)
 
-def close_mask(mask,valid):
+def close_mask(mask,valid,iters=15):
     mask = binary_closing(mask)
     mask = binary_fill_holes(mask)
-    mask = binary_dilation(mask,iterations=15)
+    mask = binary_dilation(mask,iterations=iters)
     if len(np.unique(mask[valid])) == 1:
         mask = np.zeros_like(mask,dtype=np.uint8)
     return mask
     
-
-def test_iso_np(vol,blur_kern_size=3,mask_kern_size=30):
+def isolate_foreground_AAU(vol,blur_kern_size=3,mask_kern_size=30):
     
     valid = ~np.isnan(vol)
     vol_filled = np.nan_to_num(vol,nan=np.max(vol[valid]))
+
     with Pool() as pool:
         blur = pool.starmap(gaussian_blur,[(vol_filled[z],mask_kern_size) for z in range(vol.shape[0])])
 
-    blur = np.stack(blur,axis=0)
-    vals = blur[valid].ravel()
-    print(f'Max: {vals.max()} | Min: {vals.min()}')
-    t = threshold_otsu(blur[valid].ravel())
-    mask = np.zeros_like(vol,dtype=np.int8)
-    mask[valid] = blur[valid] < t
-    mask = keep_largest_component_3d(mask,id=1)
+        blur = np.stack(blur,axis=0)
+        vals = blur[valid].ravel()
+        print(f'Max: {vals.max()} | Min: {vals.min()}')
+        t = threshold_otsu(blur[valid].ravel())
+        mask = np.zeros_like(vol,dtype=np.int8)
+        mask[valid] = blur[valid] < t
+
+        mask = keep_largest_component_3d(mask,id=1)
+
+    # with Pool() as pool:
+        if blur_kern_size != None:
+            blur = pool.starmap(gaussian_blur,[(vol_filled[z],blur_kern_size) for z in range(vol.shape[0])])
+        
+        mask_closed = pool.starmap(close_mask,[(mask[i],valid[i],35) for i in range(mask.shape[0])])
+
+    if blur_kern_size != None:
+        blur = np.stack(blur,axis=0)
+    else:
+        blur = vol
+    mask = np.stack(mask_closed,axis=0)
+    
+    return blur,mask
+
+def isolate_foreground_COM(vol,blur_kern_size=3,mask_kern_size=30):
+    
+    valid = ~np.isnan(vol)
+    vol_filled = np.nan_to_num(vol,nan=np.max(vol[valid]))
+
+    valid_slice = ~np.isnan(vol[0])
 
     with Pool() as pool:
-        blur = pool.starmap(gaussian_blur,[(vol_filled[z],blur_kern_size) for z in range(vol.shape[0])])
-        mask_closed = pool.starmap(close_mask,[(mask[i],valid[i]) for i in range(mask.shape[0])])
+        print('Blurring')
+        blur = pool.starmap(gaussian_blur,[(vol_filled[z],mask_kern_size) for z in range(vol.shape[0])])
+        print('Retrieving edges')
+        edges = pool.map(sobel_edge_2d,blur)
+        print('Selecting edges')
+        edges_otsu = pool.map(threshold_otsu,edges)
+        print('Closing interior')
+        mask = pool.starmap(close_mask,(edges_otsu,valid_slice,1))
 
-    blur = np.stack(blur,axis=0)
+    # vals = blur[valid].ravel()
+    # print(f'Max: {vals.max()} | Min: {vals.min()}')
+    # t = threshold_otsu(blur[valid].ravel())
+    # mask = np.zeros_like(vol,dtype=np.int8)
+    # mask[valid] = blur[valid] < t
+
+    # mask = keep_largest_component_3d(mask,id=1)
+
+    # with Pool() as pool:
+    #     if blur_kern_size != None:
+    #         blur = pool.starmap(gaussian_blur,[(vol_filled[z],blur_kern_size) for z in range(vol.shape[0])])
+    #     mask_closed = pool.starmap(close_mask,[(mask[i],valid[i],5) for i in range(mask.shape[0])])
+
+        if blur_kern_size == 0 | blur_kern_size == None:
+            print('No gaussian applied to scan')
+            blur = vol
+        else:
+            blur = pool.starmap(gaussian_blur,[(vol_filled[z],blur_kern_size) for z in range(blur.shape[0])])
+            blur = np.stack(blur,axis=0)
+
     mask = np.stack(mask,axis=0)
-
-    #with Pool() as pool:
-    #    results = pool.starmap(process_slice_np, [(vol[z],blur_kern_size,mask_kern_size) for z in range(vol.shape[0])])
-    
-    #blur,mask = zip(*results)
-    #blur = np.stack(blur,axis=0)
-    #mask = np.stack(mask,axis=0)
     
     return blur,mask
         
