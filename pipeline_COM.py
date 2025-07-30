@@ -40,7 +40,7 @@ def split_slices(num_slices,node_cores):
 
 
 
-def process_pipeline_dist(params):
+def process_pipeline_AAU(params):
     
 
     (
@@ -63,6 +63,7 @@ def process_pipeline_dist(params):
     core_counts = comm.gather(psutil.cpu_count(logical=False),root=0)
 
     _,tomo_dir,seg_dir = dirs
+    # [stone_id] = stone_id
 
     log_path = Path(seg_dir).parent / 'logs' / f'{stone_id}' / f'{stone_id}_log_{rank:02d}.txt'
     
@@ -110,21 +111,66 @@ def process_pipeline_dist(params):
         f.write(f'\nUsing {psutil.cpu_count(logical=False)} cores \nReading {tomo_dir}')
         f.write(f'\nRead {tomo_stack.shape[0]} images: {time.time() - start} seconds\n')
     
-    # tomo_stack = tomo_stack.compute()
+    tomo_stack = tomo_stack.compute()
     
-    if stone_id[:10] == 'Real_05_01':
-        print(f'Beginning processing on {rank}')
-        gmm_integrated,surface_data = AAU_process(tomo_stack.compute(),stone_id,voxel_size,air_water_seg,log_path,rank)
-        ext_sa,ext_faces,int_sa,int_faces = surface_data
-        print(f'Completed processing on {rank}')
-    elif stone_id[:10] == 'Real_15_01':
-        print(f'Beginning processing on {rank}')
-        gmm_integrated,surface_data = COM_process(tomo_stack.compute(),stone_id,voxel_size,air_water_seg,log_path,rank)
-        ext_sa,ext_faces,int_sa,int_faces = surface_data
-        print(f'Completed processing on {rank}')
+    tomo_stack = np.where(circular_mask(tomo_stack.shape,radius_scale=0.95),tomo_stack,np.nan)
 
-    else:
-        print(f'Enter valid ID. Received {stone_id[:10]}')
+    tomo_he = rescale(tomo_stack) # Histogram equalization
+    del tomo_stack
+    gc.collect()
+    
+    tomo_he,mask = isolate_foreground_COM(tomo_he,blur_kern_size=None,mask_kern_size=15) # Isolate foreground
+    ext_sa,ext_faces = estimate_surface_area(mask,1,vox_size=voxel_size) # Retrieve exterior surface area
+    print(f'Worker {rank} gaussian complete')
+    
+    
+    with open(log_path,'a+') as f:
+        f.write(f'Histogram adjusted and mask generated in {time.time() - start} seconds\n')
+    
+    
+    # ====== Section 2: Automated foreground segmentation ======
+    
+    print(f'Worker {rank} beginning segmentation')
+    ## First pass separates solid and fluid
+    start = time.time()
+    gmm_stone_labeled,_ = gaussian_mix_np(tomo_he,mask,n_classes=2) # Label stone (0) and pore (1)
+    gmm_stone_labeled = keep_largest_component_3d(gmm_stone_labeled,0) # Eliminate disconnected labels
+
+    total_sa,total_faces = estimate_surface_area(gmm_stone_labeled,0,vox_size=voxel_size) # Total surface area
+    # Interior is total - exterior
+    int_sa = total_sa - ext_sa 
+    int_faces = total_faces - ext_faces
+
+    with open(log_path,'a') as f:
+        f.write(f'\nSolid segmentation: {time.time() - start} seconds')
+
+    
+    print('Stone segmentation complete...')
+    # Second pass segments fluids (air and water presence)
+    if air_water_seg == True:
+        
+        start = time.time()
+        pore_stack = gmm_stone_labeled == 1
+        gmm_pore_labeled,_ = gaussian_mix_np(tomo_he,pore_stack,n_classes=2)
+        with open(log_path,'a') as f:
+            f.write(f'\nFluid segmentation: {time.time() - start} seconds')
+        
+        
+        gmm_integrated = np.zeros_like(tomo_he,dtype=np.int8)
+        
+        gmm_integrated[gmm_integrated == 0] = 0
+        gmm_integrated[gmm_pore_labeled == 0] = 1 ## Air values set to 1
+        gmm_integrated[gmm_pore_labeled == 1] = 2 ## Water values set to 2
+        gmm_integrated[gmm_stone_labeled == 0] = 3 ## Stone values set to 3
+        if stone_id[:10] == 'Stone_15_01':
+            gmm_integrated[gmm_pore_labeled == 1] = 3
+        
+    elif air_water_seg == False:
+        gmm_integrated = gmm_stone_labeled
+        gmm_integrated[gmm_integrated == 0] = 0
+        gmm_integrated[gmm_stone_labeled == 1] = 3 ## Stone values set to 1
+        print('Stone and fluid labels sorted...')
+
 
     # # ====== Section 3: Generate surface mesh ======
     # if gen_mesh == True:

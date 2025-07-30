@@ -129,6 +129,18 @@ def close_mask(mask,valid,iters=15):
     if len(np.unique(mask[valid])) == 1:
         mask = np.zeros_like(mask,dtype=np.uint8)
     return mask
+
+def isolate_foreground_AAU_2(vol,blur_kern_size=3,mask_kern_size=30):
+    valid = ~np.isnan(vol)
+    vol_filled = np.nan_to_num(vol,nan = np.max(vol[valid]))
+
+    with Pool() as pool:
+        edge_first = pool.map(sobel_edge_2d,[(slice) for slice in vol_filled])
+        edge_second = pool.map(sobel_edge_2d,edge_first)
+        blur = pool.starmap(gaussian_blur,(edge_second,mask_kern_size))
+        
+
+
     
 def isolate_foreground_AAU(vol,blur_kern_size=3,mask_kern_size=30):
     
@@ -166,7 +178,6 @@ def isolate_foreground_COM(vol,blur_kern_size=3,mask_kern_size=30):
     valid = ~np.isnan(vol)
     vol_filled = np.nan_to_num(vol,nan=np.max(vol[valid]))
 
-    valid_slice = ~np.isnan(vol[0])
 
     with Pool() as pool:
         print('Blurring')
@@ -176,8 +187,8 @@ def isolate_foreground_COM(vol,blur_kern_size=3,mask_kern_size=30):
         print('Selecting edges')
         edges_otsu = pool.map(threshold_otsu,edges)
         print('Closing interior')
-        mask = pool.starmap(close_mask,(edges_otsu,valid_slice,1))
-
+        mask = pool.starmap(close_mask,[(edges_otsu[z],valid[z],1) for z in range(len(edges_otsu))])
+        print('Closed interior')
     # vals = blur[valid].ravel()
     # print(f'Max: {vals.max()} | Min: {vals.min()}')
     # t = threshold_otsu(blur[valid].ravel())
@@ -191,14 +202,16 @@ def isolate_foreground_COM(vol,blur_kern_size=3,mask_kern_size=30):
     #         blur = pool.starmap(gaussian_blur,[(vol_filled[z],blur_kern_size) for z in range(vol.shape[0])])
     #     mask_closed = pool.starmap(close_mask,[(mask[i],valid[i],5) for i in range(mask.shape[0])])
 
-        if blur_kern_size == 0 | blur_kern_size == None:
+        if blur_kern_size in (0,1,None):
             print('No gaussian applied to scan')
             blur = vol
         else:
-            blur = pool.starmap(gaussian_blur,[(vol_filled[z],blur_kern_size) for z in range(blur.shape[0])])
+            print('Final blur')
+            blur = pool.starmap(gaussian_blur,[(vol_filled[z],blur_kern_size) for z in range(vol.shape[0])])
             blur = np.stack(blur,axis=0)
 
     mask = np.stack(mask,axis=0)
+    print(f'Number of elements in mask: {len(np.unique(mask))}')
     
     return blur,mask
         

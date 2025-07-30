@@ -7,7 +7,8 @@ import multiprocessing
 import threading
 
 from mpi4py import MPI
-from pipeline import process_pipeline_dist
+from pipeline_AAU import process_pipeline_AAU
+from pipeline_COM import process_pipeline_COM
 from get_io import get_user_input
 from pathlib import Path
 
@@ -92,10 +93,21 @@ def main(comm,param_file):
         task_args=None
 
     task_args = comm.bcast(task_args,root=0)
+    print(f'{task_args[rank]}')
+    ext_sa = None
+    ext_faces = None
+    int_sa = None
+    int_faces = None
 
     start = time.time()
-
-    ext_sa,ext_faces,int_sa,int_faces = process_pipeline_dist(*task_args)
+    if 'Real_05_01' in task_args[rank]:
+        print('ID recognized')
+        ext_sa,ext_faces,int_sa,int_faces = process_pipeline_AAU(*task_args)
+    elif 'Real_15_01' in stone_ids[rank]:
+        print('ID recognized')
+        ext_sa,ext_faces,int_sa,int_faces = process_pipeline_COM(*task_args)
+    else:
+        print('No ID detected. Not processing stone')
 
     print(f'Node {rank} completed in {time.time() - start} seconds')
     

@@ -8,7 +8,8 @@ from segmentation import gaussian_mix_np
 from surface_calc import estimate_surface_area
 
 
-def AAU_process(tomo_stack,stone_id,voxel_size,air_water_seg,log_path,rank):
+def AAU_process(tomo_stack,stone_id,voxel_size,air_water_seg,log_path,comm):
+    rank = comm.Get_rank()
     tomo_stack = np.where(circular_mask(tomo_stack.shape,radius_scale=0.95),tomo_stack,np.nan)
 
     tomo_he = rescale(tomo_stack) # Histogram equalization
@@ -70,14 +71,18 @@ def AAU_process(tomo_stack,stone_id,voxel_size,air_water_seg,log_path,rank):
 
     return gmm_integrated,surface_data
 
-def COM_process(tomo_stack,stone_id,voxel_size,air_water_seg,log_path,rank):
+def COM_process(tomo_stack,stone_id,voxel_size,air_water_seg,log_path,comm):
+    rank = comm.Get_rank()
     tomo_stack = np.where(circular_mask(tomo_stack.shape,radius_scale=0.95),tomo_stack,np.nan)
 
     tomo_he = rescale(tomo_stack) # Histogram equalization
     del tomo_stack
     gc.collect()
     
+    
+
     tomo_he,mask = isolate_foreground_COM(tomo_he,blur_kern_size=None,mask_kern_size=15) # Isolate foreground
+    comm.Barrier()
     ext_sa,ext_faces = estimate_surface_area(mask,1,vox_size=voxel_size) # Retrieve exterior surface area
     print(f'Worker {rank} gaussian complete')
     

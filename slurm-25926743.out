@@ -1,0 +1,63 @@
+Starting script
+Loading conda
+Conda activated
+/home/esrf/cameron15a/miniforge3/envs/ks_seg_dask/bin/python
+Python 3.10.18
+Launching script
+Starting job on hpc3-[2101-2102]
+[['Real_05_01_0007', '2.149544433e-6', '1862', '5']]
+Metadata from /home/esrf/cameron15a/Desktop/python/inputs/Real_05_01/seg_param_0007.txt
+Processing Stone Real_05_01_0007
+Worker 0: (('/data/visitor/me1663/id19/20240227/', '/data/visitor/me1663/id19/20240227/PROCESSED_DATA/Real_05_01/delta_beta_150/Reconstruction_16bit_dff_s32_v2/Real_05_01_0007_16bit_vol/', '/data/visitor/me1663/id19/20240227/SEGMENTATION/Real_05_01_multinode/labels/'), 'Real_05_01_0007', 2.149544433e-06, 1862, 5, False, True, True, 3, None, <mpi4py.MPI.Intracomm object at 0x7f5c9878de90>)
+ID recognized
+Clearing directories in /data/visitor/me1663/id19/20240227/SEGMENTATION/Real_05_01_multinode/labels/Real_05_01_0007
+373 [28, 28]
+Reading 186 files using 28 cores
+Sample shape and type: (3879, 3879) uint16
+Worker 0: (('/data/visitor/me1663/id19/20240227/', '/data/visitor/me1663/id19/20240227/PROCESSED_DATA/Real_05_01/delta_beta_150/Reconstruction_16bit_dff_s32_v2/Real_05_01_0007_16bit_vol/', '/data/visitor/me1663/id19/20240227/SEGMENTATION/Real_05_01_multinode/labels/'), 'Real_05_01_0007', 2.149544433e-06, 1862, 5, False, True, True, 3, None, <mpi4py.MPI.Intracomm object at 0x7f761f82de90>)
+ID recognized
+Reading 187 files using 28 cores
+Sample shape and type: (3879, 3879) uint16
+Max: 0.9835442900657654 | Min: 0.031182993203401566
+Detected 15495316 faces.
+Worker 0 gaussian complete
+Worker 0 beginning segmentation
+Creating GMM
+Predicting values...
+Remapping and sorting...
+Rebuild label volume...
+Label vol complete
+Detected 132777718 faces.
+Stone segmentation complete...
+Creating GMM
+Predicting values...
+Remapping and sorting...
+Rebuild label volume...
+Label vol complete
+Estimating surface area (6-conn.)...
+Writing labels to /data/visitor/me1663/id19/20240227/SEGMENTATION/Real_05_01_multinode/labels/Real_05_01_0007
+Max: 0.9641780853271484 | Min: 0.03172769397497177
+Detected 15511462 faces.
+Worker 1 gaussian complete
+Worker 1 beginning segmentation
+Creating GMM
+Predicting values...
+Remapping and sorting...
+Rebuild label volume...
+Label vol complete
+Detected 134065170 faces.
+Stone segmentation complete...
+Creating GMM
+Predicting values...
+Remapping and sorting...
+Rebuild label volume...
+Label vol complete
+Estimating surface area (6-conn.)...
+Writing labels to /data/visitor/me1663/id19/20240227/SEGMENTATION/Real_05_01_multinode/labels/Real_05_01_0007
+Worker 1: All labels written
+Node 1 completed in 2279.108183145523 seconds
+Worker 0: All labels written
+Node 0 completed in 2273.3140048980713 seconds
+slurmstepd: error: *** JOB 25926743 ON hpc3-2101 CANCELLED AT 2025-07-30T09:50:26 ***
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+slurmstepd: error: *** STEP 25926743.0 ON hpc3-2101 CANCELLED AT 2025-07-30T09:50:26 ***

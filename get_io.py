@@ -25,11 +25,17 @@ def get_user_input(input_file):
     split_index = next(i for i,line in enumerate(lines) if '__' in line)
     table_lines = lines[2:split_index]
     data = [line.strip().split() for line in table_lines if line.strip()]
+    print(f'{data}')
+    stone_id = data[0][0]
+    vox = float(data[0][1])
+    end = int(data[0][2])
+    skip = int(data[0][3])
     
-    stone_id = np.array([row[0] for row in data])
-    vox = np.array([float(row[1]) for row in data])
-    end = np.array([int(row[2]) for row in data])
-    skip = np.array([int(row[3]) for row in data])
+    
+    # stone_id = np.array([row[0] for row in data])
+    # vox = np.array([float(row[1]) for row in data])
+    # end = np.array([int(row[2]) for row in data])
+    # skip = np.array([int(row[3]) for row in data])
     arrs = (stone_id,vox,end,skip)
     
     settings = lines[split_index + 1:]
