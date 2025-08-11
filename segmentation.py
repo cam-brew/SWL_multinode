@@ -17,13 +17,13 @@ def gaussian_mix_init(n, covar_type='full', seed=42):
     return GaussianMixture(n_components=n, covariance_type=covar_type, random_state=seed)
 
 def gaussian_mix_np(tomo_stack, mask_stack, n_classes=2, confidence_threshold=0.9,
-                      max_voxels=850_000):
+                      max_voxels=1_000_000):
     """
     Dask-optimized version of GMM segmentation
     """
     # Flatten vals
     
-    valid_voxels = tomo_stack[mask_stack.astype(bool)]
+    valid_voxels = tomo_stack[mask_stack]
     
     N = valid_voxels.size
 

@@ -40,7 +40,7 @@ def split_slices(num_slices,node_cores):
 
 
 
-def process_pipeline_AAU(params):
+def process_pipeline_COM(params):
     
 
     (

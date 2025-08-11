@@ -1,9 +1,14 @@
 import numpy as np
+import time
 from multiprocessing import Pool
-
-from scipy.ndimage import binary_fill_holes, binary_closing,convolve,gaussian_filter,binary_dilation,label
+import multiprocessing
+from scipy.ndimage import binary_fill_holes,binary_closing,convolve,gaussian_filter,binary_dilation,binary_erosion,maximum_filter
 from skimage.filters import threshold_otsu,threshold_triangle
+from scipy.ndimage import label as label3d
+from skimage.measure import label as label2d
+from skimage.morphology import disk,remove_small_objects
 from skimage import exposure
+from segmentation import gaussian_mix_np
 
 """
     Masking functions:
@@ -12,7 +17,10 @@ from skimage import exposure
 """
 
 def circular_mask(shape, radius_scale=0.95):
-    d,h,w = shape
+    if len(shape) == 2:
+        h,w = shape
+    elif len(shape) == 3:
+        d,h,w = shape
     cy,cx = h // 2, w // 2
     Y,X = np.ogrid[:h,:w]
     radius = min(h,w) * radius_scale / 2
@@ -43,10 +51,13 @@ def hist_stretch(data,mask=None):
     p2,p98 = np.percentile(values,(2,98))
     return exposure.rescale_intensity(data,in_range=(p2,p98))
 
-def keep_largest_component_2d(mask,conn=2):
-    labeled = label(mask, connectivity=conn)
+def keep_largest_component_2d(mask,conn=1):
+    labeled = label2d(mask, connectivity=conn)
+    if labeled.max() == 0:
+        return mask
     sizes = np.bincount(labeled.ravel())
     sizes[0] = 0
+
     return labeled == sizes.argmax()
 
 
@@ -62,22 +73,24 @@ def detect_spring(vol,intensity_thresh=0.95,std_thresh=0.25):
 
 def keep_largest_component_3d(stack,id,conn=6):
     if stack.ndim != 3:
-        raise ValueError(f'Expected 3D mask, got shape: {mask.shape}')
+        raise ValueError(f'Expected 3D mask, got shape: {stack.shape}')
     if conn==6:
-        structure = np.zeros((3,3,3),dtype=np.int8)
-        structure[1,1,:] = 1
-        structure[1,:,1] = 1
-        structure[:,1,1] = 1
+        conn=1
+        # structure = np.zeros((3,3,3),dtype=np.int8)
+        # structure[1,1,:] = 1
+        # structure[1,:,1] = 1
+        # structure[:,1,1] = 1
     elif conn==26:
-        structure = np.ones((3,3,3),dtype=np.int8)
+        conn = 3
+        # structure = np.ones((3,3,3),dtype=np.int8)
     else:
         raise ValueError('conn must be 6 or 26')
     mask = (stack == id)
     if not np.any(mask):
         print('Mask considered empty')
         return stack.copy()
-    labeled_mask,num_features = label(mask,structure=structure)
-    if num_features == 0:
+    labeled_mask = label2d(mask,connectivity=conn)
+    if labeled_mask.max() == 0:
         print('Detected no features')
         return stack.copy()
 
@@ -122,25 +135,76 @@ def process_slice_np(slice,sigma_blur,sigma_mask):
 def gaussian_blur(slice,sigma):
     return gaussian_filter(slice,sigma=sigma)
 
-def close_mask(mask,valid,iters=15):
-    mask = binary_closing(mask)
-    mask = binary_fill_holes(mask)
+
+
+def close_mask_2(mask,iters=30,valid=None,erode_frac=0.5):
     mask = binary_dilation(mask,iterations=iters)
-    if len(np.unique(mask[valid])) == 1:
-        mask = np.zeros_like(mask,dtype=np.uint8)
-    return mask
+    mask = binary_closing(mask,structure=disk(3))
+    mask = binary_fill_holes(mask)
+    mask = binary_erosion(mask,structure=None,iterations=int(erode_frac*iters))
+    if np.any(valid) is not None and np.any(mask):
+        unique_vals = np.unique(mask[valid])
+        # print(f'Unique values: {unique_vals}')
+        if len(unique_vals) == 1:
+            # print(f'Detected blank slice')
+            mask = np.zeros(mask.shape,dtype=bool)
+    return mask.astype(bool)
 
 def isolate_foreground_AAU_2(vol,blur_kern_size=3,mask_kern_size=30):
-    valid = ~np.isnan(vol)
-    vol_filled = np.nan_to_num(vol,nan = np.max(vol[valid]))
+
+    vol_he = rescale(vol,clip=0.3)
+
+    circ = np.where(circular_mask(vol.shape,radius_scale=0.90),vol,np.nan)
+    valid = ~np.isnan(circ)
+
+    print(f'Valid shape: {valid.shape}')
+    # vol = np.nan_to_num(vol,nan = np.max(vol[valid]))
+
 
     with Pool() as pool:
-        edge_first = pool.map(sobel_edge_2d,[(slice) for slice in vol_filled])
-        edge_second = pool.map(sobel_edge_2d,edge_first)
-        blur = pool.starmap(gaussian_blur,(edge_second,mask_kern_size))
+        edge_first = pool.map(sobel_edge_2d,[(tomo) for tomo in vol_he])
+        edge_first = np.stack(edge_first)
+        edge_first = np.where(circular_mask(edge_first.shape,radius_scale=0.90),edge_first,0)
+        edge_first = pool.starmap(gaussian_blur,[(tomo,blur_kern_size) for tomo in edge_first])
+        edge_mask = np.zeros_like(edge_first,dtype=np.uint8)
+        edge_first = np.stack(edge_first)
+
+        print(f'Edge shape: {edge_first.shape}')
+        t_edge = threshold_otsu(edge_first[valid].ravel())
+        edge_mask[valid] = edge_first[valid] > t_edge
+
+        blur = pool.starmap(gaussian_blur,[(tomo,mask_kern_size) for tomo in vol])
+        blur = np.stack(blur)
+        blur = np.where(circular_mask(vol.shape,radius_scale=0.90),blur,0)
+        t_blur = threshold_otsu(blur[valid].ravel())
+        blur_mask = np.zeros_like(blur,dtype=np.uint8)
+        blur_mask[valid] = blur[valid] > t_blur
+
+        out = np.logical_and(edge_mask,blur_mask,dtype=np.uint8)
+        out = pool.starmap(remove_small_objects,[(out[i],300) for i in range(out.shape[0])])
+        # out = keep_largest_component_3d(out,id=1,conn=6)
+        out = pool.starmap(close_mask_2,[(out[i],100) for i in range(len(out))])
+        # edge_mask = pool.starmap(remove_small_objects,([(edge_mask[i],50) for i in range(edge_mask.shape[0])]))
+        # edge_mask = maximum_filter(edge_mask,size=3)
+        # mask = pool.starmap(close_mask_2,([(edge_mask[i],100) for i in range(len(edge_mask))]))
+        out = pool.starmap(binary_erosion,([(out[i],None,90) for i in range(len(out))]))
+
+
+        # print(f'Performing GMM')   
+        # out,_ = gaussian_mix_np(vol,np.stack(mask))
+        # out = (out == 0).astype(np.uint8)
+        # out = np.stack(out)
+        # out = pool.starmap(gaussian_blur,[(out[i],3) for i in range(out.shape[0])])
+        # out = np.stack(out)
+        # t = threshold_otsu(out.ravel())
         
+        # out = (out > t).astype(np.uint8)
+        # out = keep_largest_component_3d(out,id=out.max(),conn=6)
+
+        # out = pool.starmap(close_mask_2,[(out[i],10) for i in range(out.shape[0])])
 
 
+    return np.stack(out)
     
 def isolate_foreground_AAU(vol,blur_kern_size=3,mask_kern_size=30):
     
@@ -215,25 +279,86 @@ def isolate_foreground_COM(vol,blur_kern_size=3,mask_kern_size=30):
     
     return blur,mask
         
-def rescale(vol):
-    valid_mask = ~np.isnan(vol) # mask valid pixels
+def rescale(vol,clip=2, mask=None,hist_eq=False):
+
+    if mask is None:
+        mask = ~np.isnan(vol)
+    
+    valid_vals = vol[mask]
+    if valid_vals.size == 0:
+        print(f'No values to mask')
+        return vol
+    
+    # valid_mask = ~np.isnan(vol) # mask valid pixels
     
     # Set upper and lower clipping lims
-    vmin = np.nanpercentile(vol,2)
-    vmax = np.nanpercentile(vol,98)
+    vmin = np.nanpercentile(valid_vals,clip)
+    vmax = np.nanpercentile(valid_vals,100-clip)
     vol_clip = np.clip(vol,vmin,vmax)
     
     # Make vol [0,1]
-    vol = (vol_clip - vmin) / (vmin - vmax)
-    vol = vol.astype(np.float32)
+    vol_norm = (vol_clip - vmin) / (vmax - vmin)
+    vol_norm = vol_norm.astype(np.float32)
+    if hist_eq == True:
+        print(f'Performing histogram equalization')
+        flat_valid = vol[mask] # set valid mask
+        vol_he = np.full_like(vol,np.nan) # initially empty set
+        
+        #only equalize locations within circular mask
+        vol_he[mask] = exposure.equalize_hist(flat_valid)
+        return vol_he
     
-    flat_valid = vol[valid_mask] # set valid mask
-    vol_he = np.full_like(vol,np.nan) # initially empty set
+    return vol_norm
+
+
+def masking_blur(stack,sigma,mask=None,keep_largest_comp=False):
+    if mask is None:
+        mask = np.zeros(stack.shape[1:],dtype=np.uint8)
+
+    circ = np.where(circular_mask(stack.shape,radius_scale=0.90),stack,np.nan)
+    valid = ~np.isnan(circ)
+
+    with Pool(processes=multiprocessing.cpu_count()) as pool:
+        start = time.time()
+        blur = pool.starmap(gaussian_blur,[(tomo,sigma) for tomo in stack])
+        print(f'Blur time: {time.time() - start}')
+        start = time.time()
+        blur = rescale(np.stack(blur),clip=0.3)
+        print(f'Normalize: {time.time() - start}')
+        start = time.time()
+        blur = np.where(mask,blur,0)
+        out = np.zeros_like(stack,dtype=np.uint8)
+
+        t = threshold_otsu(blur[valid].ravel())
+        out[valid] = blur[valid] > t
+        print(f'Threshold: {time.time() - start}')
+        start = time.time()
+        if keep_largest_comp == True:
+            out = pool.map(keep_largest_component_2d,[tomo for tomo in out])
+        print(f'Keep component: {time.time() - start}')
+        start = time.time()
+        out = pool.starmap(close_mask_2,[(tomo,10) for tomo in out])
+        print(f'Closing sequence: {time.time() - start}')
+        start = time.time()
+        out = pool.starmap(binary_erosion,[(tomo,None,10) for tomo in out])
+        print(f'Erosion: {time.time() - start}')
+
+    return np.stack(out)
+
+
+def masking_edge(stack,sigma):
+    stack = rescale(stack,clip=0.3)
+
+    with Pool(processes=multiprocessing.cpu_count()) as pool:
+        edge = pool.map(sobel_edge_2d,[tomo for tomo in stack])
+        edge = np.where(circular_mask(stack.shape,radius_scale=0.9),np.stack(edge),0)
+        edge = pool.starmap(gaussian_blur,[(tomo,sigma) for tomo in edge])
+        t = threshold_otsu(np.stack(edge).ravel())
+        out = np.zeros_like(stack,dtype=np.uint8)
+        out = edge > t
     
-    # only equalize locations within circular mask
-    vol_he[valid_mask] = exposure.equalize_hist(flat_valid)
-    
-    return vol_he
+    return out
+
 
 def main():
     import tifffile

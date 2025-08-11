@@ -38,7 +38,7 @@ def main(comm,param_file):
         elif stone_id[:10] == "Real_15_01":
             tomo_dir = root_dir + f'PROCESSED_DATA/{stone_id[:10]}/Reconstruction_16bit_dff_s32_v2/{stone_id}_16bit_vol/'
         
-        seg_dir = root_dir + f"SEGMENTATION/{stone_id[:10]}_multinode/labels/"
+        seg_dir = root_dir + f"SEGMENTATION/{stone_id[:10]}/labels/"
 
         dirs = (root_dir,tomo_dir,seg_dir)
         
@@ -64,8 +64,7 @@ def main(comm,param_file):
         task_args=None
 
     task_args = comm.bcast(task_args,root=0)
-    for i,element in enumerate(task_args):
-        print(f'Worker {i}: {element}')
+    
     ext_sa = None
     ext_faces = None
     int_sa = None
@@ -73,11 +72,11 @@ def main(comm,param_file):
 
     start = time.time()
     if 'Real_05_01' in task_args[0][1]:
-        print('ID recognized')
+        print(f'ID: {task_args[0][1]}')
         ext_sa,ext_faces,int_sa,int_faces = process_pipeline_AAU(*task_args)
     elif 'Real_15_01' in task_args[0][1]:
-        print('ID recognized')
-        ext_sa,ext_faces,int_sa,int_faces = process_pipeline_COM(*task_args)
+        print(f'ID {task_args[0][1]}')
+        ext_sa,ext_faces,int_sa,int_faces = process_pipeline_AAU(*task_args)
     else:
         print(f'No ID detected in {task_args[0][1]}. Not processing stone')
 
@@ -91,7 +90,9 @@ def main(comm,param_file):
 
     if rank == 0:
              
-        with open(Path(seg_dir).parent / 'data' / f'{stone_id[0]}_data.txt', 'w+') as f:
+        with open(Path(seg_dir).parent / 'data' / f'{stone_id}_test_data.txt', 'w+') as f:
+            f.write(f'Surface area information: {stone_id}')
+            f.write(f'-------------------------')
             f.write(f'\nTotal measured exterior surface area(mm^2): {total_ext_sa}')
             f.write(f'\nTotal exterior faces detected: {total_ext_faces}')
             f.write(f'\nTotal measured interior surface area (mm^2): {total_int_sa}')

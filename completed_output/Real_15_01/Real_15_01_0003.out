@@ -1,0 +1,539 @@
+Starting script
+Loading conda
+Conda activated
+/home/esrf/cameron15a/miniforge3/envs/ks_seg_dask/bin/python
+Python 3.10.18
+Launching script
+Starting job on hpc3-[2101-2104,2601-2604,2701-2704,2801-2804,2901-2902]
+ID Real_15_01_0003
+Reading 206 files using 28 cores
+Sample shape and type: (4751, 4751) uint16
+ID Real_15_01_0003
+Reading 207 files using 28 cores
+Sample shape and type: (4751, 4751) uint16
+ID Real_15_01_0003
+Reading 207 files using 28 cores
+Sample shape and type: (4751, 4751) uint16
+ID Real_15_01_0003
+Reading 207 files using 28 cores
+Sample shape and type: (4751, 4751) uint16
+ID Real_15_01_0003
+Reading 206 files using 28 cores
+Sample shape and type: (4751, 4751) uint16
+ID Real_15_01_0003
+Reading 207 files using 28 cores
+Sample shape and type: (4751, 4751) uint16
+ID Real_15_01_0003
+Reading 207 files using 28 cores
+Sample shape and type: (4751, 4751) uint16
+ID Real_15_01_0003
+Reading 207 files using 28 cores
+Sample shape and type: (4751, 4751) uint16
+ID Real_15_01_0003
+Reading 207 files using 28 cores
+Sample shape and type: (4751, 4751) uint16
+ID Real_15_01_0003
+Reading 207 files using 28 cores
+Sample shape and type: (4751, 4751) uint16
+ID Real_15_01_0003
+Reading 206 files using 28 cores
+Sample shape and type: (4751, 4751) uint16
+ID Real_15_01_0003
+Reading 207 files using 28 cores
+Sample shape and type: (4751, 4751) uint16
+[['Real_15_01_0003', '2.149544433e-6', '3719', '1']]
+Metadata from /home/esrf/cameron15a/Desktop/python/inputs/Real_15_01/seg_param_0003.txt
+Processing Stone Real_15_01_0003
+ID Real_15_01_0003
+Clearing directories in /data/visitor/me1663/id19/20240227/SEGMENTATION/Real_15_01_multinode/labels/Real_15_01_0003
+3719 [28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28]
+Reading 207 files using 28 cores
+Sample shape and type: (4751, 4751) uint16
+ID Real_15_01_0003
+Reading 206 files using 28 cores
+Sample shape and type: (4751, 4751) uint16
+ID Real_15_01_0003
+Reading 206 files using 28 cores
+Sample shape and type: (4751, 4751) uint16
+ID Real_15_01_0003
+Reading 206 files using 28 cores
+Sample shape and type: (4751, 4751) uint16
+ID Real_15_01_0003
+Reading 206 files using 28 cores
+Sample shape and type: (4751, 4751) uint16
+ID Real_15_01_0003
+Reading 207 files using 28 cores
+Sample shape and type: (4751, 4751) uint16
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_reset_if_to: hpc3-2602 [5]: pmixp_coll_tree.c:1321: 0x14c75803c2a0: collective timeout seq=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_log: hpc3-2602 [5]: pmixp_coll.c:286: Dumping collective state
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2602 [5]: pmixp_coll_tree.c:1337: 0x14c75803c2a0: COLL_FENCE_TREE state seq=0 contribs: loc=1/prnt=0/child=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2602 [5]: pmixp_coll_tree.c:1342: my peerid: 5:hpc3-2602
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2602 [5]: pmixp_coll_tree.c:1345: root host: 0:hpc3-2101
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2602 [5]: pmixp_coll_tree.c:1348: prnt host: 1:hpc3-2102
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2602 [5]: pmixp_coll_tree.c:1350: prnt contrib:
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2602 [5]: pmixp_coll_tree.c:1351: 	 [1:hpc3-2102] false
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2602 [5]: pmixp_coll_tree.c:1392: status: coll=COLL_UPFWD upfw=COLL_SND_DONE dfwd=COLL_SND_NONE
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2602 [5]: pmixp_coll_tree.c:1396: dfwd status: dfwd_cb_cnt=0, dfwd_cb_wait=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2602 [5]: pmixp_coll_tree.c:1398: bufs (offset/size): upfw 88/88, dfwd 69/69
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_reset_if_to: hpc3-2102 [1]: pmixp_coll_tree.c:1321: 0x14ac5800e6d0: collective timeout seq=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_log: hpc3-2102 [1]: pmixp_coll.c:286: Dumping collective state
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2102 [1]: pmixp_coll_tree.c:1337: 0x14ac5800e6d0: COLL_FENCE_TREE state seq=0 contribs: loc=1/prnt=0/child=15
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2102 [1]: pmixp_coll_tree.c:1342: my peerid: 1:hpc3-2102
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2102 [1]: pmixp_coll_tree.c:1345: root host: 0:hpc3-2101
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2102 [1]: pmixp_coll_tree.c:1348: prnt host: 0:hpc3-2101
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2102 [1]: pmixp_coll_tree.c:1350: prnt contrib:
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2102 [1]: pmixp_coll_tree.c:1351: 	 [0:hpc3-2101] false
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2102 [1]: pmixp_coll_tree.c:1359: child contribs [16]:
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2102 [1]: pmixp_coll_tree.c:1385: 	 done contrib: hpc3-[2103-2104,2601-2604,2701-2704,2801-2804,2901]
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2102 [1]: pmixp_coll_tree.c:1387: 	 wait contrib: hpc3-2902
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2102 [1]: pmixp_coll_tree.c:1392: status: coll=COLL_COLLECT upfw=COLL_SND_NONE dfwd=COLL_SND_NONE
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2102 [1]: pmixp_coll_tree.c:1396: dfwd status: dfwd_cb_cnt=0, dfwd_cb_wait=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2102 [1]: pmixp_coll_tree.c:1398: bufs (offset/size): upfw 373/373, dfwd 69/69
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_reset_if_to: hpc3-2701 [8]: pmixp_coll_tree.c:1321: 0x14a54c039210: collective timeout seq=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_log: hpc3-2701 [8]: pmixp_coll.c:286: Dumping collective state
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2701 [8]: pmixp_coll_tree.c:1337: 0x14a54c039210: COLL_FENCE_TREE state seq=0 contribs: loc=1/prnt=0/child=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2701 [8]: pmixp_coll_tree.c:1342: my peerid: 8:hpc3-2701
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2701 [8]: pmixp_coll_tree.c:1345: root host: 0:hpc3-2101
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2701 [8]: pmixp_coll_tree.c:1348: prnt host: 1:hpc3-2102
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2701 [8]: pmixp_coll_tree.c:1350: prnt contrib:
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2701 [8]: pmixp_coll_tree.c:1351: 	 [1:hpc3-2102] false
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2701 [8]: pmixp_coll_tree.c:1392: status: coll=COLL_UPFWD upfw=COLL_SND_DONE dfwd=COLL_SND_NONE
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2701 [8]: pmixp_coll_tree.c:1396: dfwd status: dfwd_cb_cnt=0, dfwd_cb_wait=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2701 [8]: pmixp_coll_tree.c:1398: bufs (offset/size): upfw 88/88, dfwd 69/69
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_reset_if_to: hpc3-2101 [0]: pmixp_coll_tree.c:1321: 0x145d2c03ca90: collective timeout seq=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_log: hpc3-2101 [0]: pmixp_coll.c:286: Dumping collective state
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2101 [0]: pmixp_coll_tree.c:1337: 0x145d2c03ca90: COLL_FENCE_TREE state seq=0 contribs: loc=1/prnt=0/child=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2101 [0]: pmixp_coll_tree.c:1342: my peerid: 0:hpc3-2101
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2101 [0]: pmixp_coll_tree.c:1345: root host: 0:hpc3-2101
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2101 [0]: pmixp_coll_tree.c:1359: child contribs [1]:
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2101 [0]: pmixp_coll_tree.c:1385: 	 done contrib: -
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2101 [0]: pmixp_coll_tree.c:1387: 	 wait contrib: hpc3-2102
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2101 [0]: pmixp_coll_tree.c:1392: status: coll=COLL_COLLECT upfw=COLL_SND_NONE dfwd=COLL_SND_NONE
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2101 [0]: pmixp_coll_tree.c:1396: dfwd status: dfwd_cb_cnt=0, dfwd_cb_wait=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2101 [0]: pmixp_coll_tree.c:1398: bufs (offset/size): upfw 88/88, dfwd 69/69
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_reset_if_to: hpc3-2801 [12]: pmixp_coll_tree.c:1321: 0x14ee3003c1b0: collective timeout seq=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_log: hpc3-2801 [12]: pmixp_coll.c:286: Dumping collective state
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2801 [12]: pmixp_coll_tree.c:1337: 0x14ee3003c1b0: COLL_FENCE_TREE state seq=0 contribs: loc=1/prnt=0/child=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2801 [12]: pmixp_coll_tree.c:1342: my peerid: 12:hpc3-2801
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2801 [12]: pmixp_coll_tree.c:1345: root host: 0:hpc3-2101
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2801 [12]: pmixp_coll_tree.c:1348: prnt host: 1:hpc3-2102
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2801 [12]: pmixp_coll_tree.c:1350: prnt contrib:
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2801 [12]: pmixp_coll_tree.c:1351: 	 [1:hpc3-2102] false
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2801 [12]: pmixp_coll_tree.c:1392: status: coll=COLL_UPFWD upfw=COLL_SND_DONE dfwd=COLL_SND_NONE
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2801 [12]: pmixp_coll_tree.c:1396: dfwd status: dfwd_cb_cnt=0, dfwd_cb_wait=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2801 [12]: pmixp_coll_tree.c:1398: bufs (offset/size): upfw 88/88, dfwd 69/69
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_reset_if_to: hpc3-2604 [7]: pmixp_coll_tree.c:1321: 0x14627803c6f0: collective timeout seq=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_log: hpc3-2604 [7]: pmixp_coll.c:286: Dumping collective state
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2604 [7]: pmixp_coll_tree.c:1337: 0x14627803c6f0: COLL_FENCE_TREE state seq=0 contribs: loc=1/prnt=0/child=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2604 [7]: pmixp_coll_tree.c:1342: my peerid: 7:hpc3-2604
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2604 [7]: pmixp_coll_tree.c:1345: root host: 0:hpc3-2101
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2604 [7]: pmixp_coll_tree.c:1348: prnt host: 1:hpc3-2102
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2604 [7]: pmixp_coll_tree.c:1350: prnt contrib:
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2604 [7]: pmixp_coll_tree.c:1351: 	 [1:hpc3-2102] false
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2604 [7]: pmixp_coll_tree.c:1392: status: coll=COLL_UPFWD upfw=COLL_SND_DONE dfwd=COLL_SND_NONE
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2604 [7]: pmixp_coll_tree.c:1396: dfwd status: dfwd_cb_cnt=0, dfwd_cb_wait=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2604 [7]: pmixp_coll_tree.c:1398: bufs (offset/size): upfw 88/88, dfwd 69/69
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_reset_if_to: hpc3-2103 [2]: pmixp_coll_tree.c:1321: 0x14bbf0039210: collective timeout seq=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_log: hpc3-2103 [2]: pmixp_coll.c:286: Dumping collective state
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2103 [2]: pmixp_coll_tree.c:1337: 0x14bbf0039210: COLL_FENCE_TREE state seq=0 contribs: loc=1/prnt=0/child=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2103 [2]: pmixp_coll_tree.c:1342: my peerid: 2:hpc3-2103
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2103 [2]: pmixp_coll_tree.c:1345: root host: 0:hpc3-2101
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2103 [2]: pmixp_coll_tree.c:1348: prnt host: 1:hpc3-2102
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2103 [2]: pmixp_coll_tree.c:1350: prnt contrib:
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2103 [2]: pmixp_coll_tree.c:1351: 	 [1:hpc3-2102] false
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2103 [2]: pmixp_coll_tree.c:1392: status: coll=COLL_UPFWD upfw=COLL_SND_DONE dfwd=COLL_SND_NONE
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2103 [2]: pmixp_coll_tree.c:1396: dfwd status: dfwd_cb_cnt=0, dfwd_cb_wait=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2103 [2]: pmixp_coll_tree.c:1398: bufs (offset/size): upfw 88/88, dfwd 69/69
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_reset_if_to: hpc3-2901 [16]: pmixp_coll_tree.c:1321: 0x15231803c1b0: collective timeout seq=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_log: hpc3-2901 [16]: pmixp_coll.c:286: Dumping collective state
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2901 [16]: pmixp_coll_tree.c:1337: 0x15231803c1b0: COLL_FENCE_TREE state seq=0 contribs: loc=1/prnt=0/child=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2901 [16]: pmixp_coll_tree.c:1342: my peerid: 16:hpc3-2901
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2901 [16]: pmixp_coll_tree.c:1345: root host: 0:hpc3-2101
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2901 [16]: pmixp_coll_tree.c:1348: prnt host: 1:hpc3-2102
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2901 [16]: pmixp_coll_tree.c:1350: prnt contrib:
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2901 [16]: pmixp_coll_tree.c:1351: 	 [1:hpc3-2102] false
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2901 [16]: pmixp_coll_tree.c:1392: status: coll=COLL_UPFWD upfw=COLL_SND_DONE dfwd=COLL_SND_NONE
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2901 [16]: pmixp_coll_tree.c:1396: dfwd status: dfwd_cb_cnt=0, dfwd_cb_wait=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2901 [16]: pmixp_coll_tree.c:1398: bufs (offset/size): upfw 88/88, dfwd 69/69
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_reset_if_to: hpc3-2802 [13]: pmixp_coll_tree.c:1321: 0x15329003c1b0: collective timeout seq=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_log: hpc3-2802 [13]: pmixp_coll.c:286: Dumping collective state
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2802 [13]: pmixp_coll_tree.c:1337: 0x15329003c1b0: COLL_FENCE_TREE state seq=0 contribs: loc=1/prnt=0/child=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2802 [13]: pmixp_coll_tree.c:1342: my peerid: 13:hpc3-2802
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2802 [13]: pmixp_coll_tree.c:1345: root host: 0:hpc3-2101
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2802 [13]: pmixp_coll_tree.c:1348: prnt host: 1:hpc3-2102
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2802 [13]: pmixp_coll_tree.c:1350: prnt contrib:
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2802 [13]: pmixp_coll_tree.c:1351: 	 [1:hpc3-2102] false
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2802 [13]: pmixp_coll_tree.c:1392: status: coll=COLL_UPFWD upfw=COLL_SND_DONE dfwd=COLL_SND_NONE
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2802 [13]: pmixp_coll_tree.c:1396: dfwd status: dfwd_cb_cnt=0, dfwd_cb_wait=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2802 [13]: pmixp_coll_tree.c:1398: bufs (offset/size): upfw 88/88, dfwd 69/69
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_reset_if_to: hpc3-2603 [6]: pmixp_coll_tree.c:1321: 0x14b3e803bf30: collective timeout seq=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_log: hpc3-2603 [6]: pmixp_coll.c:286: Dumping collective state
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2603 [6]: pmixp_coll_tree.c:1337: 0x14b3e803bf30: COLL_FENCE_TREE state seq=0 contribs: loc=1/prnt=0/child=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2603 [6]: pmixp_coll_tree.c:1342: my peerid: 6:hpc3-2603
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2603 [6]: pmixp_coll_tree.c:1345: root host: 0:hpc3-2101
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2603 [6]: pmixp_coll_tree.c:1348: prnt host: 1:hpc3-2102
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2603 [6]: pmixp_coll_tree.c:1350: prnt contrib:
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2603 [6]: pmixp_coll_tree.c:1351: 	 [1:hpc3-2102] false
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2603 [6]: pmixp_coll_tree.c:1392: status: coll=COLL_UPFWD upfw=COLL_SND_DONE dfwd=COLL_SND_NONE
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2603 [6]: pmixp_coll_tree.c:1396: dfwd status: dfwd_cb_cnt=0, dfwd_cb_wait=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2603 [6]: pmixp_coll_tree.c:1398: bufs (offset/size): upfw 88/88, dfwd 69/69
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_reset_if_to: hpc3-2804 [15]: pmixp_coll_tree.c:1321: 0x14d3a40391d0: collective timeout seq=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_log: hpc3-2804 [15]: pmixp_coll.c:286: Dumping collective state
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2804 [15]: pmixp_coll_tree.c:1337: 0x14d3a40391d0: COLL_FENCE_TREE state seq=0 contribs: loc=1/prnt=0/child=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2804 [15]: pmixp_coll_tree.c:1342: my peerid: 15:hpc3-2804
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2804 [15]: pmixp_coll_tree.c:1345: root host: 0:hpc3-2101
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2804 [15]: pmixp_coll_tree.c:1348: prnt host: 1:hpc3-2102
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2804 [15]: pmixp_coll_tree.c:1350: prnt contrib:
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2804 [15]: pmixp_coll_tree.c:1351: 	 [1:hpc3-2102] false
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2804 [15]: pmixp_coll_tree.c:1392: status: coll=COLL_UPFWD upfw=COLL_SND_DONE dfwd=COLL_SND_NONE
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2804 [15]: pmixp_coll_tree.c:1396: dfwd status: dfwd_cb_cnt=0, dfwd_cb_wait=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2804 [15]: pmixp_coll_tree.c:1398: bufs (offset/size): upfw 88/88, dfwd 69/69
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_reset_if_to: hpc3-2104 [3]: pmixp_coll_tree.c:1321: 0x14884c03c420: collective timeout seq=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_log: hpc3-2104 [3]: pmixp_coll.c:286: Dumping collective state
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2104 [3]: pmixp_coll_tree.c:1337: 0x14884c03c420: COLL_FENCE_TREE state seq=0 contribs: loc=1/prnt=0/child=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2104 [3]: pmixp_coll_tree.c:1342: my peerid: 3:hpc3-2104
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2104 [3]: pmixp_coll_tree.c:1345: root host: 0:hpc3-2101
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2104 [3]: pmixp_coll_tree.c:1348: prnt host: 1:hpc3-2102
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2104 [3]: pmixp_coll_tree.c:1350: prnt contrib:
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2104 [3]: pmixp_coll_tree.c:1351: 	 [1:hpc3-2102] false
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2104 [3]: pmixp_coll_tree.c:1392: status: coll=COLL_UPFWD upfw=COLL_SND_DONE dfwd=COLL_SND_NONE
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2104 [3]: pmixp_coll_tree.c:1396: dfwd status: dfwd_cb_cnt=0, dfwd_cb_wait=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2104 [3]: pmixp_coll_tree.c:1398: bufs (offset/size): upfw 88/88, dfwd 69/69
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_reset_if_to: hpc3-2704 [11]: pmixp_coll_tree.c:1321: 0x1549dc0391d0: collective timeout seq=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_log: hpc3-2704 [11]: pmixp_coll.c:286: Dumping collective state
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2704 [11]: pmixp_coll_tree.c:1337: 0x1549dc0391d0: COLL_FENCE_TREE state seq=0 contribs: loc=1/prnt=0/child=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2704 [11]: pmixp_coll_tree.c:1342: my peerid: 11:hpc3-2704
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2704 [11]: pmixp_coll_tree.c:1345: root host: 0:hpc3-2101
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2704 [11]: pmixp_coll_tree.c:1348: prnt host: 1:hpc3-2102
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2704 [11]: pmixp_coll_tree.c:1350: prnt contrib:
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2704 [11]: pmixp_coll_tree.c:1351: 	 [1:hpc3-2102] false
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2704 [11]: pmixp_coll_tree.c:1392: status: coll=COLL_UPFWD upfw=COLL_SND_DONE dfwd=COLL_SND_NONE
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2704 [11]: pmixp_coll_tree.c:1396: dfwd status: dfwd_cb_cnt=0, dfwd_cb_wait=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2704 [11]: pmixp_coll_tree.c:1398: bufs (offset/size): upfw 88/88, dfwd 69/69
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_reset_if_to: hpc3-2703 [10]: pmixp_coll_tree.c:1321: 0x14b6d403bb10: collective timeout seq=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_log: hpc3-2703 [10]: pmixp_coll.c:286: Dumping collective state
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2703 [10]: pmixp_coll_tree.c:1337: 0x14b6d403bb10: COLL_FENCE_TREE state seq=0 contribs: loc=1/prnt=0/child=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2703 [10]: pmixp_coll_tree.c:1342: my peerid: 10:hpc3-2703
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2703 [10]: pmixp_coll_tree.c:1345: root host: 0:hpc3-2101
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2703 [10]: pmixp_coll_tree.c:1348: prnt host: 1:hpc3-2102
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2703 [10]: pmixp_coll_tree.c:1350: prnt contrib:
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2703 [10]: pmixp_coll_tree.c:1351: 	 [1:hpc3-2102] false
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2703 [10]: pmixp_coll_tree.c:1392: status: coll=COLL_UPFWD upfw=COLL_SND_DONE dfwd=COLL_SND_NONE
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2703 [10]: pmixp_coll_tree.c:1396: dfwd status: dfwd_cb_cnt=0, dfwd_cb_wait=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2703 [10]: pmixp_coll_tree.c:1398: bufs (offset/size): upfw 88/88, dfwd 69/69
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_reset_if_to: hpc3-2702 [9]: pmixp_coll_tree.c:1321: 0x147b340391d0: collective timeout seq=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_log: hpc3-2702 [9]: pmixp_coll.c:286: Dumping collective state
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2702 [9]: pmixp_coll_tree.c:1337: 0x147b340391d0: COLL_FENCE_TREE state seq=0 contribs: loc=1/prnt=0/child=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2702 [9]: pmixp_coll_tree.c:1342: my peerid: 9:hpc3-2702
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2702 [9]: pmixp_coll_tree.c:1345: root host: 0:hpc3-2101
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2702 [9]: pmixp_coll_tree.c:1348: prnt host: 1:hpc3-2102
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2702 [9]: pmixp_coll_tree.c:1350: prnt contrib:
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2702 [9]: pmixp_coll_tree.c:1351: 	 [1:hpc3-2102] false
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2702 [9]: pmixp_coll_tree.c:1392: status: coll=COLL_UPFWD upfw=COLL_SND_DONE dfwd=COLL_SND_NONE
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2702 [9]: pmixp_coll_tree.c:1396: dfwd status: dfwd_cb_cnt=0, dfwd_cb_wait=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2702 [9]: pmixp_coll_tree.c:1398: bufs (offset/size): upfw 88/88, dfwd 69/69
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_reset_if_to: hpc3-2803 [14]: pmixp_coll_tree.c:1321: 0x14929403b860: collective timeout seq=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_log: hpc3-2803 [14]: pmixp_coll.c:286: Dumping collective state
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2803 [14]: pmixp_coll_tree.c:1337: 0x14929403b860: COLL_FENCE_TREE state seq=0 contribs: loc=1/prnt=0/child=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2803 [14]: pmixp_coll_tree.c:1342: my peerid: 14:hpc3-2803
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2803 [14]: pmixp_coll_tree.c:1345: root host: 0:hpc3-2101
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2803 [14]: pmixp_coll_tree.c:1348: prnt host: 1:hpc3-2102
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2803 [14]: pmixp_coll_tree.c:1350: prnt contrib:
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2803 [14]: pmixp_coll_tree.c:1351: 	 [1:hpc3-2102] false
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2803 [14]: pmixp_coll_tree.c:1392: status: coll=COLL_UPFWD upfw=COLL_SND_DONE dfwd=COLL_SND_NONE
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2803 [14]: pmixp_coll_tree.c:1396: dfwd status: dfwd_cb_cnt=0, dfwd_cb_wait=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2803 [14]: pmixp_coll_tree.c:1398: bufs (offset/size): upfw 88/88, dfwd 69/69
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_reset_if_to: hpc3-2601 [4]: pmixp_coll_tree.c:1321: 0x14e1d003bf00: collective timeout seq=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_log: hpc3-2601 [4]: pmixp_coll.c:286: Dumping collective state
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2601 [4]: pmixp_coll_tree.c:1337: 0x14e1d003bf00: COLL_FENCE_TREE state seq=0 contribs: loc=1/prnt=0/child=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2601 [4]: pmixp_coll_tree.c:1342: my peerid: 4:hpc3-2601
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2601 [4]: pmixp_coll_tree.c:1345: root host: 0:hpc3-2101
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2601 [4]: pmixp_coll_tree.c:1348: prnt host: 1:hpc3-2102
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2601 [4]: pmixp_coll_tree.c:1350: prnt contrib:
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2601 [4]: pmixp_coll_tree.c:1351: 	 [1:hpc3-2102] false
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2601 [4]: pmixp_coll_tree.c:1392: status: coll=COLL_UPFWD upfw=COLL_SND_DONE dfwd=COLL_SND_NONE
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2601 [4]: pmixp_coll_tree.c:1396: dfwd status: dfwd_cb_cnt=0, dfwd_cb_wait=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2601 [4]: pmixp_coll_tree.c:1398: bufs (offset/size): upfw 88/88, dfwd 69/69
+Valid shape: (4751, 4751)
+Valid shape: (4751, 4751)
+Valid shape: (4751, 4751)
+Valid shape: (4751, 4751)
+Valid shape: (4751, 4751)
+Valid shape: (4751, 4751)
+Valid shape: (4751, 4751)
+Valid shape: (4751, 4751)
+Valid shape: (4751, 4751)
+Valid shape: (4751, 4751)
+Valid shape: (4751, 4751)
+Valid shape: (4751, 4751)
+Valid shape: (4751, 4751)
+Valid shape: (4751, 4751)
+Valid shape: (4751, 4751)
+Valid shape: (4751, 4751)
+Valid shape: (4751, 4751)
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_reset_if_to: hpc3-2902 [17]: pmixp_coll_tree.c:1321: 0x153c98039240: collective timeout seq=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_log: hpc3-2902 [17]: pmixp_coll.c:286: Dumping collective state
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2902 [17]: pmixp_coll_tree.c:1337: 0x153c98039240: COLL_FENCE_TREE state seq=0 contribs: loc=1/prnt=0/child=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2902 [17]: pmixp_coll_tree.c:1342: my peerid: 17:hpc3-2902
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2902 [17]: pmixp_coll_tree.c:1345: root host: 0:hpc3-2101
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2902 [17]: pmixp_coll_tree.c:1348: prnt host: 1:hpc3-2102
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2902 [17]: pmixp_coll_tree.c:1350: prnt contrib:
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2902 [17]: pmixp_coll_tree.c:1351: 	 [1:hpc3-2102] false
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2902 [17]: pmixp_coll_tree.c:1392: status: coll=COLL_UPFWD upfw=COLL_SND_DONE dfwd=COLL_SND_NONE
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2902 [17]: pmixp_coll_tree.c:1396: dfwd status: dfwd_cb_cnt=0, dfwd_cb_wait=0
+slurmstepd: error:  mpi/pmix_v3: pmixp_coll_tree_log: hpc3-2902 [17]: pmixp_coll_tree.c:1398: bufs (offset/size): upfw 88/88, dfwd 69/69
+Valid shape: (4751, 4751)
+Blur time: 1180.2411489486694
+Normalize: 121.76447439193726
+Threshold: 65.16713857650757
+Keep component: 8.58306884765625e-06
+Closing sequence: 439.2375819683075
+Erosion: 82.27253293991089
+Worker 7: completed blur mask 1916.5870928764343 seconds
+Blur time: 1181.4263236522675
+Normalize: 123.07511067390442
+Threshold: 65.27783465385437
+Keep component: 1.4543533325195312e-05
+Closing sequence: 438.19532012939453
+Erosion: 82.15153336524963
+Worker 5: completed blur mask 1917.9933137893677 seconds
+Blur time: 1179.8099813461304
+Normalize: 121.41359877586365
+Threshold: 64.95821976661682
+Keep component: 8.58306884765625e-06
+Closing sequence: 436.7936224937439
+Erosion: 82.16016173362732
+Worker 8: completed blur mask 1913.0901341438293 seconds
+Blur time: 1179.0140323638916
+Normalize: 142.91288900375366
+Threshold: 64.58536434173584
+Keep component: 1.049041748046875e-05
+Closing sequence: 434.53028774261475
+Erosion: 82.6179027557373
+Worker 0: completed blur mask 1931.4007852077484 seconds
+Blur time: 1180.7668886184692
+Normalize: 128.66658926010132
+Threshold: 65.03528428077698
+Keep component: 1.0967254638671875e-05
+Closing sequence: 439.148428440094
+Erosion: 82.80662274360657
+Worker 12: completed blur mask 1924.3657426834106 seconds
+Blur time: 1178.7235996723175
+Normalize: 135.82403469085693
+Threshold: 65.25953698158264
+Keep component: 1.1920928955078125e-05
+Closing sequence: 435.30940294265747
+Erosion: 81.51541900634766
+Worker 4: completed blur mask 1924.3978118896484 seconds
+Blur time: 1180.8072488307953
+Normalize: 143.05151867866516
+Threshold: 67.77909183502197
+Keep component: 1.1920928955078125e-05
+Closing sequence: 436.37293457984924
+Erosion: 82.33402514457703
+Worker 15: completed blur mask 1938.0680918693542 seconds
+Blur time: 1180.2055666446686
+Normalize: 117.30075597763062
+Threshold: 72.45151281356812
+Keep component: 1.0967254638671875e-05
+Closing sequence: 439.39022731781006
+Erosion: 82.61709523200989
+Worker 6: completed blur mask 1919.7597687244415 seconds
+Blur time: 1174.1097531318665
+Normalize: 147.44504594802856
+Threshold: 64.71384406089783
+Keep component: 1.0251998901367188e-05
+Closing sequence: 432.2767357826233
+Erosion: 80.40732264518738
+Worker 10: completed blur mask 1926.4994509220123 seconds
+Blur time: 1174.4537959098816
+Normalize: 147.94198942184448
+Threshold: 64.40557289123535
+Keep component: 1.0251998901367188e-05
+Closing sequence: 432.6989016532898
+Erosion: 80.324782371521
+Worker 9: completed blur mask 1927.3796560764313 seconds
+Blur time: 1173.9339270591736
+Normalize: 142.28909420967102
+Threshold: 76.25563597679138
+Keep component: 1.2874603271484375e-05
+Closing sequence: 436.26673436164856
+Erosion: 79.90477633476257
+Worker 13: completed blur mask 1936.5544483661652 seconds
+Blur time: 1181.0271754264832
+Normalize: 162.89882349967957
+Threshold: 64.94226431846619
+Keep component: 1.3828277587890625e-05
+Closing sequence: 438.42370557785034
+Erosion: 81.64234399795532
+Worker 1: completed blur mask 1957.1603071689606 seconds
+Blur time: 1174.2313468456268
+Normalize: 170.06981563568115
+Threshold: 65.55737090110779
+Keep component: 1.3113021850585938e-05
+Closing sequence: 432.53040623664856
+Erosion: 80.4275906085968
+Worker 3: completed blur mask 1950.9002544879913 seconds
+Blur time: 1174.7946989536285
+Normalize: 159.4111626148224
+Threshold: 64.76489615440369
+Keep component: 9.5367431640625e-06
+Closing sequence: 436.0466101169586
+Erosion: 79.63688039779663
+Worker 11: completed blur mask 1942.4241547584534 seconds
+Blur time: 1176.099814414978
+Normalize: 175.6133017539978
+Threshold: 82.29970645904541
+Keep component: 1.1682510375976562e-05
+Closing sequence: 434.83835768699646
+Erosion: 81.24356508255005
+Worker 14: completed blur mask 1977.849680185318 seconds
+Blur time: 1181.125824213028
+Normalize: 294.6984028816223
+Threshold: 74.79009675979614
+Keep component: 1.3589859008789062e-05
+Closing sequence: 434.3714406490326
+Erosion: 82.90182042121887
+Worker 16: completed blur mask 2095.916786670685 seconds
+Blur time: 1173.5857119560242
+Normalize: 314.0889503955841
+Threshold: 70.91362524032593
+Keep component: 1.4781951904296875e-05
+Closing sequence: 434.8475685119629
+Erosion: 80.01347088813782
+Worker 2: completed blur mask 2101.601418495178 seconds
+Blur time: 1180.2505173683167
+Normalize: 200.5019736289978
+Threshold: 73.29993271827698
+Keep component: 1.33514404296875e-05
+Closing sequence: 439.17859506607056
+Erosion: 81.51782512664795
+Worker 17: completed blur mask 2003.3895072937012 seconds
+Worker 7: completed edge mask 859.2947545051575 seconds
+Worker 8: completed edge mask 873.5596370697021 seconds
+Worker 0: completed edge mask 859.0028693675995 seconds
+Worker 5: completed edge mask 878.2781529426575 seconds
+Worker 15: completed edge mask 856.86230635643 seconds
+Worker 6: completed edge mask 877.8327701091766 seconds
+Worker 12: completed edge mask 884.2414131164551 seconds
+Worker 9: completed edge mask 869.627329826355 seconds
+Worker 4: completed edge mask 873.1531863212585 seconds
+Worker 10: completed edge mask 875.1716048717499 seconds
+Worker 3: completed edge mask 866.072535276413 seconds
+Worker 13: completed edge mask 886.2394263744354 seconds
+Worker 11: completed edge mask 877.9551949501038 seconds
+Worker 1: completed edge mask 876.4049277305603 seconds
+Worker 14: completed edge mask 896.132780790329 seconds
+Worker 2: completed edge mask 880.7989053726196 seconds
+Worker 16: completed edge mask 891.5044374465942 seconds
+Worker 17: completed edge mask 877.4848132133484 seconds
+Worker 8: Gaussian completed in 27.261361837387085 seconds
+Worker 7: Gaussian completed in 27.423853158950806 seconds
+Worker 0: Gaussian completed in 26.912869453430176 seconds
+Worker 5: Gaussian completed in 27.49517846107483 seconds
+Worker 10: Gaussian completed in 27.08924388885498 seconds
+Worker 9: Gaussian completed in 27.005064964294434 seconds
+Worker 15: Gaussian completed in 27.63820719718933 seconds
+Worker 6: Gaussian completed in 28.781781673431396 seconds
+Worker 4: Gaussian completed in 29.69839882850647 seconds
+Worker 12: Gaussian completed in 27.432172060012817 seconds
+Worker 3: Gaussian completed in 27.49034881591797 seconds
+Worker 13: Gaussian completed in 30.65784788131714 seconds
+Worker 11: Gaussian completed in 27.309375047683716 seconds
+Worker 1: Gaussian completed in 27.262863874435425 seconds
+Worker 14: Gaussian completed in 31.73233723640442 seconds
+Worker 2: Gaussian completed in 27.2882399559021 seconds
+Worker 16: Gaussian completed in 27.838095903396606 seconds
+Detected 35211540 faces.
+Detected 26921154 faces.
+Worker 8 writing labels to /data/visitor/me1663/id19/20240227/SEGMENTATION/Real_15_01_multinode/labels/Real_15_01_0003
+Detected 35386638 faces.
+Detected 27091866 faces.
+Worker 0 writing labels to /data/visitor/me1663/id19/20240227/SEGMENTATION/Real_15_01_multinode/labels/Real_15_01_0003
+Detected 35750460 faces.
+Detected 27036832 faces.
+Worker 7 writing labels to /data/visitor/me1663/id19/20240227/SEGMENTATION/Real_15_01_multinode/labels/Real_15_01_0003
+Detected 35693694 faces.
+Detected 27028270 faces.
+Worker 5 writing labels to /data/visitor/me1663/id19/20240227/SEGMENTATION/Real_15_01_multinode/labels/Real_15_01_0003
+Detected 35176632 faces.
+Detected 26996572 faces.
+Worker 9 writing labels to /data/visitor/me1663/id19/20240227/SEGMENTATION/Real_15_01_multinode/labels/Real_15_01_0003
+Detected 35133624 faces.
+Detected 26974384 faces.
+Worker 10 writing labels to /data/visitor/me1663/id19/20240227/SEGMENTATION/Real_15_01_multinode/labels/Real_15_01_0003
+Detected 35922210 faces.
+Detected 27112902 faces.
+Worker 15 writing labels to /data/visitor/me1663/id19/20240227/SEGMENTATION/Real_15_01_multinode/labels/Real_15_01_0003
+Detected 35471546 faces.
+Detected 27043402 faces.
+Worker 6 writing labels to /data/visitor/me1663/id19/20240227/SEGMENTATION/Real_15_01_multinode/labels/Real_15_01_0003
+Detected 35731548 faces.
+Detected 27018330 faces.
+Worker 4 writing labels to /data/visitor/me1663/id19/20240227/SEGMENTATION/Real_15_01_multinode/labels/Real_15_01_0003
+Detected 35680248 faces.
+Detected 27052310 faces.
+Worker 12 writing labels to /data/visitor/me1663/id19/20240227/SEGMENTATION/Real_15_01_multinode/labels/Real_15_01_0003
+Detected 35429660 faces.
+Detected 26936118 faces.
+Worker 3 writing labels to /data/visitor/me1663/id19/20240227/SEGMENTATION/Real_15_01_multinode/labels/Real_15_01_0003
+Detected 35499550 faces.
+Detected 27043264 faces.
+Worker 13 writing labels to /data/visitor/me1663/id19/20240227/SEGMENTATION/Real_15_01_multinode/labels/Real_15_01_0003
+Detected 35737414 faces.
+Detected 27097602 faces.
+Worker 11 writing labels to /data/visitor/me1663/id19/20240227/SEGMENTATION/Real_15_01_multinode/labels/Real_15_01_0003
+Detected 36153496 faces.
+Detected 27156910 faces.
+Worker 1 writing labels to /data/visitor/me1663/id19/20240227/SEGMENTATION/Real_15_01_multinode/labels/Real_15_01_0003
+Detected 35863162 faces.
+Detected 26998290 faces.
+Worker 14 writing labels to /data/visitor/me1663/id19/20240227/SEGMENTATION/Real_15_01_multinode/labels/Real_15_01_0003
+Worker 17: Gaussian completed in 28.572898387908936 seconds
+Detected 35830684 faces.
+Detected 27028804 faces.
+Worker 2 writing labels to /data/visitor/me1663/id19/20240227/SEGMENTATION/Real_15_01_multinode/labels/Real_15_01_0003
+Detected 35723178 faces.
+Detected 27089494 faces.
+Worker 16 writing labels to /data/visitor/me1663/id19/20240227/SEGMENTATION/Real_15_01_multinode/labels/Real_15_01_0003
+Detected 36012276 faces.
+Detected 27043912 faces.
+Worker 17 writing labels to /data/visitor/me1663/id19/20240227/SEGMENTATION/Real_15_01_multinode/labels/Real_15_01_0003
+Worker 5: All labels written
+Node 5 completed in 4463.151995182037 seconds
+Worker 13: All labels written
+Node 13 completed in 4487.983123064041 seconds
+Worker 15: All labels written
+Node 15 completed in 4470.007972002029 seconds
+Worker 12: All labels written
+Node 12 completed in 4484.526335954666 seconds
+Worker 14: All labels written
+Node 14 completed in 4552.456409215927 seconds
+Worker 6: All labels written
+Node 6 completed in 4478.080525159836 seconds
+Worker 7: All labels written
+Node 7 completed in 4458.309870004654 seconds
+Worker 10: All labels written
+Node 10 completed in 4463.047057628632 seconds
+Worker 11: All labels written
+Node 11 completed in 4487.818051099777 seconds
+Worker 9: All labels written
+Node 9 completed in 4460.784355640411 seconds
+Worker 3: All labels written
+Node 3 completed in 4482.724841117859 seconds
+Worker 8: All labels written
+Node 8 completed in 4451.920156240463 seconds
+Worker 4: All labels written
+Node 4 completed in 4480.220866203308 seconds
+Worker 17: All labels written
+Node 17 completed in 4888.278625965118 seconds
+Worker 1: All labels written
+Node 1 completed in 4499.6527235507965 seconds
+Worker 16: All labels written
+Node 16 completed in 4664.470175981522 seconds
+Worker 2: All labels written
+Node 2 completed in 4630.556847572327 seconds
+Worker 0: All labels written
+Node 0 completed in 4452.222560167313 seconds
+slurmstepd: error: *** STEP 26062911.0 ON hpc3-2101 CANCELLED AT 2025-08-09T18:20:15 DUE TO TIME LIMIT ***
+slurmstepd: error: *** JOB 26062911 ON hpc3-2101 CANCELLED AT 2025-08-09T18:20:15 DUE TO TIME LIMIT ***

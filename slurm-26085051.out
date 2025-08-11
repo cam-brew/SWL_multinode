@@ -1,0 +1,42 @@
+Starting script
+Loading conda
+Conda activated
+/home/esrf/cameron15a/miniforge3/envs/ks_seg_dask/bin/python
+Python 3.10.18
+Launching script
+Starting job on hpc3-[2604,2701-2704,2801-2804,2901]
+ID: Real_05_01_0003
+Reading 185 files using 28 cores
+Sample shape and type: (3876, 3876) uint16
+ID: Real_05_01_0003
+Reading 185 files using 28 cores
+Sample shape and type: (3876, 3876) uint16
+ID: Real_05_01_0003
+Reading 185 files using 28 cores
+Sample shape and type: (3876, 3876) uint16
+ID: Real_05_01_0003
+Reading 186 files using 28 cores
+Sample shape and type: (3876, 3876) uint16
+ID: Real_05_01_0003
+Reading 185 files using 28 cores
+Sample shape and type: (3876, 3876) uint16
+ID: Real_05_01_0003
+Reading 186 files using 28 cores
+Sample shape and type: (3876, 3876) uint16
+ID: Real_05_01_0003
+Reading 185 files using 28 cores
+Sample shape and type: (3876, 3876) uint16
+ID: Real_05_01_0003
+Reading 185 files using 28 cores
+Sample shape and type: (3876, 3876) uint16
+ID: Real_05_01_0003
+Reading 185 files using 28 cores
+Sample shape and type: (3876, 3876) uint16
+[['Real_05_01_0003', '2.149544433e-6', '1852', '1']]
+Metadata from /home/esrf/cameron15a/Desktop/python/inputs/Real_05_01/seg_param_0003.txt
+Processing Stone Real_05_01_0003
+ID: Real_05_01_0003
+Clearing directories in /data/visitor/me1663/id19/20240227/SEGMENTATION/Real_05_01/labels/Real_05_01_0003
+1852 [28, 28, 28, 28, 28, 28, 28, 28, 28, 28]
+Reading 185 files using 28 cores
+Sample shape and type: (3876, 3876) uint16

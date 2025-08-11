@@ -1,0 +1,195 @@
+Starting script
+Loading conda
+Conda activated
+/home/esrf/cameron15a/miniforge3/envs/ks_seg_dask/bin/python
+Python 3.10.18
+Launching script
+Starting job on hpc3-[2101,2104,2401-2402,2601-2602,2604,2701-2703]
+[['Real_05_01_0007', '2.149544433e-6', '1862', '1']]
+Metadata from /home/esrf/cameron15a/Desktop/python/inputs/Real_05_01/seg_param_0007.txt
+Processing Stone Real_05_01_0007
+ID: Real_05_01_0007
+Clearing directories in /data/visitor/me1663/id19/20240227/SEGMENTATION/Real_05_01/labels/Real_05_01_0007
+1862 [28, 28, 28, 28, 28, 28, 28, 28, 28, 28]
+Reading 186 files using 28 cores
+Sample shape and type: (3879, 3879) uint16
+ID: Real_05_01_0007
+Reading 186 files using 28 cores
+Sample shape and type: (3879, 3879) uint16
+ID: Real_05_01_0007
+Reading 186 files using 28 cores
+Sample shape and type: (3879, 3879) uint16
+ID: Real_05_01_0007
+Reading 186 files using 28 cores
+Sample shape and type: (3879, 3879) uint16
+ID: Real_05_01_0007
+Reading 186 files using 28 cores
+Sample shape and type: (3879, 3879) uint16
+ID: Real_05_01_0007
+Reading 187 files using 28 cores
+Sample shape and type: (3879, 3879) uint16
+ID: Real_05_01_0007
+Reading 186 files using 28 cores
+Sample shape and type: (3879, 3879) uint16
+ID: Real_05_01_0007
+Reading 186 files using 28 cores
+Sample shape and type: (3879, 3879) uint16
+ID: Real_05_01_0007
+Reading 186 files using 28 cores
+Sample shape and type: (3879, 3879) uint16
+ID: Real_05_01_0007
+Reading 187 files using 28 cores
+Sample shape and type: (3879, 3879) uint16
+Valid shape: (3879, 3879)
+Valid shape: (3879, 3879)
+Valid shape: (3879, 3879)
+Valid shape: (3879, 3879)
+Valid shape: (3879, 3879)
+Valid shape: (3879, 3879)
+Valid shape: (3879, 3879)
+Valid shape: (3879, 3879)
+Valid shape: (3879, 3879)
+Valid shape: (3879, 3879)
+Blur time: 489.9823486804962
+Normalize: 67.72161746025085
+Threshold: 38.68131947517395
+Keep component: 60.36330461502075
+Closing sequence: 263.1032340526581
+Erosion: 43.024863481521606
+Worker 6: completed blur mask 979.3785297870636 seconds
+Blur time: 491.5405809879303
+Normalize: 71.06103515625
+Threshold: 38.69232177734375
+Keep component: 56.222835063934326
+Closing sequence: 260.46609568595886
+Erosion: 37.10731387138367
+Worker 8: completed blur mask 971.5454449653625 seconds
+Blur time: 488.3934414386749
+Normalize: 70.10299396514893
+Threshold: 38.904414892196655
+Keep component: 60.1816189289093
+Closing sequence: 263.4727427959442
+Erosion: 43.083914041519165
+Worker 3: completed blur mask 980.5636291503906 seconds
+Blur time: 487.1145730018616
+Normalize: 68.23149466514587
+Threshold: 38.87225794792175
+Keep component: 60.24334406852722
+Closing sequence: 262.24804520606995
+Erosion: 42.84422564506531
+Worker 0: completed blur mask 976.0449123382568 seconds
+Blur time: 488.4387767314911
+Normalize: 66.34646987915039
+Threshold: 38.641101121902466
+Keep component: 59.917160511016846
+Closing sequence: 260.83645582199097
+Erosion: 42.93928837776184
+Worker 2: completed blur mask 973.6031119823456 seconds
+Blur time: 492.9955859184265
+Normalize: 72.93230414390564
+Threshold: 38.815266609191895
+Keep component: 57.42314076423645
+Closing sequence: 261.37357687950134
+Erosion: 37.31058692932129
+Worker 9: completed blur mask 977.4326295852661 seconds
+Blur time: 490.56828117370605
+Normalize: 69.45708870887756
+Threshold: 38.865604639053345
+Keep component: 60.241504430770874
+Closing sequence: 261.810129404068
+Erosion: 43.2023241519928
+Worker 7: completed blur mask 980.6268181800842 seconds
+Blur time: 489.1544785499573
+Normalize: 73.41251611709595
+Threshold: 38.87302303314209
+Keep component: 60.2403039932251
+Closing sequence: 260.8433153629303
+Erosion: 42.85007405281067
+Worker 4: completed blur mask 981.8699598312378 seconds
+Blur time: 490.6278328895569
+Normalize: 70.5641222000122
+Threshold: 38.676499128341675
+Keep component: 60.860129594802856
+Closing sequence: 263.50464844703674
+Erosion: 43.68072199821472
+Worker 5: completed blur mask 984.4265570640564 seconds
+Blur time: 489.8296558856964
+Normalize: 78.41235494613647
+Threshold: 38.768474102020264
+Keep component: 59.535008668899536
+Closing sequence: 263.2716085910797
+Erosion: 43.01430344581604
+Worker 1: completed blur mask 989.3166437149048 seconds
+Worker 6: completed edge mask 502.45541286468506 seconds
+Worker 3: completed edge mask 509.8968117237091 seconds
+Worker 8: completed edge mask 514.869649887085 seconds
+Worker 2: completed edge mask 520.5069026947021 seconds
+Worker 0: completed edge mask 518.8869092464447 seconds
+Worker 9: completed edge mask 517.6883854866028 seconds
+Worker 7: completed edge mask 523.0743527412415 seconds
+Worker 5: completed edge mask 517.4426383972168 seconds
+Worker 4: completed edge mask 516.1792731285095 seconds
+Worker 1: completed edge mask 515.6901617050171 seconds
+Worker 6: Gaussian completed in 11.28618836402893 seconds
+Worker 2: Gaussian completed in 11.495665073394775 seconds
+Worker 3: Gaussian completed in 11.336381435394287 seconds
+Worker 8: Gaussian completed in 11.286370038986206 seconds
+Worker 0: Gaussian completed in 11.243852615356445 seconds
+Worker 4: Gaussian completed in 11.387839078903198 seconds
+Worker 7: Gaussian completed in 11.421391725540161 seconds
+Worker 9: Gaussian completed in 11.370776414871216 seconds
+Worker 5: Gaussian completed in 11.306511640548706 seconds
+Worker 1: Gaussian completed in 11.279332876205444 seconds
+Detected 72274556 faces.
+Detected 19056670 faces.
+Worker 2 writing labels to /data/visitor/me1663/id19/20240227/SEGMENTATION/Real_05_01/labels/Real_05_01_0007
+Detected 72251628 faces.
+Detected 19077516 faces.
+Worker 8 writing labels to /data/visitor/me1663/id19/20240227/SEGMENTATION/Real_05_01/labels/Real_05_01_0007
+Detected 70716930 faces.
+Detected 19132374 faces.
+Worker 6 writing labels to /data/visitor/me1663/id19/20240227/SEGMENTATION/Real_05_01/labels/Real_05_01_0007
+Detected 71706638 faces.
+Detected 19396530 faces.
+Worker 3 writing labels to /data/visitor/me1663/id19/20240227/SEGMENTATION/Real_05_01/labels/Real_05_01_0007
+Detected 70663390 faces.
+Detected 19139528 faces.
+Worker 0 writing labels to /data/visitor/me1663/id19/20240227/SEGMENTATION/Real_05_01/labels/Real_05_01_0007
+Detected 72366934 faces.
+Detected 19150158 faces.
+Worker 7 writing labels to /data/visitor/me1663/id19/20240227/SEGMENTATION/Real_05_01/labels/Real_05_01_0007
+Detected 73575204 faces.
+Detected 19267708 faces.
+Worker 9 writing labels to /data/visitor/me1663/id19/20240227/SEGMENTATION/Real_05_01/labels/Real_05_01_0007
+Detected 70873164 faces.
+Detected 18974914 faces.
+Worker 4 writing labels to /data/visitor/me1663/id19/20240227/SEGMENTATION/Real_05_01/labels/Real_05_01_0007
+Detected 68784164 faces.
+Detected 18585722 faces.
+Worker 5 writing labels to /data/visitor/me1663/id19/20240227/SEGMENTATION/Real_05_01/labels/Real_05_01_0007
+Detected 72087640 faces.
+Detected 18796584 faces.
+Worker 1 writing labels to /data/visitor/me1663/id19/20240227/SEGMENTATION/Real_05_01/labels/Real_05_01_0007
+Worker 7: All labels written
+Node 7 completed in 2369.9012393951416 seconds
+Worker 5: All labels written
+Node 5 completed in 2381.772787332535 seconds
+Worker 3: All labels written
+Node 3 completed in 2359.1035928726196 seconds
+Worker 6: All labels written
+Node 6 completed in 2353.7623388767242 seconds
+Worker 2: All labels written
+Node 2 completed in 2351.7127182483673 seconds
+Worker 4: All labels written
+Node 4 completed in 2374.04762506485 seconds
+Worker 1: All labels written
+Node 1 completed in 2381.376163005829 seconds
+Worker 9: All labels written
+Node 9 completed in 2372.8005244731903 seconds
+Worker 8: All labels written
+Node 8 completed in 2355.3832619190216 seconds
+Worker 0: All labels written
+Node 0 completed in 2365.9247455596924 seconds
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+slurmstepd: error: *** STEP 26084699.0 ON hpc3-2101 CANCELLED AT 2025-08-11T17:19:55 ***
+slurmstepd: error: *** JOB 26084699 ON hpc3-2101 CANCELLED AT 2025-08-11T17:19:55 ***
