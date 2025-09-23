@@ -28,15 +28,16 @@ def get_user_input(input_file):
     print(f'{data}')
     stone_id = data[0][0]
     vox = float(data[0][1])
-    end = int(data[0][2])
-    skip = int(data[0][3])
+    start = int(data[0][2])
+    end = int(data[0][3])
+    skip = int(data[0][4])
     
     
     # stone_id = np.array([row[0] for row in data])
     # vox = np.array([float(row[1]) for row in data])
     # end = np.array([int(row[2]) for row in data])
     # skip = np.array([int(row[3]) for row in data])
-    arrs = (stone_id,vox,end,skip)
+    arrs = (stone_id,vox,start,end,skip)
     
     settings = lines[split_index + 1:]
     # print(f'Settings: {bool_map.get(settings[0].split()[-1].strip().lower())}')

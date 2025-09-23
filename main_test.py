@@ -7,8 +7,7 @@ import multiprocessing
 import threading
 
 from mpi4py import MPI
-from pipeline_AAU import process_pipeline_AAU
-from pipeline_COM import process_pipeline_COM
+from pipeline import process_pipeline_AAU
 from get_io import get_user_input
 from pathlib import Path
 
@@ -27,7 +26,7 @@ def main(comm,param_file):
         
         
         
-        stone_id,voxel_size,end_slice,skip_interval = id_details
+        stone_id,voxel_size,start_slice,end_slice,skip_interval = id_details
         gen_mesh,air_water_seg,animate,num_classes = task_settings
 
         print(f'Processing Stone {stone_id}')
@@ -50,6 +49,7 @@ def main(comm,param_file):
                 dirs,
                 stone_id,
                 voxel_size,
+                start_slice,
                 end_slice,
                 skip_interval,
                 gen_mesh,

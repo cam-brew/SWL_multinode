@@ -2,7 +2,7 @@ import trimesh
 from skimage.measure import marching_cubes
 
 def write_surface(root_dir,stone_id,mesh):
-    output_path = root_dir + f'Visualizations/{stone_id}_surface.stl'
+    output_path = root_dir.as_posix() + f'surfaces/{stone_id}_surface.stl'
     mesh.export(output_path,file_type='stl')
 
 def gen_surf(binary,vox_size,step_size=1):
@@ -14,8 +14,8 @@ def clean_mesh(mesh):
     mesh.remove_duplicate_faces()
     mesh.remove_degenerate_faces()
     mesh.remove_unreferenced_vertices()
-    mesh.fill_holes()
     mesh.merge_vertices()
+    mesh.fill_holes()
     mesh.fix_normals()
     
     return mesh
@@ -23,3 +23,4 @@ def clean_mesh(mesh):
 def simplify_mesh(mesh):
     mesh = mesh.simplify_quadratic_decimation(target_face_count=2_000_000)
     return mesh
+

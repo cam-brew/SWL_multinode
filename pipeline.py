@@ -12,12 +12,13 @@ from multiprocessing import Pool
 from masking_np import circular_mask, masking_blur,masking_edge, close_mask_2, gaussian_blur, isolate_foreground_COM, rescale, keep_largest_component_2d
 from segmentation import gaussian_mix_np
 from surface_calc import estimate_surface_area
+from surface_gen import gen_surf, clean_mesh, simplify_mesh,write_surface
 from preproc_img import AAU_process,COM_process
 from get_io import get_metadata, clear_dir, read_tomos_dask, write_labels_pool
 from pathlib import Path
 
 
-
+## Interleaved split slices
 def split_slices(num_slices,node_cores):
     total_weight = sum(node_cores)
     weights = [cores / total_weight for cores in node_cores]
@@ -42,6 +43,22 @@ def split_slices(num_slices,node_cores):
 
     return node_slices
 
+## Chunked split slices
+# def split_slices(num_slices,node_cores):
+#     total_weight = sum(node_cores)
+#     weights = [cores/total_weight for cores in node_cores]
+#     node_slices_counts = [int(round(w * num_slices)) for w in weights]
+#     diff = num_slices - sum(node_slices_counts)
+
+#     for i in range(abs(diff)):
+#         node_slices_counts[i % len(node_cores)] += np.sign(diff)
+
+#     node_slices = []
+#     start = 0
+#     for count in node_slices_counts:
+#         node_slices.append(list(range(start,start + count)))
+#         start += count
+#     return node_slices
 
 
 def process_pipeline_AAU(params):
@@ -51,6 +68,7 @@ def process_pipeline_AAU(params):
         dirs,
         stone_id,
         voxel_size,
+        start_slice,
         end_slice,
         skip_interval,
         gen_mesh,
@@ -80,9 +98,11 @@ def process_pipeline_AAU(params):
         
         tomo_files,shape,dtype = get_metadata(tomo_dir)
         ## remove when testing vull sample
+        if start_slice == None:
+            start_slice = 0
         if end_slice == None:
             end_slice = -1
-        tomo_files = tomo_files[:end_slice:skip_interval]
+        tomo_files = tomo_files[start_slice:end_slice:skip_interval]
         print(len(tomo_files), core_counts)
         n_slices = len(tomo_files)
         z_split = split_slices(n_slices,core_counts)
@@ -116,21 +136,14 @@ def process_pipeline_AAU(params):
         f.write(f'\nRead {tomo_stack.shape[0]} images: {time.time() - start} seconds\n')
     
     tomo_stack = tomo_stack.compute()
-    # circ_slice = np.where(circular_mask(tomo_stack[0].shape,radius_scale=0.9),tomo_stack[0],np.nan)
     valid_slice = circular_mask(tomo_stack[0].shape,radius_scale=0.9).astype(bool)
     print(f'Valid shape: {valid_slice.shape}')
     
-    # tomo_stack = np.where(circular_mask(tomo_stack.shape,radius_scale=0.95),tomo_stack,np.nan)
-
-    # tomo_he = rescale(tomo_stack,clip=1) # Histogram equalization
-    # del tomo_stack
-    # gc.collect()
     
-    # blurred = isolate_foreground_AAU_2(tomo_stack,mask_kern_size=25)
     start = time.time()
     blur_mask = np.zeros_like(tomo_stack,dtype=np.uint8)
     if 'Real_05_01' in stone_id:
-        blur_mask = masking_blur(tomo_stack,sigma=20,mask=circular_mask(tomo_stack.shape,radius_scale=0.9),keep_largest_comp=True)
+        blur_mask = masking_blur(tomo_stack,sigma=30,mask=circular_mask(tomo_stack.shape,radius_scale=0.9),keep_largest_comp=True)
     else:
         blur_mask = masking_blur(tomo_stack,sigma=30,mask=circular_mask(tomo_stack.shape,radius_scale=0.9),keep_largest_comp=False)
     print(f'Worker {rank}: completed blur mask {time.time() - start} seconds')
@@ -150,7 +163,7 @@ def process_pipeline_AAU(params):
 
     with Pool() as pool:
         if 'Real_05_01' in stone_id:
-            mask = pool.starmap(close_mask_2,[(img,30,valid_slice,0.9) for img in mask])
+            mask = pool.starmap(close_mask_2,[(img,40,valid_slice,0.9) for img in mask])
         # start = time.time()
         elif 'Real_15_01' in stone_id:
             mask = pool.starmap(close_mask_2,[(img,100,valid_slice,0.5) for img in mask])
@@ -169,105 +182,88 @@ def process_pipeline_AAU(params):
     tomo_clean = rescale(tomo_clean,clip=0.0,mask=mask)
 
     
-    # print(f'Blurring complete')
-
-    # tomo_he,mask = isolate_foreground_AAU_2(tomo_he,blur_kern_size=3,mask_kern_size=50) # Isolate foreground
-    
-    # ext_sa,ext_faces = estimate_surface_area(mask,1,vox_size=voxel_size) # Retrieve exterior surface area
-    # print(f'Worker {rank} gaussian complete')
-    
-    
-    # with open(log_path,'a+') as f:
-    #     f.write(f'Histogram adjusted and mask generated in {time.time() - start} seconds\n')
-    
     
     # # ====== Section 2: Automated foreground segmentation ======
     
-    # print(f'Worker {rank} beginning segmentation')
     # First pass separates solid and fluid
     start = time.time()
-    # gmm_stone_labeled,_ = gaussian_mix_np(tomo_clean,mask,n_classes=4) # Label stone (0) and pore (1)
-    # gmm_stone_labeled[gmm_stone_labeled == 255] = -1
     gmm_stone_labeled = np.zeros_like(tomo_clean,dtype=np.uint8)
+
+    
+    
+
+    # thresh_list = np.zeros(tomo_clean.shape[0])
+    # for z in range(tomo_clean.shape[0]):
+    #     px = tomo_clean[z][mask[z]]
+    #     if px.size > 0:
+    #         thresh_list[z] = threshold_otsu(px)
+
+    # for z in range(tomo_clean.shape[0]):
+    #     slice_mask = mask[z]
+    #     if np.any(slice_mask):
+    #         gmm_stone_labeled[z][slice_mask] = tomo_clean[z][slice_mask] > thresh_list[z]
+    ## Threshold entire dataset here
     t = threshold_otsu(tomo_clean[mask].ravel())
     gmm_stone_labeled[mask] = tomo_clean[mask] > t
     print(f'Worker {rank}: Gaussian completed in {time.time() - start} seconds')
-    # gmm_stone_labeled = keep_largest_component_3d(gmm_stone_labeled,0) # Eliminate disconnected labels
 
     
+    if 'Real_05_01' in stone_id:
+        with Pool(processes=psutil.cpu_count()) as pool:
+            gmm_stone_filled = pool.map(binary_fill_holes,gmm_stone_labeled)
+            # gmm_stone_filled = pool.map(keep_largest_component_2d,[tomo for tomo in gmm_stone_filled])
 
-    with Pool(processes=psutil.cpu_count()) as pool:
-        gmm_stone_filled = pool.map(binary_fill_holes,gmm_stone_labeled)
-        gmm_stone_filled = pool.map(keep_largest_component_2d,[tomo for tomo in gmm_stone_filled])
 
-
-    gmm_stone_filled = np.stack(gmm_stone_filled).astype(np.uint8)
-    # if 'Real_05_01' in stone_id:
-    #     print('Isolating largest component')
-    #     gmm_stone_filled = keep_largest_component_3d(gmm_stone_filled,id=np.max(gmm_stone_filled),conn=6)
-    # else: 
-    #     print('Allowing smaller particles')
+        gmm_stone_filled = np.stack(gmm_stone_filled).astype(np.uint8)
+    else:
+        gmm_stone_filled = mask.astype(np.uint8)
 
     gmm_stone_labeled[gmm_stone_filled == 0] = 0
     
     total_sa,total_faces = estimate_surface_area(gmm_stone_labeled,np.max(gmm_stone_labeled),vox_size=voxel_size) # Total surface area
     ext_sa,ext_faces = estimate_surface_area(gmm_stone_filled,np.max(gmm_stone_filled),vox_size=voxel_size)
-    # # Interior is total - exterior
+    # Interior is total - exterior
     int_sa = total_sa - ext_sa 
     int_faces = total_faces - ext_faces
 
-    # with open(log_path,'a') as f:
-    #     f.write(f'\nSolid segmentation: {time.time() - start} seconds')
-
     
-    # print('Stone segmentation complete...')
+    print('Stone segmentation complete...')
     # Second pass segments fluids (air and water presence)
-   # if air_water_seg == True:
-   #     
-   #     start = time.time()
-   #     pore_stack = gmm_stone_labeled == 1
-   #     gmm_pore_labeled,_ = gaussian_mix_np(tomo_clean,pore_stack,n_classes=2)
-   #     with open(log_path,'a') as f:
-   #         f.write(f'\nFluid segmentation: {time.time() - start} seconds')
-   #     
-   #     
-   #     gmm_integrated = np.zeros_like(tomo_clean,dtype=np.int8)
-   #     
-   #     gmm_integrated[gmm_integrated == 0] = 0
-   #     gmm_integrated[gmm_pore_labeled == 0] = 1 ## Air values set to 1
-   #     gmm_integrated[gmm_pore_labeled == 1] = 2 ## Water values set to 2
-   #     gmm_integrated[gmm_stone_labeled == 0] = 3 ## Stone values set to 3
-   #     if stone_id[:10] == 'Stone_15_01':
-   #         gmm_integrated[gmm_pore_labeled == 1] = 3
-   #     
-   # elif air_water_seg == False:
-   #     gmm_integrated = gmm_stone_labeled
-   #     gmm_integrated[gmm_integrated == 0] = 0
-   #     gmm_integrated[gmm_stone_labeled == 1] = 3 ## Stone values set to 1
-   #     print('Stone and fluid labels sorted...')
+    if air_water_seg == True:
+        with Pool(processes = psutil.cpu_count()) as pool:
+            gmm_stone_filled = pool.starmap(close_mask_2,[(tomo,100,None,0.8) for tomo in gmm_stone_filled])
+
+        gmm_stone_filled = np.stack(gmm_stone_filled,axis=0)
+        gmm_pore_labeled = (gmm_stone_filled == 1) & (gmm_stone_labeled == 0)
+        t = threshold_otsu(tomo_clean[gmm_pore_labeled].ravel())
+        gmm_integrated = np.zeros_like(gmm_stone_filled,dtype=np.uint8)
+        gmm_integrated[gmm_stone_filled == 1] = 3
+        gmm_integrated[(gmm_pore_labeled == 1) & (tomo_clean < t)] = 1
+        gmm_integrated[(gmm_pore_labeled == 1) & (tomo_clean > t)] = 2
 
 
     # # # ====== Section 3: Generate surface mesh ======
-    # # if gen_mesh == True:
-    # #     binary = (gmm_integrated == 3).astype(np.uint8)
-    # #     start = time.time()
-    # #     print('\nGenerating surface mesh')
-    # #     mesh,verts,faces = gen_surf(binary,voxel_size,step_size = 1)
-    # #     print(f'Generated surface in {time.time() - start} seconds')
+    # if gen_mesh == True:
+        
+    #     start = time.time()
+    #     print('\nGenerating surface mesh')
+    #     mesh,verts,faces = gen_surf(gmm_integrated,voxel_size,step_size = 2)
+    #     mesh = clean_mesh(mesh)
+    #     mesh = simplify_mesh(mesh)
+    #     print(f'Generated surface in {time.time() - start} seconds')
+
+    #     start = time.time()
+    #     surface_png(mesh,path=f'{stone_id}.png')
+    #     print(f'Visualized surface in {time.time() - start}')
+
+    #     start = time.time()
+    #     write_surface(Path(seg_dir).parent)
+
         
     # #     start = time.time()
     # #     mesh_sa = mesh_surface_area(verts,faces)
     # #     print(f'Surface area calculated: {mesh_sa} m^2 | {time.time() - start} seconds')
     
-    # # ====== Section 3: Stone surface area estimation ======
-    # ## Stone surface area calculation
-    # print('Estimating surface area (6-conn.)...')
-    # start = time.time()
-    
-    
-    # with open(log_path,'a') as f:
-    #     f.write(f'\nInterior faces: {int_faces} | Exterior faces: {ext_faces}')
-    #     f.write(f'\nInterior SA: {int_sa} mm^2 | Exterior SA: {ext_sa} mm^2')
         
 
     # # ====== Section 4: Labeled data validation and visualization ======
@@ -279,13 +275,13 @@ def process_pipeline_AAU(params):
     
     print(f'Worker {rank} writing labels to {seg_dir_update}')
     start = time.time()
-    write_labels_pool(gmm_stone_labeled,seg_dir_update,z_list,prefix=f'/{stone_id}_label_',dtype=gmm_stone_labeled.dtype,cores=None)
+    write_labels_pool(gmm_integrated,seg_dir_update,z_list,prefix=f'/{stone_id}_fill_',dtype=gmm_integrated.dtype,cores=None)
 
     print(f'Worker {rank}: All labels written')
     with open(log_path,'a+') as f:
         f.write(f'\nTime to write labels: {time.time() - start} seconds\n\n')
         f.write(f'\nTotal time: {time.time() - total_start}')
-
+    # return 0, 0, 0, 0
     return ext_sa,ext_faces,int_sa,int_faces
 
 
