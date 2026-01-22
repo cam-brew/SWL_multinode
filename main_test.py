@@ -37,7 +37,7 @@ def main(comm,param_file):
         elif stone_id[:10] == "Real_15_01":
             tomo_dir = root_dir + f'PROCESSED_DATA/{stone_id[:10]}/Reconstruction_16bit_dff_s32_v2/{stone_id}_16bit_vol/'
         
-        seg_dir = root_dir + f"SEGMENTATION/{stone_id[:10]}/labels/"
+        seg_dir = root_dir + f"SEGMENTATION/{stone_id[:10]}_multinode/labels/"
 
         dirs = (root_dir,tomo_dir,seg_dir)
         
@@ -73,10 +73,10 @@ def main(comm,param_file):
     start = time.time()
     if 'Real_05_01' in task_args[0][1]:
         print(f'ID: {task_args[0][1]}')
-        ext_sa,ext_faces,int_sa,int_faces = process_pipeline_AAU(*task_args)
+        ext_sa,ext_faces,int_sa,int_faces, ext_sa_over,ext_faces_over,int_sa_over,int_faces_over, ext_sa_under,ext_faces_under,int_sa_under,int_faces_under = process_pipeline_AAU(*task_args)
     elif 'Real_15_01' in task_args[0][1]:
         print(f'ID {task_args[0][1]}')
-        ext_sa,ext_faces,int_sa,int_faces = process_pipeline_AAU(*task_args)
+        ext_sa,ext_faces,int_sa,int_faces, ext_sa_over,ext_faces_over,int_sa_over,int_faces_over, ext_sa_under,ext_faces_under,int_sa_under,int_faces_under = process_pipeline_AAU(*task_args)
     else:
         print(f'No ID detected in {task_args[0][1]}. Not processing stone')
 
@@ -86,6 +86,16 @@ def main(comm,param_file):
     total_ext_faces = comm.reduce(ext_faces,op=MPI.SUM,root=0)
     total_int_sa = comm.reduce(int_sa,op=MPI.SUM,root=0)
     total_int_faces = comm.reduce(int_faces,op=MPI.SUM,root=0)
+
+    total_ext_sa_over = comm.reduce(ext_sa_over,op=MPI.SUM,root=0)
+    total_ext_faces_over = comm.reduce(ext_faces_over,op=MPI.SUM,root=0)
+    total_int_sa_over = comm.reduce(int_sa_over,op=MPI.SUM,root=0)
+    total_int_faces_over = comm.reduce(int_faces_over,op=MPI.SUM,root=0)
+
+    total_ext_sa_under = comm.reduce(ext_sa_under,op=MPI.SUM,root=0)
+    total_ext_faces_under = comm.reduce(ext_faces_under,op=MPI.SUM,root=0)
+    total_int_sa_under = comm.reduce(int_sa_under,op=MPI.SUM,root=0)
+    total_int_faces_under = comm.reduce(int_faces_under,op=MPI.SUM,root=0)
 
 
     if rank == 0:
@@ -97,6 +107,23 @@ def main(comm,param_file):
             f.write(f'\nTotal exterior faces detected: {total_ext_faces}')
             f.write(f'\nTotal measured interior surface area (mm^2): {total_int_sa}')
             f.write(f'\nTotal interior faces detected: {total_int_faces}\n')
+
+
+        with open(Path(seg_dir).parent.parent / f'{stone_id[:10]}_over' / 'data' / f'{stone_id}_over_test_data.txt', 'w+') as f:
+            f.write(f'Surface area information: {stone_id}')
+            f.write(f'-------------------------')
+            f.write(f'\nTotal measured exterior surface area(mm^2): {total_ext_sa_over}')
+            f.write(f'\nTotal exterior faces detected: {total_ext_faces_over}')
+            f.write(f'\nTotal measured interior surface area (mm^2): {total_int_sa_over}')
+            f.write(f'\nTotal interior faces detected: {total_int_faces_over}\n')
+
+        with open(Path(seg_dir).parent.parent / f'{stone_id[:10]}_under' / 'data' / f'{stone_id}_under_test_data.txt', 'w+') as f:
+            f.write(f'Surface area information: {stone_id}')
+            f.write(f'-------------------------')
+            f.write(f'\nTotal measured exterior surface area(mm^2): {total_ext_sa_under}')
+            f.write(f'\nTotal exterior faces detected: {total_ext_faces_under}')
+            f.write(f'\nTotal measured interior surface area (mm^2): {total_int_sa_under}')
+            f.write(f'\nTotal interior faces detected: {total_int_faces_under}\n')
     
     pass
 

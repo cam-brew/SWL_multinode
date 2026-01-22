@@ -3,8 +3,9 @@ import time
 from multiprocessing import Pool
 import multiprocessing
 from scipy.ndimage import binary_fill_holes,binary_closing,convolve,gaussian_filter,binary_dilation,binary_erosion,maximum_filter
-from skimage.filters import threshold_otsu,threshold_triangle
+from skimage.filters import threshold_otsu,threshold_triangle,threshold_minimum
 from scipy.ndimage import label as label3d
+from scipy.signal import find_peaks
 from skimage.measure import label as label2d
 from skimage.morphology import disk,remove_small_objects
 from skimage import exposure
@@ -279,7 +280,7 @@ def isolate_foreground_COM(vol,blur_kern_size=3,mask_kern_size=30):
     
     return blur,mask
         
-def rescale(vol,clip=2, mask=None,hist_eq=False):
+def rescale(vol,clip=2, mask=None,dtype=np.float32,hist_eq=False):
 
     if mask is None:
         mask = ~np.isnan(vol)
@@ -298,7 +299,11 @@ def rescale(vol,clip=2, mask=None,hist_eq=False):
     
     # Make vol [0,1]
     vol_norm = (vol_clip - vmin) / (vmax - vmin)
-    vol_norm = vol_norm.astype(np.float32)
+    if dtype == np.uint16:
+        vol_norm = vol_norm * 65535
+    elif dtype == np.uint8:
+        vol_norm = vol_norm * 255
+    vol_norm = vol_norm.astype(dtype)
     if hist_eq == True:
         print(f'Performing histogram equalization')
         flat_valid = vol[mask] # set valid mask
@@ -319,29 +324,24 @@ def masking_blur(stack,sigma,mask=None,keep_largest_comp=False):
     valid = ~np.isnan(circ)
 
     with Pool(processes=multiprocessing.cpu_count()) as pool:
-        start = time.time()
+
+        ## Test new approach
+        # blur = pool.starmap(maximum_filter,[(tomo,10) for tomo in stack])
+        # blur = pool.starmap(gaussian_blur,[(tomo,sigma - 10) for tomo in blur])
+        
         blur = pool.starmap(gaussian_blur,[(tomo,sigma) for tomo in stack])
-        print(f'Blur time: {time.time() - start}')
-        start = time.time()
-        blur = rescale(np.stack(blur),clip=0.3)
-        print(f'Normalize: {time.time() - start}')
-        start = time.time()
+        blur = rescale(np.stack(blur),clip=0.0)
         blur = np.where(mask,blur,0)
         out = np.zeros_like(stack,dtype=np.uint8)
 
         t = threshold_otsu(blur[valid].ravel())
         out[valid] = blur[valid] > t
-        print(f'Threshold: {time.time() - start}')
-        start = time.time()
+        
         if keep_largest_comp == True:
             out = pool.map(keep_largest_component_2d,[tomo for tomo in out])
-        print(f'Keep component: {time.time() - start}')
-        start = time.time()
+        
         out = pool.starmap(close_mask_2,[(tomo,10) for tomo in out])
-        print(f'Closing sequence: {time.time() - start}')
-        start = time.time()
         out = pool.starmap(binary_erosion,[(tomo,None,10) for tomo in out])
-        print(f'Erosion: {time.time() - start}')
 
     return np.stack(out)
 
@@ -358,6 +358,105 @@ def masking_edge(stack,sigma):
         out = edge > t
     
     return out
+
+def masking_blur_2(stack,gauss_sigma,mask=None,chunk_size=16):
+    if mask is None:
+        mask = np.zeros(stack.shape[1:],dtype=np.uint8)
+
+    circ = np.where(mask,stack,np.nan)
+    valid = ~np.isnan(circ)
+    
+    if gauss_sigma != 0:
+        blur = gaussian_filter(stack,sigma=gauss_sigma)
+    blur = rescale(blur,clip=0.1,mask=valid,dtype=np.uint16)
+    blur = np.where(mask,blur,0)
+    out = np.zeros_like(blur,dtype=np.uint8)
+    
+    hist = np.bincount(blur[valid].ravel())
+    hist[0] = 0
+    hist[-1] = 0
+    
+    ## Chunking thresholding
+    chunks = [blur[i:i+chunk_size] for i in range(0,blur.shape[0],chunk_size)]
+    t_otsu = []
+
+    for idx,slice_num in enumerate(range(0,blur.shape[0],chunk_size)):
+        if chunks[idx].shape[0] < chunk_size:
+            chunk_size = chunks[idx].shape[0]
+        t = threshold_otsu(chunks[idx][valid[slice_num:slice_num+chunk_size]].ravel())
+        t_otsu.append(t)
+        print(f'Chunk {idx}: {chunks[idx].shape}, Otsu: {t}')
+        print(f'Blur shape: {blur[slice_num:slice_num+chunk_size].shape}')
+        out[slice_num:slice_num+chunk_size] = chunks[idx] > t
+        
+    # for i,chunk in enumerate(chunks):
+    #     if chunk.shape[0] < chunk_size:
+    #          chunk_size = chunk.shape[0]
+    #     t = threshold_otsu(chunk[valid[i:i+chunk_size]].ravel())
+    #     blur[i:i+chunk_size] = chunk[i:i+chunk_size] > t
+    #     t_otsu.append(t)
+        
+    
+
+    # if rank != 0:
+    # print(f'Hist prominence: {0.15 * np.max(hist[otsu_bin:])}')
+    # peaks,_ = find_peaks(hist[otsu_bin:],prominence=0.3 * np.max(hist[otsu_bin:]))
+    
+    # if len(peaks) != 0:
+    #     peak_val_1 = otsu_bin #+ peaks[0]
+    #     print(f'Detected {len(peaks)} peaks')
+    #     print(f'Using peak: {peak_val_1}')
+    #     # peak_val_1 = bin_edges[peak_bin_1]
+    # else:
+    #     peak_val_1 = np.argmax(hist[otsu_bin:]) + otsu_bin
+    #     print(f'No peaks detected')
+    #     print(f'Using peak: {peak_val_1}')
+   
+    # peak_val_1 = otsu_bin
+    return out, blur, hist, valid,t_otsu
+    
+def masking_post_proc_2(mask,blur,t,valid,dilate_iters,keep_largest_comp=False,chunk_size=16,remask=False):
+    # out = np.zeros_like(blur,dtype=np.uint8)
+    
+    # out[valid] = blur[valid] > t
+    out = mask.copy().astype(bool)
+    struct = np.ones((3,3),dtype=bool)
+    
+    # out = keep_largest_component_3d(out,id=out.max(),conn=6)
+    with Pool(processes=multiprocessing.cpu_count()) as pool:
+        args = [(tomo,struct,dilate_iters//2) for tomo in out]
+        out = pool.starmap(binary_dilation,args)
+        if keep_largest_comp == True:
+            out = pool.map(keep_largest_component_2d,out)
+        out = pool.map(binary_fill_holes,out)
+        out = np.stack(out)
+        out = binary_dilation(out,structure=np.ones((3,3,3)),iterations=dilate_iters // 2)
+        out = binary_dilation(out,structure=np.array([[[0,0,0],[0,1,0],[0,0,0]],
+                                                    [[0,1,0],[0,1,0],[0,0,0]],
+                                                    [[0,0,0],[0,0,0],[0,0,0]]]),iterations=15)
+        
+        if remask == True:
+            out,_,_,_,t_otsu = masking_blur_2(blur,gauss_sigma=3,mask=out,chunk_size=chunk_size)
+            out = binary_dilation(out,structure=np.ones((3,3,3)),iterations=dilate_iters)
+            out = pool.map(binary_fill_holes,out)
+            if keep_largest_comp == True:
+                out = pool.map(keep_largest_component_2d,out)
+            out = np.stack(out)
+    # out = binary_fill_holes(out)
+
+    # with Pool(processes=multiprocessing.cpu_count()) as pool:
+    #     # out = np.zeros_like(blur,dtype=np.uint8)
+    #     # out[valid] = blur[valid] > t
+
+    #     out = pool.starmap(binary_dilation,[(tomo,None,dilate_iters) for tomo in out])
+        # out = pool.map(binary_fill_holes,out)
+
+        
+        
+        
+        # out = pool.starmap(binary_erosion,[(tomo,None,int(dilate_iters*0.8)) for tomo in out])
+    # 
+    return np.stack(out,axis=0)
 
 
 def main():

@@ -4,7 +4,7 @@
 #SBATCH --partition=nice
 #SBATCH --nodelist=hpc7-[62-65,01-04],hpc6-[06-08,32-33,35-40],hpc3-[2101-2104,2401,2401-2402,2601-2603,2604,2701-2704,2801-2804,2901-2902],hpc5-[0102-0104,0502-0504,0603,0701-0704]
 #SBATCH --mem=0
-#SBATCH --time=2:30:00
+#SBATCH --time=5:00:00
 #SBATCH --wait-all-nodes=1
 export OMPI_MCA_pml=ob1
 export OMPI_MCA_btl=self,vader,tcp

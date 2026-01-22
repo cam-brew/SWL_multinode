@@ -1,5 +1,6 @@
 import numpy as np
-
+from multiprocessing import Pool
+from skimage.filters import threshold_otsu
 from sklearn.mixture import GaussianMixture
 
 
@@ -56,3 +57,52 @@ def gaussian_mix_np(tomo_stack, mask_stack, n_classes=2, confidence_threshold=0.
     
     print(f'Label vol complete')
     return label_volume,gmm
+
+def otsu_chunk(chunk,mask_chunk,k=None):
+    
+    valid_vals = chunk[mask_chunk]
+    otsu_t = threshold_otsu(valid_vals.ravel())
+
+    out = np.zeros(chunk.shape,dtype=np.uint8)
+    out[(chunk > otsu_t) & mask_chunk] = 1
+    out[(chunk <= otsu_t) & mask_chunk] = 0
+    return out
+
+def otsu_chunk_over(chunk,mask_chunk,k=0.25):
+    
+    valid_vals = chunk[mask_chunk]
+    sigma = np.std(valid_vals)
+    otsu_t = threshold_otsu(valid_vals.ravel())
+    ## OVERESTIMATING for uncertainty
+    otsu_t = otsu_t - (k * sigma)
+
+    out = np.zeros(chunk.shape,dtype=np.uint8)
+    out[(chunk > otsu_t) & mask_chunk] = 1
+    out[(chunk <= otsu_t) & mask_chunk] = 0
+    return out
+
+def otsu_chunk_under(chunk,mask_chunk,k=0.25):
+    
+    valid_vals = chunk[mask_chunk]
+    sigma = np.std(valid_vals)
+    otsu_t = threshold_otsu(valid_vals.ravel())
+    ## OVERESTIMATING for uncertainty
+    otsu_t = otsu_t + (k * sigma)
+
+    out = np.zeros(chunk.shape,dtype=np.uint8)
+    out[(chunk > otsu_t) & mask_chunk] = 1
+    out[(chunk <= otsu_t) & mask_chunk] = 0
+    return out
+
+def parallel_otsu(stack,mask,chunk_size=8,k=None):
+    if k == None:
+        k = 0.25
+    if chunk_size > stack.shape[0]:
+        chunk_size = stack.shape[0]
+    z = stack.shape[0]
+    chunks = [(stack[i:i+chunk_size],mask[i:i+chunk_size],k) for i in range(0,z,chunk_size)]
+    with Pool() as pool:
+        results = pool.starmap(otsu_chunk,chunks)
+        results_over = pool.starmap(otsu_chunk_over,chunks)
+        results_under = pool.starmap(otsu_chunk_under,chunks)
+    return np.concatenate(results,axis=0),np.concatenate(results_over,axis=0),np.concatenate(results_under,axis=0)
